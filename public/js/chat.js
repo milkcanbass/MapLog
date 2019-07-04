@@ -9,21 +9,36 @@ const $messageFormButton = $messageForm.querySelector("button");
 const $locationButton = document.querySelector("#send-location");
 
 const $messages = document.querySelector("#messages");
+const $locationUrl = document.querySelector("#locationUrl");
 
 //Templates
 const messageTemplate = document.querySelector("#message-template").innerHTML;
+const locationMessageTemplate = document.querySelector(
+  "#locationMessage-template"
+).innerHTML;
+
+//options
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
 
 //Receiving message
 socket.on("message", message => {
   console.log(message);
   const html = Mustache.render(messageTemplate, {
-    message
+    message: message.text,
+    createdAt: moment(message.createdAt).format("MMM DD h:mm a")
   });
   $messages.insertAdjacentHTML("beforeend", html);
 });
 
-socket.on("locationMessage", message => {
-  console.log(message);
+socket.on("locationMessage", generateLocation => {
+  console.log(generateLocation);
+  const html = Mustache.render(locationMessageTemplate, {
+    url: generateLocation.url,
+    createdAt: moment(generateLocation.createdAt).format("MMM DD h:mm a")
+  });
+  $messages.insertAdjacentHTML("beforeend", html);
 });
 
 //Send message from message input
@@ -72,11 +87,4 @@ document.querySelector("#send-location").addEventListener("click", () => {
   });
 });
 
-// socket.on('countUpdated', (count) => {
-//     console.log('The count has been updated!', count)
-// })
-
-// document.querySelector('#increment').addEventListener('click', () => {
-//     console.log('Clicked')
-//     socket.emit('increment')
-// })
+socket.emit("join", { username, room });

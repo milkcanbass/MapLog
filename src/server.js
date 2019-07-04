@@ -4,6 +4,8 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
 
+const { generateMessage, generateLocation } = require("./utlis/messages");
+
 //Http server setup
 const server = http.createServer(app);
 
@@ -21,11 +23,16 @@ app.use(express.static(publicDirectoryPath));
 //open socket when user access the page
 io.on("connection", socket => {
   console.log("New WebSocket connection");
-  const initialMessage = "Welcome";
-  socket.emit("message", initialMessage);
 
-  //broad cast other users when new user access
-  socket.broadcast.emit("message", "A new user has joined");
+  socket.on("join", ({ username, room }) => {
+    socket.join(room);
+    socket.emit("message", generateMessage("welcome"));
+
+    //broad cast other users when new user access
+    socket.broadcast
+      .to(room)
+      .emit("message", generateMessage(`${username} has joined ${room}`));
+  });
 
   socket.on("sendMessage", (message, cb) => {
     const filter = new Filter();
@@ -33,22 +40,19 @@ io.on("connection", socket => {
       return cb("Profanity is not allowed");
     }
 
-    io.emit("message", message);
+    io.to("center city").emit("message", generateMessage(message));
     cb("delivered");
   });
 
   //receive location data
-  socket.on("sendLocation", (coords, cb) => {
-    io.emit(
-      "locationMessage",
-      `http://google.com/maps?q=${coords.latitude},${coords.longitude}`
-    );
+  socket.on("sendLocation", ({ latitude, longitude } = coords, cb) => {
+    io.emit("locationMessage", generateLocation(latitude, longitude));
     cb();
   });
 
   //Announcement when user leave page
   socket.on("disconnect", () => {
-    io.emit("message", "A user has left");
+    io.emit("message", generateMessage("A user has left"));
   });
 });
 
