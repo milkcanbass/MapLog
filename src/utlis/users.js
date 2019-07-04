@@ -28,10 +28,31 @@ const addUser = ({ id, username, room }) => {
   users.push(user);
   return { user };
 };
+const removeUser = id => {
+  const index = users.findIndex(user => user.id === id);
+  if (index !== -1) {
+    return users.splice(index, 1)[0];
+  }
+};
 
-addUser({
-  id: 22,
-  username: "kai",
-  room: "Toronto"
-});
-console.log(user);
+const getUser = id => {
+  const user = users.find(user => user.id === id);
+  if (!user) {
+    console.log("no User found");
+  }
+  return { user };
+};
+
+const getUserInRoom = room => {
+  room = room.trim().toLowerCase();
+  return users.filter(user => {
+    user.room === room;
+  });
+};
+
+module.exports = {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom
+};
