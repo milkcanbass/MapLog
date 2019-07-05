@@ -4,13 +4,16 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js"
+    "start": "node server",
+    "server": "nodemon src/server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bad-words": "^3.0.0",
+    "concurrently": "^4.1.1",
     "express": "^4.17.1",
     "socket.io": "^2.2.0"
   }
