@@ -14,8 +14,8 @@ const addUser = ({ id, username, room }) => {
     };
   }
   //Check for existing user
-  const existingUser = users.find(() => {
-    return users.room === room && user.username === username;
+  const existingUser = users.find(user => {
+    return user.room === room && user.username === username;
   });
 
   if (existingUser) {
@@ -40,14 +40,13 @@ const getUser = id => {
   if (!user) {
     console.log("no User found");
   }
-  return { user };
+
+  return user;
 };
 
-const getUserInRoom = room => {
+const getUsersInRoom = room => {
   room = room.trim().toLowerCase();
-  return users.filter(user => {
-    user.room === room;
-  });
+  return users.filter(user => user.room === room);
 };
 
 module.exports = {
