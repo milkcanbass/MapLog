@@ -13,8 +13,22 @@
   "license": "ISC",
   "dependencies": {
     "bad-words": "^3.0.0",
+    "bcrypt": "^3.0.6",
     "concurrently": "^4.1.1",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "express-validator": "^6.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.3",
     "socket.io": "^2.2.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milkcanbass/InstantMessage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/milkcanbass/InstantMessage/issues"
+  },
+  "homepage": "https://github.com/milkcanbass/InstantMessage#readme"
 }
