@@ -3,6 +3,8 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import img from "../img/frontend.png";
+
 const mapStyles = {
   width: "100%",
   height: "100%",
@@ -19,7 +21,25 @@ const MapContainer = props => {
     lng: null
   });
 
-  const mapClicked = (mapProps, map, clickEvent) => {
+  const [infoWindowState, setInfoWindowState] = useState({
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {}
+  });
+
+  const onMarkerClick = (props, marker, e) => {
+    console.log({ marker });
+    console.log({ e });
+
+    setInfoWindowState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  };
+
+  //Add marker
+  const onMapClicked = (props, map, clickEvent) => {
     const { latLng } = clickEvent;
     const lat = latLng.lat();
     const lng = latLng.lng();
@@ -30,7 +50,12 @@ const MapContainer = props => {
       lat,
       lng
     });
-    console.log();
+    if (infoWindowState.showingInfoWindow) {
+      setInfoWindowState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
   };
 
   return (
@@ -40,7 +65,8 @@ const MapContainer = props => {
         google={props.google}
         zoom={14}
         style={mapStyles}
-        onClick={mapClicked}
+        onClick={onMapClicked}
+        // onClick={mapClicked}
         initialCenter={{
           lat: props.latitude,
           lng: props.longitude
@@ -52,9 +78,23 @@ const MapContainer = props => {
       >
         <Marker
           position={{ lat: markerState.lat, lng: markerState.lng }}
-          name={markerState.name}
-          title={markerState.title}
+          // name={markerState.name}
+          // title={markerState.title}
+          onClick={onMarkerClick}
         />
+        <InfoWindow
+          marker={infoWindowState.activeMarker}
+          visible={infoWindowState.showingInfoWindow}
+        >
+          <div>
+            <center>
+              <h1>Hello</h1>
+              <h1>Hello</h1>
+              <img src={img} />
+              <input type="text" />
+            </center>
+          </div>
+        </InfoWindow>
       </Map>
     </Fragment>
   );
