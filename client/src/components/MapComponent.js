@@ -10,59 +10,27 @@ const mapStyles = {
   top: "10px"
 };
 
+//Get lat and lng by clicking map
 const MapContainer = props => {
-  //   const [markes, setMarkes] = useState({
-  //     stores: [
-  //       { latitude: 47.359423, longitude: -122.021071 },
-  //       { latitude: 47.2052192687988, longitude: -121.988426208496 },
-  //       { latitude: 47.6307081, longitude: -122.1434325 },
-  //       { latitude: 47.3084488, longitude: -122.2140121 },
-  //       { latitude: 47.5524695, longitude: -122.0425407 }
-  //     ]
-  //   });
+  const [markerState, setMakerState] = useState({
+    title: "",
+    name: "",
+    lat: null,
+    lng: null
+  });
 
-  //   const displayMarkers = markes.stores.map((mark, index) => {
-  //     return (
-  //       <Marker
-  //         key={index}
-  //         id={index}
-  //         position={{
-  //           lat: mark.latitude,
-  //           lng: mark.longitude
-  //         }}
-  //         onClick={() => console.log("You clicked me!")}
-  //       />
-  //     );
-  //   });
-
-  //   const [infoWindow, setInfoWindow] = useState({
-  //     showingInfoWindow: false,
-  //     activeMarker: {},
-  //     selectedPlace: {}
-  //   });
-
-  //   const onMarkerClick = (props, marker, e) => {
-  //     console.log("clicked");
-
-  //     setInfoWindow({
-  //       selectedPlace: props,
-  //       activeMarker: marker,
-  //       showingInfoWindow: true
-  //     });
-  //   };
-
-  //   const onMapClicked = props => {
-  //     console.log(props);
-  //     if (infoWindow.showingInfoWindow) {
-  //       setInfoWindow({
-  //         showingInfoWindow: false,
-  //         activeMarker: null
-  //       });
-  //     }
-  //   };
-
-  const mClicked = (mapProps, map, clickEvent) => {
-    console.log(clickEvent.lat);
+  const mapClicked = (mapProps, map, clickEvent) => {
+    const { latLng } = clickEvent;
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+    console.log({ lat, lng });
+    setMakerState({
+      title: "Title",
+      name: "Name",
+      lat,
+      lng
+    });
+    console.log();
   };
 
   return (
@@ -72,30 +40,20 @@ const MapContainer = props => {
         google={props.google}
         zoom={14}
         style={mapStyles}
-        onClick={mClicked}
-        // initialCenter={{
-        //   lat: props.latitude,
-        //   lng: props.longitude
-        // }}
+        onClick={mapClicked}
+        initialCenter={{
+          lat: props.latitude,
+          lng: props.longitude
+        }}
         center={{
           lat: props.latitude,
           lng: props.longitude
         }}
       >
-        {/* <Marker onClick={onMarkerClick} name={"current location"} />
-        <InfoWindow
-          marker={infoWindow.activeMarker}
-          visible={infoWindow.showingInfoWindow}
-        >
-          <div>
-            <h1>Hello</h1>
-          </div>
-        </InfoWindow> */}
-
         <Marker
-          position={{ lat: props.latitude, lng: props.longitude }}
-          name={"Your position"}
-          title={"The marker`s title will appear as a tooltip."}
+          position={{ lat: markerState.lat, lng: markerState.lng }}
+          name={markerState.name}
+          title={markerState.title}
         />
       </Map>
     </Fragment>
