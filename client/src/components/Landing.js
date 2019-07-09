@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 
 import MapContainer from "../components/MapComponent";
 
+import Button from "react-bootstrap/Button";
+
 const Landing = ({ register }) => {
   const onSubmit = e => {
     e.preventDefault();
@@ -15,7 +17,8 @@ const Landing = ({ register }) => {
   return (
     <Fragment>
       <h1>Map Chat</h1>
-      <button onClick={e => onSubmit(e)}>Hello</button>
+      <Button onClick={e => onSubmit(e)}>Hello</Button>
+      <Button variant="primary">Primary</Button>
       <div>
         <MapContainer />
       </div>

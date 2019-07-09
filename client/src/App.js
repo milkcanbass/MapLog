@@ -7,11 +7,13 @@ import store from "./store";
 
 //Components
 import Landing from "./components/Landing";
+import NavbarTop from "./components/layout/NavbarTop";
 
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
+        <NavbarTop />
         <Switch>
           <Route exact path="/" component={Landing} />
         </Switch>
