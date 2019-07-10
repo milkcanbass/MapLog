@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ModalContent from "./ModalContent";
 import ModalTrigger from "./ModalTrigger";
+
+import "../../css/modal_styles.css";
+
 export class Modal extends Component {
   constructor() {
     super();
@@ -25,6 +28,8 @@ export class Modal extends Component {
     }
   };
   onClickOutside = event => {
+    console.log(event.target);
+
     if (this.modal && this.modal.contains(event.target)) return;
     this.closeModal();
   };

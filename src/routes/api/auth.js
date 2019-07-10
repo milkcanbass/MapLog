@@ -3,12 +3,13 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 
 //UserModel
 const UserModel = require("../../models/UserModel");
 
 //JwtSecret key
-const jwtSecret = "jwtSecret";
+const jwtSecret = config.get("jwtSecret");
 
 //route api/auth/register
 //register user

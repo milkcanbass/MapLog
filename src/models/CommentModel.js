@@ -6,13 +6,16 @@ const CommentSchema = Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user"
   },
+  name: {
+    type: String,
+    require: true
+  },
   comment: {
     type: String,
     require: true
   },
-  name: {
-    type: String,
-    require: true
+  filename: {
+    type: String
   },
   latitude: {
     type: Number,

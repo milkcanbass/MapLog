@@ -1,12 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+const upload = require("../../../config/multer");
+const config = require("config");
+const mongoose = require("mongoose");
+const mongoURI = config.get("mongoURI");
+const Grid = require("gridfs-stream");
 
 //middleWare
 const auth = require("../../middleWare/auth");
 
 const CommentModel = require("../../models/CommentModel");
 const UserModel = require("../../models/UserModel");
+
+//Create mongo connection
+const conn = mongoose.createConnection(mongoURI, { useNewUrlParser: true });
+
+//Init gfs
+let gfs;
+//Init stream
+conn.once("open", () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("selfies");
+});
 
 //Route /api/comment/post
 //upload comment and populate user data
@@ -48,4 +64,99 @@ router.post(
     }
   }
 );
+
+//Uploade Image with Gridfs
+//@route /getall
+//@desc get all images in server(need)
+//Goal find images by Meta data
+//@Auth public
+router.get("/getallPic", (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    files.map(file => {
+      console.log(file.filename);
+
+      const readStream = gfs.createReadStream(file.filename);
+      readStream.pipe(res);
+      readStream.on("end", () => {
+        console.log("file sent");
+      });
+    });
+  });
+});
+
+//@route /get
+//@desc get one images in server(need)
+//Goal find images by Meta data
+//@Auth public
+router.get("/getPic", (req, res) => {
+  gfs.files.findOne(
+    { filename: "11e6dc475c73ec1272bf78bf47f21ba4.jpg" },
+    (err, file) => {
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: "no file exist"
+        });
+      }
+      const readStream = gfs.createReadStream(file.filename);
+      readStream.pipe(res);
+      readStream.on("close", () => {
+        console.log("file found");
+      });
+    }
+  );
+});
+
+//@route Post /upload
+//@desc Uploads file to DB
+//@Auth private
+router.post("/uploadPic", auth, upload.single("myImg"), (req, res) => {
+  if (req.file === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  } else {
+    console.log(req.file.filename);
+    console.log("uploaded an image");
+
+    res.json({ uploaded: "hey" });
+    // res.redirect("/");
+  }
+});
+
+//@route GET /files
+//@desc Display, all files in json
+router.get("/files", (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      return res.status(404).json({
+        err: "No files exist"
+      });
+    }
+
+    // Files exist
+    res.json(files);
+  });
+});
+
+//route GET /image/:filename
+//@desc Display single file object
+router.get("/images/:filename", (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: "no file exists"
+      });
+    }
+
+    //check if image
+    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
+      //Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+      console.log(res.data);
+    } else {
+      res.status(404).json({ err: "not an image" });
+    }
+  });
+});
+
 module.exports = router;
