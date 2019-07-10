@@ -14,7 +14,7 @@ const mapStyles = {
   width: "100%",
   height: "100%",
   position: "relative",
-  top: "10px",
+  top: "100px",
   borderRadius: "5%"
 };
 const imgStyle = {
