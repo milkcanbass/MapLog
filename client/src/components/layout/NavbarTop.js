@@ -9,6 +9,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { connect } from "react-redux";
 import { modalShow } from "../../actions/modalActions";
 import { moveToCurrentLoc } from "../../actions/userAction";
+import { register } from "../../actions/userAction";
 
 //css
 import "../css/NavbarTop.css";
@@ -47,5 +48,5 @@ NavbarTop.prototype = {
 
 export default connect(
   null,
-  { modalShow, moveToCurrentLoc }
+  { modalShow, moveToCurrentLoc, register }
 )(NavbarTop);

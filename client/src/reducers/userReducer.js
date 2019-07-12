@@ -5,9 +5,8 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  token: null,
-  name: null,
-  password: null,
+  token: localStorage.getItem("token"),
+  isAuth: null,
   latitude: 43.653908,
   longitude: -79.384293,
   createdAt: new Date().getTime()
@@ -21,17 +20,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
-        isAuth: true,
-        loading: false,
-        latitude: payload.coords.latitude,
-        longitude: payload.coords.longitude
+        isAuth: true
       };
     case REGISTER_FAIL:
       return {
         ...state,
         ...payload,
-        isAuth: false,
-        loading: false
+        isAuth: false
       };
     case USER_LOCATION: {
       return {

@@ -11,7 +11,7 @@ import { modalShow, modalClose } from "./actions/modalActions";
 import Landing from "./components/Landing";
 import NavbarTop from "./components/layout/NavbarTop";
 import UploadPage from "./components/UploadPage";
-import StandardModal from "./components/layout/Modal/RegisterModal";
+import StandardModal from "./components/layout/Modal/StandardModal";
 
 // //Read Bootstrap css//
 // import "bootstrap/dist/css/bootstrap.css";
@@ -34,7 +34,7 @@ const App = ({ modalOpen, modalClose }) => {
 App.prototype = {
   modalOpen: PropTypes.bool.isRequired,
   modalShow: PropTypes.func.isRequired,
-  modalClose: PropTypes.node.isRequired
+  modalClose: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
