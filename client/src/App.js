@@ -16,7 +16,7 @@ import StandardModal from "./components/layout/Modal/RegisterModal";
 //Read Bootstrap css//
 import "bootstrap/dist/css/bootstrap.css";
 
-const App = ({ modalOpen, modalShow, modalClose }) => {
+const App = ({ modalOpen, modalClose }) => {
   return (
     <Router>
       <NavbarTop />
@@ -25,8 +25,7 @@ const App = ({ modalOpen, modalShow, modalClose }) => {
 
       <Switch>
         <Route exact path="/" component={Landing} />
-        <Route exact path="/UploadPage" component={UploadPage} />
-        <Route exact path="/modal" component={StandardModal} />
+        <Route exact path="/upload" component={UploadPage} />
       </Switch>
     </Router>
   );

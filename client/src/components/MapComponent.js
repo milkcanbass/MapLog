@@ -13,9 +13,9 @@ import InfoWindowEx from "./layout/InfoWindowEx";
 const mapStyles = {
   width: "100%",
   height: "100%",
-  position: "relative",
-  top: "100px",
-  borderRadius: "5%"
+  position: "relative"
+  // top: "100px"
+  // borderRadius: "5%"
 };
 const imgStyle = {
   maxWidth: "400px",

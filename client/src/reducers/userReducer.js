@@ -1,4 +1,8 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL } from "../actions/types";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  USER_LOCATION
+} from "../actions/types";
 
 const initialState = {
   token: null,
@@ -29,6 +33,14 @@ export default function(state = initialState, action) {
         isAuth: false,
         loading: false
       };
+    case USER_LOCATION: {
+      return {
+        ...state,
+        ...payload,
+        latitude: payload.coords.latitude,
+        longitude: payload.coords.longitude
+      };
+    }
     default:
       return state;
   }

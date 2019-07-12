@@ -1,24 +1,13 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { register } from "../actions/userAction";
 import PropTypes from "prop-types";
 
 //component
 import MapContainer from "../components/MapComponent";
 
-import Button from "react-bootstrap/Button";
-
-const Landing = ({ register }) => {
-  const onSubmit = e => {
-    e.preventDefault();
-
-    register();
-  };
-
+const Landing = () => {
   return (
     <Fragment>
-      <Button onClick={e => onSubmit(e)}>Hello</Button>
-      <Button variant="primary">Primary</Button>
       <div>
         <MapContainer />
       </div>
@@ -39,5 +28,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { register }
+  {}
 )(Landing);

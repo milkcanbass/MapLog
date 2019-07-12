@@ -8,18 +8,20 @@ import Navbar from "react-bootstrap/Navbar";
 //Redux
 import { connect } from "react-redux";
 import { modalShow } from "../../actions/modalActions";
+import { moveToCurrentLoc } from "../../actions/userAction";
 
 //css
 import "../css/NavbarTop.css";
 
-const NavbarTop = ({ modalShow }) => {
+const NavbarTop = ({ modalShow, moveToCurrentLoc }) => {
   return (
     <Fragment>
       <Navbar bg="primary" variant="dark">
         <Navbar.Brand href="#home">MapLog</Navbar.Brand>
         <Nav className="ml-auto">
+          <Nav.Link href="/">Add New Log</Nav.Link>
           <Nav.Link onClick={modalShow}>Register/LogOut</Nav.Link>
-          <Nav.Link href="/add">Add New Log</Nav.Link>
+          <Nav.Link onClick={moveToCurrentLoc}>ToCurrentLocation</Nav.Link>
         </Nav>
       </Navbar>
     </Fragment>
@@ -32,5 +34,5 @@ NavbarTop.prototype = {
 
 export default connect(
   null,
-  { modalShow }
+  { modalShow, moveToCurrentLoc }
 )(NavbarTop);

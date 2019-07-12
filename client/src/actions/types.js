@@ -4,3 +4,4 @@ export const COMMENT_SUCCESS = "COMMENT_SUCCESS";
 export const COMMENT_FAIL = "COMMENT_FAIL";
 export const MODAL_SHOW = "MODAL_SHOW";
 export const MODAL_CLOSE = "MODAL_CLOSE";
+export const USER_LOCATION = "USER_LOCATION";
