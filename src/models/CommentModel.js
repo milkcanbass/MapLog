@@ -11,8 +11,7 @@ const CommentSchema = Schema({
     require: true
   },
   comment: {
-    type: String,
-    require: true
+    type: String
   },
   filename: {
     type: String

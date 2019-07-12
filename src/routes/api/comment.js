@@ -21,68 +21,23 @@ let gfs;
 //Init stream
 conn.once("open", () => {
   gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection("selfies");
+  gfs.collection("myImgs");
 });
 
-//Route /api/comment/post
-//upload comment and populate user data
-//private
-
-router.post(
-  "/post",
-  [
-    auth,
-    [
-      check("comment", "Comment is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      const { comment } = req.body;
-      const user = await UserModel.findById(req.user.id).select(
-        "-password -email"
-      );
-
-      newComment = new CommentModel({
-        user: req.user.id,
-        comment,
-        name: user.name,
-        latitude: 9999,
-        longitude: 9999
-      });
-      await newComment.save();
-      await res.json(newComment);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server error");
-    }
+//@route Post /api/comment/uploadImg
+//@desc Uploads file to DB
+//@Auth private
+router.post("/uploadImg", upload.single("myImg"), (req, res) => {
+  if (req.file === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  } else {
+    console.log("uploaded an image");
+    res.json({ msg: "imageUploaded" });
+    // res.redirect("/");
   }
-);
-
-//Uploade Image with Gridfs
-//@route /getall
-//@desc get all images in server(need)
-//Goal find images by Meta data
-//@Auth public
-router.get("/getallPic", (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    files.map(file => {
-      console.log(file.filename);
-
-      const readStream = gfs.createReadStream(file.filename);
-      readStream.pipe(res);
-      readStream.on("end", () => {
-        console.log("file sent");
-      });
-    });
-  });
 });
+
+//Need update to use below///
 
 //@route /get
 //@desc get one images in server(need)
@@ -106,25 +61,26 @@ router.get("/getPic", (req, res) => {
   );
 });
 
-//@route Post /upload
-//@desc Uploads file to DB
-//@Auth private
-router.post("/uploadPic", auth, upload.single("myImg"), (req, res) => {
-  if (req.file === null) {
-    return res.status(400).json({ msg: "No file uploaded" });
-  } else {
-    console.log(req.file.filename);
-    console.log("uploaded an image");
-
-    res.json({ uploaded: "hey" });
-    // res.redirect("/");
-  }
+//Get all images by metaData
+router.get("/getRes", (req, res) => {
+  gfs.files.find({ "metadata.userName": "kai" }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: "no file exist"
+      });
+    }
+    const readStream = gfs.createReadStream(file.filename);
+    readStream.pipe(res);
+    readStream.on("close", () => {
+      console.log("file found");
+    });
+  });
 });
 
 //@route GET /files
 //@desc Display, all files in json
 router.get("/files", (req, res) => {
-  gfs.files.find().toArray((err, files) => {
+  gfs.files.find({ "metadata.userName": "kai" }).toArray((err, files) => {
     // Check if files
     if (!files || files.length === 0) {
       return res.status(404).json({
@@ -158,5 +114,65 @@ router.get("/images/:filename", (req, res) => {
     }
   });
 });
+
+// //Route /api/comment/post
+// //upload comment and populate user data
+// //private
+
+// router.post(
+//   "/post",
+//   // [
+//   // auth,
+//   [
+//     check("comment", "Comment is required")
+//       .not()
+//       .isEmpty()
+//   ],
+//   // ],
+//   async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     try {
+//       const { comment } = req.body;
+//       const user = await UserModel.findById(req.user.id).select(
+//         "-password -email"
+//       );
+
+//       newComment = new CommentModel({
+//         user: req.user.id,
+//         comment,
+//         name: user.name,
+//         latitude: 9999,
+//         longitude: 9999
+//       });
+//       await newComment.save();
+//       await res.json(newComment);
+//     } catch (err) {
+//       console.error(err.message);
+//       res.status(500).send("Server error");
+//     }
+//   }
+// );
+
+// //Uploade Image with Gridfs
+// //@route /getall
+// //@desc get all images in server(need)
+// //Goal find images by Meta data
+// //@Auth public
+// router.get("/getallPic", (req, res) => {
+//   gfs.files.find().toArray((err, files) => {
+//     files.map(file => {
+//       console.log(file.filename);
+
+//       const readStream = gfs.createReadStream(file.filename);
+//       readStream.pipe(res);
+//       readStream.on("end", () => {
+//         console.log("file sent");
+//       });
+//     });
+//   });
+// });
 
 module.exports = router;

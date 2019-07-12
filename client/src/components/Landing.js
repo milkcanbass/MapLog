@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 
 //component
 import MapContainer from "../components/MapComponent";
-import Modal from "./layout/Modal/Modal";
 
 import Button from "react-bootstrap/Button";
 
@@ -14,10 +13,6 @@ const Landing = ({ register }) => {
     e.preventDefault();
 
     register();
-  };
-
-  const modalProps = {
-    triggerText: "Launch the Modal!"
   };
 
   const modalContent = (
@@ -36,7 +31,6 @@ const Landing = ({ register }) => {
       <h1>Map Chat</h1>
       <Button onClick={e => onSubmit(e)}>Hello</Button>
       <Button variant="primary">Primary</Button>
-      <Modal modalProps={modalProps} modalContent={modalContent} />
       <div>
         <MapContainer />
       </div>

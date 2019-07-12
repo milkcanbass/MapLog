@@ -2,3 +2,5 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const COMMENT_SUCCESS = "COMMENT_SUCCESS";
 export const COMMENT_FAIL = "COMMENT_FAIL";
+export const MODAL_SHOW = "MODAL_SHOW";
+export const MODAL_CLOSE = "MODAL_CLOSE";
