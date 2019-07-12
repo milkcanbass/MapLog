@@ -65,7 +65,6 @@ const MapContainer = props => {
   };
 
   const [textAreaState, setTextAreaState] = useState({ textArea: "" });
-  const { textArea } = textAreaState;
 
   //Add marker
   const onMapClicked = (props, map, clickEvent) => {
@@ -85,10 +84,6 @@ const MapContainer = props => {
         activeMarker: null
       });
     }
-  };
-
-  const onChange = e => {
-    setTextAreaState({ [e.target.name]: e.target.value });
   };
 
   //This is submitButton to send message on text area

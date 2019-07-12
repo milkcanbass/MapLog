@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
 //Bootstrap
@@ -12,11 +12,7 @@ import { modalShow } from "../../actions/modalActions";
 //css
 import "../css/NavbarTop.css";
 
-const NavbarTop = ({ modalShow, modalOpen }) => {
-  useEffect(() => {
-    console.log({ modalOpen });
-  });
-
+const NavbarTop = ({ modalShow }) => {
   return (
     <Fragment>
       <Navbar bg="primary" variant="dark">
@@ -31,15 +27,10 @@ const NavbarTop = ({ modalShow, modalOpen }) => {
 };
 
 NavbarTop.prototype = {
-  modalShow: PropTypes.func.isRequired,
-  modalOpen: PropTypes.bool.isRequired
+  modalShow: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  modalOpen: state.modalReducer.modalOpen
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   { modalShow }
 )(NavbarTop);

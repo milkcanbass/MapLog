@@ -11,11 +11,13 @@ export default function(state = initialState, action) {
     case MODAL_SHOW:
       return {
         ...state,
+        ...payload,
         modalOpen: true
       };
     case MODAL_CLOSE:
       return {
         ...state,
+        ...payload,
         modalOpen: false
       };
     default:

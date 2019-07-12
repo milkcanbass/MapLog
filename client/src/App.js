@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -15,36 +15,14 @@ import StandardModal from "./components/layout/Modal/RegisterModal";
 
 //Read Bootstrap css//
 import "bootstrap/dist/css/bootstrap.css";
-import Button from "react-bootstrap/Button";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-import { SSL_OP_LEGACY_SERVER_CONNECT } from "constants";
 
 const App = ({ modalOpen, modalShow, modalClose }) => {
-  // const [AmodalShow, setAModalShow] = useState({
-  //   modalShow: false
-  // });
-
-  // let modalClose = () => setAModalShow({ modalShow: false });
-
-  useEffect(() => {
-    console.log({ modalOpen });
-  });
-
-  const click = () => {
-    console.log({ modalOpen });
-  };
-
   return (
     <Router>
-      {modalOpen ? <h1>true</h1> : <h1>false/null</h1>}
       <NavbarTop />
-      <ButtonToolbar>
-        <Button variant="primary" onClick={modalShow}>
-          Launch vertically centered modal
-        </Button>
 
-        <StandardModal show={modalOpen} onHide={modalClose} />
-      </ButtonToolbar>
+      <StandardModal show={modalOpen} onHide={modalClose} />
+
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/UploadPage" component={UploadPage} />

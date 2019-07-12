@@ -15,20 +15,8 @@ const Landing = ({ register }) => {
     register();
   };
 
-  const modalContent = (
-    <React.Fragment>
-      <p>
-        Press <code>Esc</code> or click Outside the Modal to exit.
-      </p>
-      <p>
-        Pressing Return also exits the Modal if you haven't changed the focus!
-      </p>
-    </React.Fragment>
-  );
-
   return (
     <Fragment>
-      <h1>Map Chat</h1>
       <Button onClick={e => onSubmit(e)}>Hello</Button>
       <Button variant="primary">Primary</Button>
       <div>
