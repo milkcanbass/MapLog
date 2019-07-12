@@ -13,8 +13,8 @@ import NavbarTop from "./components/layout/NavbarTop";
 import UploadPage from "./components/UploadPage";
 import StandardModal from "./components/layout/Modal/RegisterModal";
 
-//Read Bootstrap css//
-import "bootstrap/dist/css/bootstrap.css";
+// //Read Bootstrap css//
+// import "bootstrap/dist/css/bootstrap.css";
 
 const App = ({ modalOpen, modalClose }) => {
   return (
