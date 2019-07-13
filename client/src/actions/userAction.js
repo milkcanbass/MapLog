@@ -6,30 +6,24 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAIL
+  LOGOUT
 } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
+import store from "../store";
+import { modalClose } from "./modalActions";
 
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
   try {
-    //Get User Comment Data
-
-    const res = await axios.get();
     dispatch({
-      type: USER_LOADED,
-      payload: res.Data
-    });
-    console.log("userLoaded need get all comment data");
-    dispatch({
-      type: USER_LOADED,
-      payload: {}
+      type: USER_LOADED
     });
   } catch (err) {
+    console.log(err.message);
+
     dispatch({
       type: AUTH_ERROR
     });
@@ -50,7 +44,8 @@ export const register = ({ name, email, password }) => async dispatch => {
     const res = await axios.post("api/auth/register", body, config);
 
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-    // dispatch(loadUser());
+    dispatch(loadUser());
+    store.dispatch(modalClose());
   } catch (err) {
     console.log(err.message);
 
@@ -72,12 +67,19 @@ export const login = ({ email, password }) => async dispatch => {
     const res = await axios.post("api/auth/login", body, config);
 
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-    // dispatch(loadUser());
+    dispatch(loadUser());
+    store.dispatch(modalClose());
   } catch (err) {
     console.log(err.message);
 
     dispatch({ type: LOGIN_FAIL });
   }
+};
+
+export const logout = () => dispatch => {
+  dispatch({
+    type: LOGOUT
+  });
 };
 
 export const moveToCurrentLoc = payload => dispatch => {
@@ -88,6 +90,7 @@ export const moveToCurrentLoc = payload => dispatch => {
     navigator.geolocation.getCurrentPosition(position => {
       dispatch({ type: USER_LOCATION, payload: position });
     });
+    dispatch(loadUser());
   } catch (err) {
     alert(err);
     console.log(err.message);

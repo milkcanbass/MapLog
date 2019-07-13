@@ -6,8 +6,7 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAIL
+  LOGOUT
 } from "../actions/types";
 
 const initialState = {
@@ -25,23 +24,22 @@ export default function(state = initialState, action) {
     case USER_LOADED:
       return {
         ...state,
-        token: payload.token,
+
         isAuth: true
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      console.log(payload);
-
       localStorage.setItem("token", payload.token);
       return {
         ...state,
         ...payload,
-        token: payload.token,
+        token: payload.token, //Why is this effect???
         isAuth: true
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case AUTH_ERROR:
+    case LOGOUT:
       localStorage.removeItem("token");
       return {
         ...state,

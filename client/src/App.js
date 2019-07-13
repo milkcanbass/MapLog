@@ -14,7 +14,11 @@ import StandardModal from "./components/layout/Modal/StandardModal";
 
 // //Read Bootstrap css//
 // import "bootstrap/dist/css/bootstrap.css";
+import setAuthToken from "./utils/setAuthToken";
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 const App = ({ modalOpen, modalClose, loadUser }) => {
   useEffect(() => {
     loadUser();

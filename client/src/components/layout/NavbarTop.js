@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 
 //Bootstrap
@@ -8,8 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 //Redux
 import { connect } from "react-redux";
 import { modalShow } from "../../actions/modalActions";
-import { moveToCurrentLoc } from "../../actions/userAction";
-import { register } from "../../actions/userAction";
+import { moveToCurrentLoc, register, logout } from "../../actions/userAction";
 
 //css
 import "../css/NavbarTop.css";
@@ -21,14 +20,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const NavbarTop = ({ modalShow, moveToCurrentLoc }) => {
-  return (
+const NavbarTop = ({ modalShow, moveToCurrentLoc, isAuth, logout }) => {
+  useEffect(() => {
+    console.log(localStorage.token);
+  });
+  const authNav = (
     <Fragment>
-      <Navbar bg="primary" variant="dark">
+      <Navbar bg="danger" variant="dark">
         <Navbar.Brand href="#home">MapLog</Navbar.Brand>
         <Nav className="ml-auto">
-          <Nav.Link onClick={modalShow}>
-            <FontAwesomeIcon icon={faSignInAlt} /> Login
+          <Nav.Link onClick={logout}>
+            <FontAwesomeIcon icon={faSignInAlt} /> Logout
           </Nav.Link>
           <Nav.Link href="/">
             <FontAwesomeIcon icon={faPlusCircle} /> Add Log
@@ -40,13 +42,36 @@ const NavbarTop = ({ modalShow, moveToCurrentLoc }) => {
       </Navbar>
     </Fragment>
   );
+
+  const noAuthNav = (
+    <Fragment>
+      <Navbar bg="dark" variant="dark">
+        <Navbar.Brand href="#home">MapLog</Navbar.Brand>
+        <Nav className="ml-auto">
+          <Nav.Link onClick={modalShow}>
+            <FontAwesomeIcon icon={faSignInAlt} /> Login
+          </Nav.Link>
+          <Nav.Link onClick={moveToCurrentLoc}>
+            <FontAwesomeIcon icon={faMapMarkedAlt} /> Your Location
+          </Nav.Link>
+        </Nav>
+      </Navbar>
+    </Fragment>
+  );
+
+  return <Fragment>{isAuth ? authNav : noAuthNav}</Fragment>;
 };
 
 NavbarTop.prototype = {
+  isAuth: PropTypes.bool.isRequired,
   modalShow: PropTypes.func.isRequired
 };
 
+const mapStateToProps = state => ({
+  isAuth: state.userReducer.isAuth
+});
+
 export default connect(
-  null,
-  { modalShow, moveToCurrentLoc, register }
+  mapStateToProps,
+  { modalShow, moveToCurrentLoc, register, logout }
 )(NavbarTop);
