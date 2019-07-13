@@ -55,9 +55,6 @@ const MapContainer = props => {
   });
 
   const onMarkerClick = (props, marker, e) => {
-    console.log({ marker });
-    console.log({ e });
-
     setInfoWindowState({
       selectedPlace: props,
       activeMarker: marker,
@@ -68,10 +65,6 @@ const MapContainer = props => {
   const [textAreaState, setTextAreaState] = useState({ textArea: "" });
 
   //Add marker
-  //  useEffect(() =>{
-  //    document.getElementById("test").setAttribute()
-  //  })
-
   const onMapClicked = (props, map, clickEvent) => {
     console.log(props);
     const { latLng } = clickEvent;
@@ -91,6 +84,26 @@ const MapContainer = props => {
       });
     }
   };
+
+  useEffect(() => {
+    console.log("useEffect run!");
+    console.log(!props.postStatus);
+
+    if (!props.postStatus) {
+      console.log("run deeper");
+      setMakerState({
+        lat: null,
+        lng: null
+      });
+
+      if (infoWindowState.showingInfoWindow) {
+        setInfoWindowState({
+          showingInfoWindow: false
+        });
+      }
+    }
+  }, [infoWindowState.showingInfoWindow, props.postStatus]);
+
   console.log(props.postStatus);
 
   return (
@@ -101,7 +114,6 @@ const MapContainer = props => {
         zoom={14}
         style={mapStyles}
         onClick={props.postStatus ? onMapClicked : null}
-        disabled="true"
         initialCenter={{
           lat: props.latitude,
           lng: props.longitude
