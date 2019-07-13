@@ -3,7 +3,11 @@ import {
   REGISTER_FAIL,
   USER_LOCATION,
   AUTH_ERROR,
-  USER_LOADED
+  USER_LOADED,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL
 } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
@@ -15,11 +19,11 @@ export const loadUser = () => async dispatch => {
   try {
     //Get User Comment Data
 
-    // const res = await axios.get()
-    // dispatch({
-    //   type:USER_LOADED,
-    //   payload:res.Data
-    // })
+    const res = await axios.get();
+    dispatch({
+      type: USER_LOADED,
+      payload: res.Data
+    });
     console.log("userLoaded need get all comment data");
     dispatch({
       type: USER_LOADED,
@@ -51,6 +55,28 @@ export const register = ({ name, email, password }) => async dispatch => {
     console.log(err.message);
 
     dispatch({ type: REGISTER_FAIL });
+  }
+};
+
+export const login = ({ email, password }) => async dispatch => {
+  console.log({ email, password });
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post("api/auth/login", body, config);
+
+    dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+    // dispatch(loadUser());
+  } catch (err) {
+    console.log(err.message);
+
+    dispatch({ type: LOGIN_FAIL });
   }
 };
 

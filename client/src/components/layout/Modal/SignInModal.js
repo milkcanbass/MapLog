@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 
 //Redux
 import { connect } from "react-redux";
-import { register } from "../../../actions/userAction";
+import { login } from "../../../actions/userAction";
 import { signInOff } from "../../../actions/modalActions";
 
 //Bootstrap
@@ -14,11 +14,10 @@ import Form from "react-bootstrap/Form";
 
 const SignInModal = props => {
   const [inputState, setInputState] = useState({
-    name: "",
     email: "",
     password: ""
   });
-  const { name, email, password } = inputState;
+  const { email, password } = inputState;
 
   const onChange = e => {
     e.persist();
@@ -31,20 +30,14 @@ const SignInModal = props => {
     e.preventDefault();
 
     try {
-      props.register({ email, name, password });
+      props.login({ email, password });
       // register({ name, email, password });
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  useEffect(() => {
-    console.log(props);
-  }, [props]);
-
   const handler = () => {
-    console.log("clicked");
-
     props.signInOff();
   };
 
@@ -59,18 +52,7 @@ const SignInModal = props => {
         <Modal.Title id="contained-modal-title-vcenter">Sign In</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* <h4>Centered Modal</h4> */}
-        {/* 
-        <Form onSubmit={e => onSubmit(e)}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={name}
-              onChange={e => onChange(e)}
-            />
-          </Form.Group>
+        <Form onSubmit={e => onSubmit(e)} autoComplete="off">
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -78,6 +60,7 @@ const SignInModal = props => {
               name="email"
               value={email}
               onChange={e => onChange(e)}
+              autoComplete="off"
             />
             <Form.Text className="text-muted">
               We'll never share your email with anyone else.
@@ -91,25 +74,22 @@ const SignInModal = props => {
               name="password"
               value={password}
               onChange={e => onChange(e)}
+              autoComplete="off"
             />
-          </Form.Group> */}
-        <p>
-          Didn't register?{" "}
-          <span onClick={handler} style={{ color: "blue" }}>
-            Click here to Sign up.
-          </span>
-        </p>
-        <Button
-          // onClick={props.onHide}
-          type="submit"
-          // onClick={onSubmit()}
-          variant="info"
-          size="lg"
-          block
-        >
-          Sign In
-        </Button>
+          </Form.Group>
+          <p>
+            Have an account?{" "}
+            <span onClick={handler} style={{ color: "blue" }}>
+              Click here to Sign up
+            </span>
+            .
+          </p>
+          <Button type="submit" variant="info" size="lg" block>
+            Sign up
+          </Button>
+        </Form>
       </Modal.Body>
+
       {/* <Modal.Footer>
           <Button onClick={props.onHide} type="submit">
             Submit
@@ -134,5 +114,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { register, signInOff }
+  { signInOff, login }
 )(SignInModal);

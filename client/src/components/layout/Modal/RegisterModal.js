@@ -51,7 +51,7 @@ const RegisterModal = props => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Sign In</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Sign Up</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={e => onSubmit(e)} autoComplete="off">
