@@ -1,7 +1,13 @@
-import { MODAL_SHOW, MODAL_CLOSE } from "../actions/types";
+import {
+  MODAL_SHOW,
+  MODAL_CLOSE,
+  SIGNIN_ON,
+  SIGNIN_OFF
+} from "../actions/types";
 
 const initialState = {
-  modalOpen: false
+  modalOpen: false,
+  signInOn: false //True = SignIn screen open
 };
 
 export default function(state = initialState, action) {
@@ -19,6 +25,18 @@ export default function(state = initialState, action) {
         ...state,
         ...payload,
         modalOpen: false
+      };
+    case SIGNIN_ON:
+      return {
+        ...state,
+        ...payload,
+        signInOn: true
+      };
+    case SIGNIN_OFF:
+      return {
+        ...state,
+        ...payload,
+        signInOn: false
       };
     default:
       return state;

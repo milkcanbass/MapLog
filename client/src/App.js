@@ -25,7 +25,7 @@ const App = ({ modalOpen, modalClose }) => {
 
       <Switch>
         <Route exact path="/" component={Landing} />
-        <Route exact path="/upload" component={UploadPage} />
+        {/* <Route exact path="/upload" component={UploadPage} /> */}
       </Switch>
     </Router>
   );

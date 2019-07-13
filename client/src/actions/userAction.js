@@ -1,5 +1,36 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOCATION } from "./types";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  USER_LOCATION,
+  AUTH_ERROR,
+  USER_LOADED
+} from "./types";
 import axios from "axios";
+import setAuthToken from "../utils/setAuthToken";
+
+export const loadUser = () => async dispatch => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+  try {
+    //Get User Comment Data
+
+    // const res = await axios.get()
+    // dispatch({
+    //   type:USER_LOADED,
+    //   payload:res.Data
+    // })
+    console.log("userLoaded need get all comment data");
+    dispatch({
+      type: USER_LOADED,
+      payload: {}
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR
+    });
+  }
+};
 
 export const register = ({ name, email, password }) => async dispatch => {
   console.log({ name, email, password });
@@ -12,7 +43,7 @@ export const register = ({ name, email, password }) => async dispatch => {
   const body = JSON.stringify({ name, email, password });
 
   try {
-    const res = await axios.post("/api/auth/register", body, config);
+    const res = await axios.post("api/auth/register", body, config);
 
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     // dispatch(loadUser());
