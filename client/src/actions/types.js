@@ -7,6 +7,8 @@ export const USER_LOADED = "USER_LOADED";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
+export const POST_ABLE = "POST_ABLE";
+export const POST_DISABLE = "POST_DISABLE";
 
 //ModalReducer
 export const MODAL_SHOW = "MODAL_SHOW";

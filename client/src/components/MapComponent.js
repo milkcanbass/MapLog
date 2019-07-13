@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -9,6 +9,7 @@ import img from "../img/frontend.png";
 //To solve this, render InfoWindow children into a DOM node in order to prevent losing React Context.
 
 import InfoWindowEx from "./layout/InfoWindowEx";
+import { postAble } from "../actions/userAction";
 
 const mapStyles = {
   width: "100%",
@@ -67,7 +68,12 @@ const MapContainer = props => {
   const [textAreaState, setTextAreaState] = useState({ textArea: "" });
 
   //Add marker
+  //  useEffect(() =>{
+  //    document.getElementById("test").setAttribute()
+  //  })
+
   const onMapClicked = (props, map, clickEvent) => {
+    console.log(props);
     const { latLng } = clickEvent;
     const lat = latLng.lat();
     const lng = latLng.lng();
@@ -85,11 +91,7 @@ const MapContainer = props => {
       });
     }
   };
-
-  //This is submitButton to send message on text area
-  const sendMessage = () => {
-    console.log(textAreaState);
-  };
+  console.log(props.postStatus);
 
   return (
     <Fragment>
@@ -98,8 +100,8 @@ const MapContainer = props => {
         google={props.google}
         zoom={14}
         style={mapStyles}
-        onClick={onMapClicked}
-        // onClick={mapClicked}
+        onClick={props.postStatus ? onMapClicked : null}
+        disabled="true"
         initialCenter={{
           lat: props.latitude,
           lng: props.longitude
@@ -137,7 +139,7 @@ const MapContainer = props => {
                 </p>
               </div>
 
-              <button type="button" style={button} onClick={sendMessage}>
+              <button type="button" style={button}>
                 <a href={`mailto:${markerState.name}`}>Send mail</a>
               </button>
             </center>
@@ -150,12 +152,14 @@ const MapContainer = props => {
 
 MapContainer.propTypes = {
   latitude: PropTypes.number.isRequired,
-  longitude: PropTypes.number.isRequired
+  longitude: PropTypes.number.isRequired,
+  postStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   latitude: state.userReducer.latitude,
-  longitude: state.userReducer.longitude
+  longitude: state.userReducer.longitude,
+  postStatus: state.userReducer.postStatus
 });
 
 export default connect(
