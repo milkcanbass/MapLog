@@ -5,12 +5,18 @@ import PropTypes from "prop-types";
 //Redux
 import { connect } from "react-redux";
 // import store from "./store";
-import { modalShow, modalClose } from "./actions/modalActions";
+import {
+  modalShow,
+  modalClose,
+  postModalShow,
+  postModalClose
+} from "./actions/modalActions";
 import { loadUser } from "./actions/userAction";
 //Components
 import Landing from "./components/Landing";
 import NavbarTop from "./components/layout/NavbarTop";
 import StandardModal from "./components/layout/Modal/StandardModal";
+import AddPostModal from "./components/layout/Modal/AddPostModal";
 
 // //Read Bootstrap css//
 // import "bootstrap/dist/css/bootstrap.css";
@@ -19,7 +25,15 @@ import setAuthToken from "./utils/setAuthToken";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-const App = ({ modalOpen, modalClose, loadUser }) => {
+const App = ({
+  modalOpen,
+
+  modalClose,
+
+  postModalOpen,
+
+  loadUser
+}) => {
   useEffect(() => {
     loadUser();
   }, [loadUser]);
@@ -27,11 +41,12 @@ const App = ({ modalOpen, modalClose, loadUser }) => {
     <Router>
       <NavbarTop />
 
+      <AddPostModal show={postModalOpen} onHide={modalClose} />
+
       <StandardModal show={modalOpen} onHide={modalClose} />
 
       <Switch>
         <Route exact path="/" component={Landing} />
-        {/* <Route exact path="/upload" component={UploadPage} /> */}
       </Switch>
     </Router>
   );
@@ -44,10 +59,11 @@ App.prototype = {
 };
 
 const mapStateToProps = state => ({
-  modalOpen: state.modalReducer.modalOpen
+  modalOpen: state.modalReducer.modalOpen,
+  postModalOpen: state.modalReducer.postModalOpen
 });
 
 export default connect(
   mapStateToProps,
-  { modalShow, modalClose, loadUser }
+  { modalShow, modalClose, postModalShow, loadUser }
 )(App);

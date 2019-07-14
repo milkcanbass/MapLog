@@ -52,25 +52,12 @@ export default function(state = initialState, action) {
         postStatus: false,
         isAuth: false
       };
-    case USER_LOCATION: {
+    case USER_LOCATION:
       return {
         ...state,
         ...payload,
         latitude: payload.coords.latitude,
         longitude: payload.coords.longitude
-      };
-    }
-    case POST_ABLE:
-      return {
-        ...state,
-        ...payload,
-        postStatus: true
-      };
-    case POST_DISABLE:
-      return {
-        ...state,
-        ...payload,
-        postStatus: false
       };
     default:
       return state;

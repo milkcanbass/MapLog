@@ -9,7 +9,9 @@ import img from "../img/frontend.png";
 //To solve this, render InfoWindow children into a DOM node in order to prevent losing React Context.
 
 import InfoWindowEx from "./layout/InfoWindowEx";
-import { postAble } from "../actions/userAction";
+import { modalShow, postModalShow } from "../actions/modalActions";
+import store from "../store";
+import AddPostModal from "./layout/Modal/AddPostModal";
 
 const mapStyles = {
   width: "100%",
@@ -65,7 +67,7 @@ const MapContainer = props => {
   const [textAreaState, setTextAreaState] = useState({ textArea: "" });
 
   //Add marker
-  const onMapClicked = (props, map, clickEvent) => {
+  const onMapClicked = async (props, map, clickEvent) => {
     console.log(props);
     const { latLng } = clickEvent;
     const lat = latLng.lat();
@@ -86,9 +88,6 @@ const MapContainer = props => {
   };
 
   useEffect(() => {
-    console.log("useEffect run!");
-    console.log(!props.postStatus);
-
     if (!props.postStatus) {
       console.log("run deeper");
       setMakerState({
@@ -104,7 +103,9 @@ const MapContainer = props => {
     }
   }, [infoWindowState.showingInfoWindow, props.postStatus]);
 
-  console.log(props.postStatus);
+  const test = () => {
+    store.dispatch(postModalShow());
+  };
 
   return (
     <Fragment>
@@ -127,7 +128,9 @@ const MapContainer = props => {
           position={{ lat: markerState.lat, lng: markerState.lng }}
           // name={markerState.name}
           // title={markerState.title}
-          onClick={onMarkerClick}
+          onClick={
+            props.postStatus ? store.dispatch(postModalShow()) : onMarkerClick
+          }
         />
         <InfoWindowEx
           marker={infoWindowState.activeMarker}
@@ -176,7 +179,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { modalShow, postModalShow }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDKUUexAAJ4p0Mb7zTp-zxpWiwmyiEr-H4"

@@ -7,14 +7,8 @@ import Navbar from "react-bootstrap/Navbar";
 
 //Redux
 import { connect } from "react-redux";
-import { modalShow } from "../../actions/modalActions";
-import {
-  moveToCurrentLoc,
-  register,
-  logout,
-  postAble,
-  postDisable
-} from "../../actions/userAction";
+import { modalShow, postModalShow } from "../../actions/modalActions";
+import { moveToCurrentLoc, register, logout } from "../../actions/userAction";
 
 //css
 import "../css/NavbarTop.css";
@@ -30,25 +24,18 @@ const NavbarTop = ({
   modalShow,
   moveToCurrentLoc,
   isAuth,
-  postStatus,
   logout,
-  postAble,
-  postDisable
+  postModalShow
 }) => {
-  const addLogHandler = () => {
-    console.log("clicked");
-    postAble();
-  };
-
   const authNav = (
-    <Fragment className="test">
+    <Fragment>
       <Navbar bg="danger" variant="dark">
-        <Navbar.Brand href="#home">MapLog</Navbar.Brand>
+        <Navbar.Brand href="/">MapLog</Navbar.Brand>
         <Nav className="ml-auto">
           <Nav.Link onClick={logout}>
             <FontAwesomeIcon icon={faSignInAlt} /> Logout
           </Nav.Link>
-          <Nav.Link onClick={postStatus ? postDisable : addLogHandler}>
+          <Nav.Link onClick={postModalShow}>
             <FontAwesomeIcon icon={faPlusCircle} /> Add Log
           </Nav.Link>
           <Nav.Link onClick={moveToCurrentLoc}>
@@ -89,10 +76,10 @@ NavbarTop.prototype = {
 
 const mapStateToProps = state => ({
   isAuth: state.userReducer.isAuth,
-  postStatus: state.userReducer.postStatus
+  postStatus: state.modalReducer.postStatus
 });
 
 export default connect(
   mapStateToProps,
-  { modalShow, moveToCurrentLoc, register, logout, postAble, postDisable }
+  { modalShow, moveToCurrentLoc, register, logout, postModalShow }
 )(NavbarTop);

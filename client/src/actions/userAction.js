@@ -6,9 +6,7 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
-  POST_ABLE,
-  POST_DISABLE
+  LOGOUT
 } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
@@ -97,16 +95,4 @@ export const moveToCurrentLoc = payload => dispatch => {
     alert(err);
     console.log(err.message);
   }
-};
-
-export const postAble = payload => dispatch => {
-  dispatch({
-    type: POST_ABLE
-  });
-};
-
-export const postDisable = payload => dispatch => {
-  dispatch({
-    type: POST_DISABLE
-  });
 };

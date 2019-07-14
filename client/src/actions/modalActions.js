@@ -1,4 +1,13 @@
-import { MODAL_CLOSE, MODAL_SHOW, SIGNIN_ON, SIGNIN_OFF } from "./types";
+import {
+  MODAL_CLOSE,
+  MODAL_SHOW,
+  POST_MODAL_SHOW,
+  POST_MODAL_CLOSE,
+  POST_ABLE,
+  POST_DISABLE,
+  SIGNIN_ON,
+  SIGNIN_OFF
+} from "./types";
 
 export const modalShow = () => dispatch => {
   dispatch({
@@ -9,6 +18,33 @@ export const modalShow = () => dispatch => {
 export const modalClose = () => dispatch => {
   dispatch({
     type: MODAL_CLOSE
+  });
+};
+export const postModalShow = () => dispatch => {
+  dispatch({
+    type: POST_MODAL_SHOW
+  });
+};
+export const postModalClose = () => dispatch => {
+  dispatch({
+    type: POST_MODAL_CLOSE
+  });
+  dispatch({
+    type: POST_DISABLE
+  });
+};
+export const postAble = payload => dispatch => {
+  dispatch({
+    type: POST_ABLE
+  });
+  dispatch({
+    type: POST_MODAL_SHOW
+  });
+};
+
+export const postDisable = payload => dispatch => {
+  dispatch({
+    type: POST_DISABLE
   });
 };
 
