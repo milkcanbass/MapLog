@@ -21,3 +21,7 @@ export const SIGNIN_OFF = "SIGNIN_OFF";
 //postReducer
 export const POST_SUCCESS = "POST_SUCCESS";
 export const POST_FAIL = "POST_FAIL";
+
+//getPostReducer
+export const GETALLPOST_SUCCESS = "GETALLPOST_SUCCESS";
+export const GETALLPOST_FAIL = "GETALLPOST_FAIL";

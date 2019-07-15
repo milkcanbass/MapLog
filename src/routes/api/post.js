@@ -63,7 +63,7 @@ router.get("/getPic", (req, res) => {
 
 //Get all images by metaData
 router.get("/getRes", (req, res) => {
-  gfs.files.find({ "metadata.userName": "kai" }, (err, file) => {
+  gfs.files.find({}, (err, file) => {
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: "no file exist"
@@ -80,7 +80,7 @@ router.get("/getRes", (req, res) => {
 //@route GET /files
 //@desc Display, all files in json
 router.get("/files", (req, res) => {
-  gfs.files.find({ "metadata.userName": "kai" }).toArray((err, files) => {
+  gfs.files.find({}).toArray((err, files) => {
     // Check if files
     if (!files || files.length === 0) {
       return res.status(404).json({
