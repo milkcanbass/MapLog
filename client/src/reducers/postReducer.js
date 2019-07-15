@@ -1,7 +1,8 @@
-import { COMMENT_SUCCESS, COMMENT_FAIL } from "../actions/types";
+import { POST_SUCCESS, POST_FAIL } from "../actions/types";
 
 const initialState = {
   name: null,
+  myImg: null,
   latitude: 43.653908,
   longitude: -79.384293,
   comment: null,
@@ -13,13 +14,13 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case COMMENT_SUCCESS:
+    case POST_SUCCESS:
       return {
         ...state,
         ...payload,
         commented: true
       };
-    case COMMENT_FAIL:
+    case POST_FAIL:
       return {
         ...state,
         ...payload,

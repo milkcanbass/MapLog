@@ -9,7 +9,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 app.use("/api/auth", require("./routes/api/auth"));
-app.use("/api/comment", require("./routes/api/comment"));
+app.use("/api/post", require("./routes/api/post"));
 
 // app.get("*", (req, res) => {
 //   console.log("for other request");

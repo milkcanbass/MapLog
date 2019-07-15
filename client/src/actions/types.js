@@ -18,6 +18,6 @@ export const POST_DISABLE = "POST_DISABLE";
 export const SIGNIN_ON = "SIGNIN_ON";
 export const SIGNIN_OFF = "SIGNIN_OFF";
 
-//CommentReducer
-export const COMMENT_SUCCESS = "COMMENT_SUCCESS";
-export const COMMENT_FAIL = "COMMENT_FAIL";
+//postReducer
+export const POST_SUCCESS = "POST_SUCCESS";
+export const POST_FAIL = "POST_FAIL";

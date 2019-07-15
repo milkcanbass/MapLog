@@ -1,54 +1,36 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect, useRef } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import { connect } from "react-redux";
+import { post } from "../actions/postAction";
 import PropTypes from "prop-types";
-
-import img from "../img/frontend.png";
 
 //Since react-maps-react library doesn't support to attach event handler to InforWindow dynamic content.
 //To solve this, render InfoWindow children into a DOM node in order to prevent losing React Context.
 
 import InfoWindowEx from "./layout/InfoWindowEx";
-import { modalShow, postModalShow } from "../actions/modalActions";
-import store from "../store";
-import AddPostModal from "./layout/Modal/AddPostModal";
+import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/frontend.png";
 
-const mapStyles = {
-  width: "100%",
-  height: "100%",
-  position: "relative"
-  // top: "100px"
-  // borderRadius: "5%"
-};
-const imgStyle = {
-  maxWidth: "400px",
-  minWidth: "200px",
-  maxHeight: "auto"
-};
+//Bootstrap
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
 
-const infoWindowStyle = {
-  maxWidth: "400px",
-  minWidth: "200px",
-  height: "auto"
-};
-
-const button = {
-  background: "#3498db",
-  maxWidth: "400px",
-  padding: "15px 100px",
-  position: "relative",
-  margin: "10px 0",
-  borderRadius: "3px"
-};
+//css
+import "./css/mapComponent.css";
 
 //Get lat and lng by clicking map
+
 const MapContainer = props => {
   const [markerState, setMakerState] = useState({
     title: "",
-    name: "",
+    text: "",
+    myImg: null,
     lat: null,
     lng: null
   });
+  const { title, text, img, lat, lng } = markerState;
 
   const [infoWindowState, setInfoWindowState] = useState({
     showingInfoWindow: false,
@@ -67,15 +49,14 @@ const MapContainer = props => {
   const [textAreaState, setTextAreaState] = useState({ textArea: "" });
 
   //Add marker
-  const onMapClicked = async (props, map, clickEvent) => {
+  const onMapClicked = (props, map, clickEvent) => {
     console.log(props);
     const { latLng } = clickEvent;
     const lat = latLng.lat();
     const lng = latLng.lng();
     console.log({ lat, lng });
     setMakerState({
-      title: "Title",
-      name: "Name",
+      ...markerState,
       lat,
       lng
     });
@@ -87,24 +68,30 @@ const MapContainer = props => {
     }
   };
 
-  useEffect(() => {
-    if (!props.postStatus) {
-      console.log("run deeper");
-      setMakerState({
-        lat: null,
-        lng: null
-      });
+  const imgChange = e => {
+    setMakerState({
+      ...markerState,
+      myImg: e.target.files[0]
+    });
+  };
 
-      if (infoWindowState.showingInfoWindow) {
-        setInfoWindowState({
-          showingInfoWindow: false
-        });
-      }
-    }
-  }, [infoWindowState.showingInfoWindow, props.postStatus]);
+  const titleRef = useRef();
+  const textRef = useRef();
+  const imgRef = useRef();
 
-  const test = () => {
-    store.dispatch(postModalShow());
+  const submitPost = e => {
+    e.preventDefault();
+    const title = titleRef.current.value;
+    const text = textRef.current.value;
+    const myImg = markerState.myImg;
+    const lat = markerState.lat;
+    const lng = markerState.lng;
+
+    props.post({ title, text, myImg, lat, lng });
+
+    // const image = document.getElementsByName("myImg");
+    // console.log(image);
+    // console.log(imgRef);
   };
 
   return (
@@ -113,8 +100,8 @@ const MapContainer = props => {
         className={"map"}
         google={props.google}
         zoom={14}
-        style={mapStyles}
-        onClick={props.postStatus ? onMapClicked : null}
+        id="mapStyles"
+        onClick={onMapClicked}
         initialCenter={{
           lat: props.latitude,
           lng: props.longitude
@@ -126,38 +113,80 @@ const MapContainer = props => {
       >
         <Marker
           position={{ lat: markerState.lat, lng: markerState.lng }}
-          // name={markerState.name}
-          // title={markerState.title}
-          onClick={
-            props.postStatus ? store.dispatch(postModalShow()) : onMarkerClick
-          }
+          name={markerState.name}
+          title={markerState.title}
+          onClick={onMarkerClick}
         />
         <InfoWindowEx
           marker={infoWindowState.activeMarker}
           visible={infoWindowState.showingInfoWindow}
         >
-          <div style={infoWindowStyle}>
-            <center>
-              <h1>{markerState.title}</h1>
-              <p>updated:2019 12/12</p>
-              <div>
-                <p>
-                  <img src={img} className="img" style={imgStyle} />
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum."
-                </p>
-              </div>
+          <div className="infoWindowStyle">
+            {props.isAuth ? (
+              <Fragment>
+                <Form onSubmit={e => submitPost(e)}>
+                  <Form.Group controlId="exampleForm.ControlInput1" fluid>
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="title"
+                      ref={titleRef}
+                      required
+                    />
+                  </Form.Group>
 
-              <button type="button" style={button}>
-                <a href={`mailto:${markerState.name}`}>Send mail</a>
-              </button>
-            </center>
+                  <Form.Group controlId="exampleForm.ControlTextarea1" fluid>
+                    <Form.Label>Text</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      ref={textRef}
+                      rows="3"
+                      name="text"
+                    />
+                  </Form.Group>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      type="file"
+                      ref={imgRef}
+                      name="myImg"
+                      onChange={e => imgChange(e)}
+                    />
+                  </InputGroup>
+                  <Button type="submit">Set Location</Button>
+                  <Image
+                    src={sampleImage}
+                    ref={imgRef}
+                    className="imagePreview"
+                    fluid
+                    required
+                  />
+                </Form>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <center>
+                  <h1>{markerState.title}</h1>
+                  <p>updated:2019 12/12</p>
+                  <div>
+                    <p>
+                      <img src={img} className="img" className="imgStyle" />
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum."
+                    </p>
+                  </div>
+
+                  <Button type="button">
+                    <a href={`mailto:${markerState.name}`}>Send mail</a>
+                  </Button>
+                </center>
+              </Fragment>
+            )}
           </div>
         </InfoWindowEx>
       </Map>
@@ -174,12 +203,13 @@ MapContainer.propTypes = {
 const mapStateToProps = state => ({
   latitude: state.userReducer.latitude,
   longitude: state.userReducer.longitude,
-  postStatus: state.userReducer.postStatus
+  postStatus: state.userReducer.postStatus,
+  isAuth: state.userReducer.isAuth
 });
 
 export default connect(
   mapStateToProps,
-  { modalShow, postModalShow }
+  { post }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDKUUexAAJ4p0Mb7zTp-zxpWiwmyiEr-H4"

@@ -35,9 +35,9 @@ const NavbarTop = ({
           <Nav.Link onClick={logout}>
             <FontAwesomeIcon icon={faSignInAlt} /> Logout
           </Nav.Link>
-          <Nav.Link onClick={postModalShow}>
+          {/* <Nav.Link onClick={postModalShow}>
             <FontAwesomeIcon icon={faPlusCircle} /> Add Log
-          </Nav.Link>
+          </Nav.Link> */}
           <Nav.Link onClick={moveToCurrentLoc}>
             <FontAwesomeIcon icon={faMapMarkedAlt} /> Your Location
           </Nav.Link>

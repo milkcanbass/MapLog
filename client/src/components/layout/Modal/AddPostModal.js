@@ -59,19 +59,20 @@ const AddPostModal = props => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Image src={sampleImage} className="imagePreview" fluid />
-          <InputGroup className="mb-3">
-            <FormControl type="file" />
-          </InputGroup>
-          <Form.Group controlId="exampleForm.ControlInput1">
+          <Form.Group controlId="exampleForm.ControlInput1" fluid>
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="name@example.com" />
           </Form.Group>
 
-          <Form.Group controlId="exampleForm.ControlTextarea1">
+          <Form.Group controlId="exampleForm.ControlTextarea1" fluid>
             <Form.Label>Example textarea</Form.Label>
             <Form.Control as="textarea" rows="3" />
           </Form.Group>
+          <InputGroup className="mb-3">
+            <FormControl type="file" />
+          </InputGroup>
+          <Button onClick={console.log("clicked")}>Set Location</Button>
+          <Image src={sampleImage} className="imagePreview" fluid />
         </Form>
       </Modal.Body>
       <Modal.Footer>
