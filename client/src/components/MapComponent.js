@@ -140,9 +140,9 @@ const MapContainer = props => {
                 <Marker
                   index={i}
                   position={{ lat: lat, lng: lng }}
-                  title={title}
-                  text={text}
-                  onClick={onMarkerClick}
+                  // name={markerState.name}
+                  // title={markerState.title}
+                  // onClick={onMarkerClick}
                 />
               );
             })
