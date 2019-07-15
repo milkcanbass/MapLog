@@ -13,8 +13,6 @@ import { signInOn } from "../../../actions/modalActions";
 import Form from "react-bootstrap/Form";
 
 const RegisterModal = props => {
-  console.log(props);
-
   const [inputState, setInputState] = useState({
     name: "",
     email: "",

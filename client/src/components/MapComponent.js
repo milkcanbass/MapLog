@@ -19,6 +19,7 @@ import FormControl from "react-bootstrap/FormControl";
 
 //css
 import "./css/mapComponent.css";
+import { log } from "util";
 
 //Get lat and lng by clicking map
 
@@ -45,8 +46,6 @@ const MapContainer = props => {
       showingInfoWindow: true
     });
   };
-
-  const [textAreaState, setTextAreaState] = useState({ textArea: "" });
 
   //Add marker
   const onMapClicked = (props, map, clickEvent) => {
@@ -94,6 +93,17 @@ const MapContainer = props => {
     // console.log(imgRef);
   };
 
+  useEffect(() => {
+    console.log(props.allPost);
+    if (props.loadAllPost) {
+      props.allPost.map((post, i) => {
+        console.log(post.metadata.title);
+      });
+    } else {
+      console.log("bad request");
+    }
+  });
+
   return (
     <Fragment>
       <Map
@@ -117,6 +127,26 @@ const MapContainer = props => {
           title={markerState.title}
           onClick={onMarkerClick}
         />
+        {props.loadAllPost
+          ? props.allPost.map((post, i) => {
+              const lat = post.metadata.lat;
+              const lng = post.metadata.lng;
+              const title = post.metadata.title;
+              const text = post.metadata.text;
+
+              console.log(lat);
+
+              return (
+                <Marker
+                  index={i}
+                  position={{ lat: lat, lng: lng }}
+                  title={title}
+                  text={text}
+                  onClick={onMarkerClick}
+                />
+              );
+            })
+          : null}
         <InfoWindowEx
           marker={infoWindowState.activeMarker}
           visible={infoWindowState.showingInfoWindow}
@@ -197,14 +227,18 @@ const MapContainer = props => {
 MapContainer.propTypes = {
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
-  postStatus: PropTypes.bool.isRequired
+  postStatus: PropTypes.bool.isRequired,
+  allPost: PropTypes.array.isRequired,
+  loadAllPost: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   latitude: state.userReducer.latitude,
   longitude: state.userReducer.longitude,
   postStatus: state.userReducer.postStatus,
-  isAuth: state.userReducer.isAuth
+  isAuth: state.userReducer.isAuth,
+  allPost: state.getPostReducer.allPost,
+  loadAllPost: state.getPostReducer.loadAllPost
 });
 
 export default connect(

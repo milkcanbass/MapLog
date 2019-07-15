@@ -30,16 +30,10 @@ const NavbarTop = ({
   logout,
   getAllPost
 }) => {
-  const clickme = e => {
+  const clickme = async e => {
     e.persist();
-    console.log("clicked");
-
-    getAllPost();
+    await getAllPost();
   };
-
-  useEffect(() => {
-    console.log(allPost);
-  }, [allPost]);
 
   const authNav = (
     <Fragment>
@@ -83,7 +77,7 @@ const NavbarTop = ({
   return (
     <Fragment>
       {isAuth ? authNav : noAuthNav}
-      {loadAllPost
+      {/* {loadAllPost
         ? allPost.map((post, i) => {
             return (
               <Fragment>
@@ -91,7 +85,7 @@ const NavbarTop = ({
               </Fragment>
             );
           })
-        : null}
+        : null} */}
     </Fragment>
   );
 };

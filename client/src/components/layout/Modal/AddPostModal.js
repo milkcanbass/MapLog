@@ -71,7 +71,7 @@ const AddPostModal = props => {
           <InputGroup className="mb-3">
             <FormControl type="file" />
           </InputGroup>
-          <Button onClick={console.log("clicked")}>Set Location</Button>
+          <Button>Set Location</Button>
           <Image src={sampleImage} className="imagePreview" fluid />
         </Form>
       </Modal.Body>
