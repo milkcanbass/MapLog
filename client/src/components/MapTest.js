@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 
 //CSS
 import "./css/mapComponent.css";
-import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/frontend.png";
+import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/samaple.png";
 
 //Bootstrap
 import Form from "react-bootstrap/Form";
@@ -29,22 +29,65 @@ const MapTest = props => {
   //   }, [allPost]);
 
   const [selectedPost, setSelectedPost] = useState(null);
+  const [newPost, setNewPost] = useState({
+    isMarkerShown: false,
+    markerPosition: null
+  });
+  console.log(GoogleMap.onMapClick);
+
+  const [addPost, setAddPost] = useState({
+    lat: null,
+
+    lng: null
+  });
+
+  const mapRef = useRef();
+
+  const addNewMarker = e => {
+    console.log(e.latLng.lat);
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    console.log(lat, lng);
+
+    setAddPost({
+      ...addPost,
+      lat,
+      lng
+    });
+  };
+  console.log(addPost);
 
   return (
     <GoogleMap
       defaultZoom={15}
       defaultCenter={{ lat: 43.653908, lng: -79.384293 }}
+      onClick={e => addNewMarker(e)}
+      ref={mapRef}
     >
+      <Marker position={{ lat: addPost.lat, lng: addPost.lng }}>
+        <InfoWindow
+          position={{
+            lat: addPost.lat,
+            lng: addPost.lng
+          }}
+        >
+          <Fragment>
+            <h1>Hello</h1>
+          </Fragment>
+        </InfoWindow>
+      </Marker>
       {loadAllPost
         ? allPost.map(post => {
             const fLat = parseFloat(post.metadata.lat);
             const fLng = parseFloat(post.metadata.lng);
             console.log(post.metadata.uploadDate);
+
             return (
               <Marker
                 key={post._id}
                 position={{ lat: fLat, lng: fLng }}
                 onClick={() => setSelectedPost(post._id)}
+                defaultAnimation="2"
               >
                 {selectedPost === post._id && (
                   <InfoWindow
