@@ -24,30 +24,20 @@ import FormControl from "react-bootstrap/FormControl";
 const MapTest = props => {
   const { loadAllPost, lat, lng, allPost, isAuth } = props;
 
-  //   useEffect(() => {
-  //     console.log(allPost);
-  //   }, [allPost]);
-
   const [selectedPost, setSelectedPost] = useState(null);
-  const [newPost, setNewPost] = useState({
-    isMarkerShown: false,
-    markerPosition: null
-  });
-  console.log(GoogleMap.onMapClick);
 
   const [addPost, setAddPost] = useState({
+    title: null,
+    text: null,
     lat: null,
-
-    lng: null
+    lng: null,
+    myImg: null,
+    openInfo: true
   });
 
-  const mapRef = useRef();
-
   const addNewMarker = e => {
-    console.log(e.latLng.lat);
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
-    console.log(lat, lng);
 
     setAddPost({
       ...addPost,
@@ -55,26 +45,108 @@ const MapTest = props => {
       lng
     });
   };
-  console.log(addPost);
+
+  const addPostInfoOpen = () => {
+    setAddPost({
+      ...addPost,
+      openInfo: true
+    });
+  };
+
+  const addPostInfoClose = () => {
+    setAddPost({
+      ...addPost,
+      openInfo: false
+    });
+  };
+
+  const imgChange = e => {
+    setAddPost({
+      ...addPost,
+      myImg: e.target.files[0]
+    });
+  };
+  const defaultMapOptions = {
+    fullscreenControl: false
+  };
+
+  const titleRef = useRef();
+  const textRef = useRef();
+  const imgRef = useRef();
+
+  const submitPost = e => {
+    e.preventDefault();
+    setAddPost({
+      ...addPost,
+      title: titleRef.current.value,
+      text: textRef.current.value
+    });
+
+    console.log(addPost);
+
+    // props.post({ title, text, myImg, lat, lng });
+  };
 
   return (
     <GoogleMap
       defaultZoom={15}
       defaultCenter={{ lat: 43.653908, lng: -79.384293 }}
+      defaultOptions={defaultMapOptions}
       onClick={e => addNewMarker(e)}
-      ref={mapRef}
     >
-      <Marker position={{ lat: addPost.lat, lng: addPost.lng }}>
-        <InfoWindow
-          position={{
-            lat: addPost.lat,
-            lng: addPost.lng
-          }}
-        >
-          <Fragment>
-            <h1>Hello</h1>
-          </Fragment>
-        </InfoWindow>
+      <Marker
+        position={{ lat: addPost.lat, lng: addPost.lng }}
+        onClick={() => addPostInfoOpen()}
+      >
+        {addPost.openInfo && (
+          <InfoWindow
+            position={{
+              lat: addPost.lat,
+              lng: addPost.lng
+            }}
+            onCloseClick={() => addPostInfoClose()}
+          >
+            <Fragment>
+              <Form onSubmit={e => submitPost(e)}>
+                <Form.Group controlId="exampleForm.ControlInput1" fluid>
+                  <Form.Label>Title</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="title"
+                    ref={titleRef}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="exampleForm.ControlTextarea1" fluid>
+                  <Form.Label>Text</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    ref={textRef}
+                    rows="3"
+                    name="text"
+                  />
+                </Form.Group>
+                <InputGroup className="mb-3">
+                  <FormControl
+                    type="file"
+                    ref={imgRef}
+                    name="myImg"
+                    onChange={e => imgChange(e)}
+                  />
+                </InputGroup>
+                <Button type="submit">Set Location</Button>
+                <Image
+                  src={sampleImage}
+                  ref={imgRef}
+                  className="imagePreview"
+                  fluid
+                  required
+                />
+              </Form>
+            </Fragment>
+          </InfoWindow>
+        )}
       </Marker>
       {loadAllPost
         ? allPost.map(post => {
