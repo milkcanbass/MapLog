@@ -3,8 +3,8 @@ import { POST_SUCCESS, POST_FAIL } from "../actions/types";
 const initialState = {
   name: null,
   myImg: null,
-  latitude: 43.653908,
-  longitude: -79.384293,
+  lat: 43.653908,
+  lng: -79.384293,
   comment: null,
   createdAt: new Date().getTime(),
   commented: null

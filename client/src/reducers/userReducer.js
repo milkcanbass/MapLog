@@ -6,17 +6,15 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
-  POST_ABLE,
-  POST_DISABLE
+  LOGOUT
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuth: false,
   postStatus: false,
-  latitude: 43.653908,
-  longitude: -79.384293,
+  lat: 43.653908,
+  lng: -79.384293,
   createdAt: new Date().getTime()
 };
 
@@ -56,8 +54,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
-        latitude: payload.coords.latitude,
-        longitude: payload.coords.longitude
+        lat: payload.coords.latitude,
+        lng: payload.coords.longitude
       };
     default:
       return state;
