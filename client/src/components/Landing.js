@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import { withScriptjs, withGoogleMap } from "react-google-maps";
 
 //component
-import MapTest from "../components/MapTest";
+import MapComponent from "./MapComponent";
 
 const Landing = () => {
-  const WrappedMap = withScriptjs(withGoogleMap(MapTest));
+  const WrappedMap = withScriptjs(withGoogleMap(MapComponent));
 
   return (
     <Fragment>
-      <div style={{ width: "100vh", height: "100vh" }}>
+      <div style={{ width: "200vh", height: "100vh" }}>
         <WrappedMap
           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDKUUexAAJ4p0Mb7zTp-zxpWiwmyiEr-H4"
           loadingElement={<div style={{ height: `100%` }} />}
