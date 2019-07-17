@@ -194,7 +194,7 @@ const MapComponent = props => {
                             <p>{post.metadata.text}</p>
                           </div>
 
-                          <Button type="button">Send mail</Button>
+                          <Button type="button">Delete</Button>
                         </center>
                       </Fragment>
                     </div>
