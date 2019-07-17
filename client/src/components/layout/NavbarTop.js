@@ -30,7 +30,7 @@ const NavbarTop = ({
   logout,
   getAllPost
 }) => {
-  const clickme = async e => {
+  const getPosts = async e => {
     e.persist();
     await getAllPost();
   };
@@ -43,7 +43,7 @@ const NavbarTop = ({
           <Nav.Link onClick={logout}>
             <FontAwesomeIcon icon={faSignInAlt} /> Logout
           </Nav.Link>
-          <Nav.Link onClick={e => clickme(e)}>
+          <Nav.Link onClick={e => getPosts(e)}>
             <FontAwesomeIcon icon={faPlusCircle} />
             Download markers
           </Nav.Link>

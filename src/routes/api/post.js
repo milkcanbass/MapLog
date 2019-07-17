@@ -80,7 +80,9 @@ router.get("/getRes", (req, res) => {
 //@route GET /files
 //@desc Display, all files in json
 router.get("/files", (req, res) => {
-  gfs.files.find({}).toArray((err, files) => {
+  let userId = req.query.id;
+
+  gfs.files.find({ "metadata.id": userId }).toArray((err, files) => {
     // Check if files
     if (!files || files.length === 0) {
       return res.status(404).json({
