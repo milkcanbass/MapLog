@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 //CSS
 import "./css/mapComponent.css";
-import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/samaple.png";
+import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
 
 //Bootstrap
 import Form from "react-bootstrap/Form";
@@ -14,7 +14,6 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import { SSL_OP_LEGACY_SERVER_CONNECT } from "constants";
 
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
@@ -27,9 +26,10 @@ const MapComponent = props => {
     lat: "",
     lng: "",
     myImg: null,
-    openInfo: true
+    openInfo: true,
+    prevImgUrl: null
   });
-  const { title, text, lat, lng, myImg, openInfo } = addPost;
+  const { title, text, lat, lng, myImg, openInfo, prevImgUrl } = addPost;
 
   const addNewMarker = e => {
     if (isAuth) {
@@ -61,18 +61,28 @@ const MapComponent = props => {
   };
 
   const imgChange = e => {
-    {
-      e.target.type === "file"
-        ? setAddPost({
-            ...addPost,
-            myImg: e.target.files[0]
-          })
-        : setAddPost({
-            ...addPost,
-            [e.target.name]: e.target.value
-          });
+    if (e.target.type === "file") {
+      try {
+        setAddPost({
+          ...addPost,
+          myImg: e.target.files[0],
+          prevImgUrl: URL.createObjectURL(e.target.files[0])
+        });
+      } catch (err) {
+        console.log(err.message);
+        setAddPost({
+          ...addPost,
+          prevImgUrl: sampleImage
+        });
+      }
+    } else {
+      setAddPost({
+        ...addPost,
+        [e.target.name]: e.target.value
+      });
     }
   };
+
   const defaultMapOptions = {
     fullscreenControl: false
   };
@@ -132,15 +142,17 @@ const MapComponent = props => {
                 <InputGroup className="mb-3">
                   <FormControl
                     type="file"
-                    ref={imgRef}
                     name="myImg"
                     onChange={e => imgChange(e)}
                   />
                 </InputGroup>
-                <Button type="submit">Set Location</Button>
+                <Button type="submit">Post</Button>
                 <Image
-                  src={sampleImage}
-                  ref={imgRef}
+                  src={
+                    prevImgUrl === null || prevImgUrl === ""
+                      ? sampleImage
+                      : prevImgUrl
+                  }
                   className="imagePreview"
                   required
                 />
@@ -182,12 +194,7 @@ const MapComponent = props => {
                             <p>{post.metadata.text}</p>
                           </div>
 
-                          <Button
-                            type="button"
-                            onClick={() => console.log("hi")}
-                          >
-                            Send mail
-                          </Button>
+                          <Button type="button">Send mail</Button>
                         </center>
                       </Fragment>
                     </div>
