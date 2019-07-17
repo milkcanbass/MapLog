@@ -155,7 +155,7 @@ const MapContainer = props => {
             {props.isAuth ? (
               <Fragment>
                 <Form onSubmit={e => submitPost(e)}>
-                  <Form.Group controlId="exampleForm.ControlInput1" fluid>
+                  <Form.Group controlId="exampleForm.ControlInput1">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                       type="text"
@@ -165,7 +165,7 @@ const MapContainer = props => {
                     />
                   </Form.Group>
 
-                  <Form.Group controlId="exampleForm.ControlTextarea1" fluid>
+                  <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Text</Form.Label>
                     <Form.Control
                       as="textarea"
@@ -187,7 +187,6 @@ const MapContainer = props => {
                     src={sampleImage}
                     ref={imgRef}
                     className="imagePreview"
-                    fluid
                     required
                   />
                 </Form>

@@ -11,10 +11,26 @@ const UserModel = require("../../models/UserModel");
 //JwtSecret key
 const jwtSecret = config.get("jwtSecret");
 
+const auth = require("../../middleWare/auth");
+
+//api/auth
+//get user name and email
+//private
+
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.user.id).select("-password");
+    res.json(user);
+    console.log(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
 //route api/auth/register
 //register user
 //public
-
 router.post(
   "/register",
   [

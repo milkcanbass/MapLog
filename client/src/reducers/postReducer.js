@@ -1,7 +1,7 @@
 import { POST_SUCCESS, POST_FAIL } from "../actions/types";
 
 const initialState = {
-  name: null,
+  id: null,
   myImg: null,
   lat: 43.653908,
   lng: -79.384293,
@@ -18,6 +18,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
+
         commented: true
       };
     case POST_FAIL:

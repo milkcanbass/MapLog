@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
 //Bootstrap
@@ -43,9 +43,6 @@ const NavbarTop = ({
           <Nav.Link onClick={logout}>
             <FontAwesomeIcon icon={faSignInAlt} /> Logout
           </Nav.Link>
-          {/* <Nav.Link onClick={postModalShow}>
-            <FontAwesomeIcon icon={faPlusCircle} /> Add Log
-          </Nav.Link> */}
           <Nav.Link onClick={e => clickme(e)}>
             <FontAwesomeIcon icon={faPlusCircle} />
             Download markers
@@ -74,20 +71,7 @@ const NavbarTop = ({
     </Fragment>
   );
 
-  return (
-    <Fragment>
-      {isAuth ? authNav : noAuthNav}
-      {/* {loadAllPost
-        ? allPost.map((post, i) => {
-            return (
-              <Fragment>
-                <h1>{post.metadata.title}</h1>
-              </Fragment>
-            );
-          })
-        : null} */}
-    </Fragment>
-  );
+  return <Fragment>{isAuth ? authNav : noAuthNav}</Fragment>;
 };
 
 NavbarTop.prototype = {

@@ -18,8 +18,12 @@ export const loadUser = () => async dispatch => {
     setAuthToken(localStorage.token);
   }
   try {
+    const res = await axios.get("/api/auth/");
+    console.log(res.data);
+
     dispatch({
-      type: USER_LOADED
+      type: USER_LOADED,
+      payload: res.data
     });
   } catch (err) {
     console.log(err.message);
@@ -67,7 +71,7 @@ export const login = ({ email, password }) => async dispatch => {
     const res = await axios.post("api/auth/login", body, config);
 
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-    dispatch(loadUser());
+
     store.dispatch(modalClose());
   } catch (err) {
     console.log(err.message);
@@ -77,6 +81,8 @@ export const login = ({ email, password }) => async dispatch => {
 };
 
 export const logout = () => dispatch => {
+  console.log("logout");
+
   dispatch({
     type: LOGOUT
   });
@@ -90,7 +96,6 @@ export const moveToCurrentLoc = payload => dispatch => {
     navigator.geolocation.getCurrentPosition(position => {
       dispatch({ type: USER_LOCATION, payload: position });
     });
-    dispatch(loadUser());
   } catch (err) {
     alert(err);
     console.log(err.message);

@@ -1,7 +1,7 @@
 import { GETALLPOST_SUCCESS, GETALLPOST_FAIL } from "../actions/types";
 
 const initialState = {
-  allPost: null,
+  allPost: [],
   loadAllPost: false
 };
 
@@ -19,7 +19,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
-        allPost: null,
+        allPost: [],
         loadAllPost: false
       };
     default:

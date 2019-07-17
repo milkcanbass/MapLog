@@ -11,6 +11,7 @@ import {
 
 const initialState = {
   token: localStorage.getItem("token"),
+  _id: null,
   isAuth: false,
   postStatus: false,
   lat: 43.653908,
@@ -25,6 +26,7 @@ export default function(state = initialState, action) {
     case USER_LOADED:
       return {
         ...state,
+        id: payload._id,
         postStatus: false,
         isAuth: true
       };
@@ -34,7 +36,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
-        token: payload.token, //Why is this effect???
+        token: payload.token,
+        id: payload._id,
         postStatus: false,
         isAuth: true
       };
@@ -47,6 +50,7 @@ export default function(state = initialState, action) {
         ...state,
         ...payload,
         token: null,
+        id: null,
         postStatus: false,
         isAuth: false
       };

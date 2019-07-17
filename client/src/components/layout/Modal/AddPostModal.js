@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import Modal from "react-bootstrap/Modal";
@@ -19,34 +19,6 @@ import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/
 import "../../css/addPostModal_styles.css";
 
 const AddPostModal = props => {
-  const [inputState, setInputState] = useState({
-    name: "",
-    email: "",
-    password: ""
-  });
-  const { name, email, password } = inputState;
-
-  const onChange = e => {
-    e.persist();
-    setInputState({
-      ...inputState,
-      [e.target.name]: e.target.value
-    });
-  };
-  const onSubmit = async e => {
-    e.preventDefault();
-
-    try {
-      props.register({ email, name, password });
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
-  const handler = () => {
-    props.signInOn();
-  };
-
   return (
     <Modal
       {...props}
@@ -59,12 +31,12 @@ const AddPostModal = props => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group controlId="exampleForm.ControlInput1" fluid>
+          <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="name@example.com" />
           </Form.Group>
 
-          <Form.Group controlId="exampleForm.ControlTextarea1" fluid>
+          <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Example textarea</Form.Label>
             <Form.Control as="textarea" rows="3" />
           </Form.Group>
@@ -72,7 +44,7 @@ const AddPostModal = props => {
             <FormControl type="file" />
           </InputGroup>
           <Button>Set Location</Button>
-          <Image src={sampleImage} className="imagePreview" fluid />
+          <Image src={sampleImage} className="imagePreview" />
         </Form>
       </Modal.Body>
       <Modal.Footer>

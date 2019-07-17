@@ -5,12 +5,7 @@ import PropTypes from "prop-types";
 //Redux
 import { connect } from "react-redux";
 // import store from "./store";
-import {
-  modalShow,
-  modalClose,
-  postModalShow,
-  postModalClose
-} from "./actions/modalActions";
+import { modalShow, modalClose, postModalShow } from "./actions/modalActions";
 import { loadUser } from "./actions/userAction";
 //Components
 import Landing from "./components/Landing";
@@ -25,15 +20,7 @@ import setAuthToken from "./utils/setAuthToken";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-const App = ({
-  modalOpen,
-
-  modalClose,
-
-  postModalOpen,
-
-  loadUser
-}) => {
+const App = ({ modalOpen, modalClose, postModalOpen, loadUser }) => {
   useEffect(() => {
     loadUser();
   }, [loadUser]);
