@@ -207,7 +207,6 @@ const MapComponent = props => {
                               className="imgStyle"
                               alt={props.img}
                             />
-                            {/* <Image src={sampleImage} className="imgStyle" /> */}
                             <p>{post.metadata.text}</p>
                           </div>
 
