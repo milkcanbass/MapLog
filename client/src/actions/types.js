@@ -25,3 +25,5 @@ export const POST_FAIL = "POST_FAIL";
 //getPostReducer
 export const GETALLPOST_SUCCESS = "GETALLPOST_SUCCESS";
 export const GETALLPOST_FAIL = "GETALLPOST_FAIL";
+export const GETIMG_SUCCESS = "GETIMG_SUCCESS";
+export const GETIMG_FAIL = "GETIMG_FAIL";

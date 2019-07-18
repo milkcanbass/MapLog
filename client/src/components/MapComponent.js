@@ -2,6 +2,7 @@ import React, { useState, Fragment, useRef } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
 import { post } from "../actions/postAction";
+import { requestImg } from "../actions/getPostAction";
 import PropTypes from "prop-types";
 
 //CSS
@@ -87,10 +88,6 @@ const MapComponent = props => {
     fullscreenControl: false
   };
 
-  const titleRef = useRef();
-  const textRef = useRef();
-  const imgRef = useRef();
-
   const submitPost = e => {
     e.preventDefault();
 
@@ -165,17 +162,24 @@ const MapComponent = props => {
         ? allPost.map(post => {
             const fLat = parseFloat(post.metadata.lat);
             const fLng = parseFloat(post.metadata.lng);
+            const filename = post.filename;
+            const getImg = filename => {
+              setSelectedPost(filename);
+              props.requestImg(filename);
+            };
+            const base64 = props.img;
+            console.log(base64);
 
             return (
               <Marker
                 key={post._id}
                 position={{ lat: fLat, lng: fLng }}
-                onClick={() => setSelectedPost(post._id)}
+                onClick={() => getImg(filename)}
                 defaultAnimation="2"
               >
-                {selectedPost === post._id && (
+                {selectedPost === post.filename && (
                   <InfoWindow
-                    key={post._id}
+                    key={post.filename}
                     position={{
                       lat: fLat,
                       lng: fLng
@@ -190,7 +194,11 @@ const MapComponent = props => {
                           <h1>{post.metadata.title}</h1>
                           <h1>{post.metadata.uploadDate}</h1>
                           <div>
-                            <Image src={sampleImage} className="imgStyle" />
+                            <img
+                              src={`data:image/;base64, ${props.img}`}
+                              className="imgStyle"
+                            />
+                            {/* <Image src={sampleImage} className="imgStyle" /> */}
                             <p>{post.metadata.text}</p>
                           </div>
 
@@ -212,7 +220,8 @@ MapComponent.propTypes = {
   lat: PropTypes.number.isRequired,
   lng: PropTypes.number.isRequired,
   allPost: PropTypes.array.isRequired,
-  loadAllPost: PropTypes.bool.isRequired
+  loadAllPost: PropTypes.bool.isRequired,
+  img: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -220,19 +229,11 @@ const mapStateToProps = state => ({
   lng: state.userReducer.lng,
   isAuth: state.userReducer.isAuth,
   allPost: state.getPostReducer.allPost,
-  loadAllPost: state.getPostReducer.loadAllPost
+  loadAllPost: state.getPostReducer.loadAllPost,
+  img: state.getPostReducer.img
 });
 
 export default connect(
   mapStateToProps,
-  { post }
+  { post, requestImg }
 )(MapComponent);
-
-// export default connect(
-//   mapStateToProps,
-//   { post }
-// )(
-//   GoogleApiWrapper({
-//     apiKey: "AIzaSyDKUUexAAJ4p0Mb7zTp-zxpWiwmyiEr-H4"
-//   })(MapTest)
-// );

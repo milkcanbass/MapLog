@@ -6,6 +6,7 @@ const config = require("config");
 const mongoose = require("mongoose");
 const mongoURI = config.get("mongoURI");
 const Grid = require("gridfs-stream");
+const fileType = require("file-type");
 
 //middleWare
 const auth = require("../../middleWare/auth");
@@ -27,7 +28,7 @@ conn.once("open", () => {
 //@route Post /api/comment/uploadImg
 //@desc Uploads file to DB
 //@Auth private
-router.post("/uploadImg", upload.single("myImg"), (req, res) => {
+router.post("/uploadImg", auth, upload.single("myImg"), (req, res) => {
   if (req.file === null) {
     return res.status(400).json({ msg: "No file uploaded" });
   } else {
@@ -43,22 +44,46 @@ router.post("/uploadImg", upload.single("myImg"), (req, res) => {
 //@desc get one images in server(need)
 //Goal find images by Meta data
 //@Auth public
-router.get("/getPic", (req, res) => {
-  gfs.files.findOne(
-    { filename: "11e6dc475c73ec1272bf78bf47f21ba4.jpg" },
-    (err, file) => {
-      if (!file || file.length === 0) {
-        return res.status(404).json({
-          err: "no file exist"
-        });
-      }
-      const readStream = gfs.createReadStream(file.filename);
-      readStream.pipe(res);
-      readStream.on("close", () => {
-        console.log("file found");
+router.get("/getImg", (req, res) => {
+  let filename = req.query.filename;
+  console.log(filename);
+
+  gfs.files.findOne({ filename: filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: "no file exist"
       });
     }
-  );
+    try {
+      const readStream = gfs.createReadStream(file.filename);
+
+      const bufs = [];
+      readStream.on("data", function(chunk) {
+        bufs.push(chunk);
+      });
+      readStream.on("end", function() {
+        const fbuf = Buffer.concat(bufs);
+        const base64 = fbuf.toString("base64");
+        res.json(base64);
+      });
+
+      // readStream.pipe(res);
+      // readStream.on("close", () => {
+      //   console.log("file found");
+      // });
+      // readstream.on("data", function(chunk) {
+      //   bufs.push(chunk);
+      // });
+      // readstream.on("end", function() {
+      //   const fbuf = Buffer.concat(bufs);
+      //   const base64 = fbuf.toString("base64");
+      //   console.log(base64);
+      // });
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).json({ err: "server error" });
+    }
+  });
 });
 
 //Get all images by metaData
@@ -79,7 +104,7 @@ router.get("/getRes", (req, res) => {
 
 //@route GET /files
 //@desc Display, all files in json
-router.get("/files", (req, res) => {
+router.get("/files", auth, (req, res) => {
   let userId = req.query.id;
 
   gfs.files.find({ "metadata.id": userId }).toArray((err, files) => {
@@ -97,25 +122,26 @@ router.get("/files", (req, res) => {
 
 //route GET /image/:filename
 //@desc Display single file object
-router.get("/images/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "no file exists"
-      });
-    }
+// router.get("/images/:filename", (req, res) => {
+//   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+//     if (!file || file.length === 0) {
+//       return res.status(404).json({
+//         err: "no file exists"
+//       });
+//     }
 
-    //check if image
-    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
-      //Read output to browser
-      const readstream = gfs.createReadStream(file.filename);
-      readstream.pipe(res);
-      console.log(res.data);
-    } else {
-      res.status(404).json({ err: "not an image" });
-    }
-  });
-});
+//     //check if image
+//     if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
+//       //Read output to browser
+//       const bufs = [];
+//       const readstream = gfs.createReadStream(file.filename);
+//       readstream.pipe(res);
+//       console.log(res.data);
+//     } else {
+//       res.status(404).json({ err: "not an image" });
+//     }
+//   });
+// });
 
 // //Route /api/comment/post
 // //upload comment and populate user data

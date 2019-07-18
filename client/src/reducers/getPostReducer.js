@@ -1,8 +1,15 @@
-import { GETALLPOST_SUCCESS, GETALLPOST_FAIL } from "../actions/types";
+import {
+  GETALLPOST_SUCCESS,
+  GETALLPOST_FAIL,
+  GETIMG_SUCCESS,
+  GETIMG_FAIL
+} from "../actions/types";
 
 const initialState = {
   allPost: [],
-  loadAllPost: false
+  loadAllPost: false,
+  img: null,
+  loadImg: false
 };
 
 export default function(state = initialState, action) {
@@ -21,6 +28,19 @@ export default function(state = initialState, action) {
         ...payload,
         allPost: [],
         loadAllPost: false
+      };
+    case GETIMG_SUCCESS:
+      console.log(payload);
+      return {
+        ...state,
+        img: payload,
+        loadImg: true
+      };
+    case GETIMG_FAIL:
+      return {
+        ...state,
+        img: null,
+        loadImg: false
       };
     default:
       return state;

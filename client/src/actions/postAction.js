@@ -1,7 +1,6 @@
 import { POST_SUCCESS, POST_FAIL } from "./types";
 import axios from "axios";
 import store from "../store";
-import userReducer from "../reducers/userReducer";
 
 export const post = payload => async dispatch => {
   try {
