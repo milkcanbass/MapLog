@@ -36,17 +36,6 @@ export const requestImg = filename => async dispatch => {
         filename
       }
     });
-    console.log(res);
-    console.log(res.data);
-
-    // const pic = await Buffer.from(res.data, "binary").toString("base64");
-    // console.log(res);
-    // console.log(res.data);
-    // console.log("Images", pic);
-
-    // const pic = Buffer.from(res.data, "binary").toString("base64");
-    // console.log(pic);
-
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
   } catch (err) {
     console.log(err.message);

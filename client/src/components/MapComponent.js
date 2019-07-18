@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, Fragment } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
 import { post } from "../actions/postAction";
@@ -7,7 +7,10 @@ import PropTypes from "prop-types";
 
 //CSS
 import "./css/mapComponent.css";
+
+//image
 import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
+import addMarker from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/iconfinder_Marker_red_1891013.png";
 
 //Bootstrap
 import Form from "react-bootstrap/Form";
@@ -30,7 +33,7 @@ const MapComponent = props => {
     openInfo: true,
     prevImgUrl: null
   });
-  const { title, text, lat, lng, myImg, openInfo, prevImgUrl } = addPost;
+  const { title, text, prevImgUrl } = addPost;
 
   const addNewMarker = e => {
     if (isAuth) {
@@ -85,7 +88,8 @@ const MapComponent = props => {
   };
 
   const defaultMapOptions = {
-    fullscreenControl: false
+    fullscreenControl: false,
+    clickableIcons: false
   };
 
   const submitPost = e => {
@@ -104,6 +108,10 @@ const MapComponent = props => {
       <Marker
         position={{ lat: addPost.lat, lng: addPost.lng }}
         onClick={() => addPostInfoOpen()}
+        icon={{
+          url: { addMarker },
+          scaledSize: new window.google.maps.Size(250, 250)
+        }}
       >
         {addPost.openInfo && (
           <InfoWindow
@@ -197,6 +205,7 @@ const MapComponent = props => {
                             <img
                               src={`data:image/;base64, ${props.img}`}
                               className="imgStyle"
+                              alt={props.img}
                             />
                             {/* <Image src={sampleImage} className="imgStyle" /> */}
                             <p>{post.metadata.text}</p>
