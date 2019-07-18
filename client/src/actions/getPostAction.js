@@ -25,8 +25,6 @@ export const getAllPost = () => async dispatch => {
 };
 
 export const requestImg = filename => async dispatch => {
-  console.log("requestImg called");
-
   try {
     const res = await axios({
       method: "get",
@@ -36,6 +34,7 @@ export const requestImg = filename => async dispatch => {
         filename
       }
     });
+
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
   } catch (err) {
     console.log(err.message);

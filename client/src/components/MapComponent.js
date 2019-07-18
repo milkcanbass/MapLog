@@ -10,6 +10,7 @@ import "./css/mapComponent.css";
 
 //image
 import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
+import postMarker from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/iconfinder_Location_728975.png";
 import addMarker from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/iconfinder_Marker_red_1891013.png";
 
 //Bootstrap
@@ -25,10 +26,10 @@ const MapComponent = props => {
   const [selectedPost, setSelectedPost] = useState(null);
 
   const [addPost, setAddPost] = useState({
-    title: null,
-    text: null,
-    lat: "",
-    lng: "",
+    title: "",
+    text: "",
+    lat: 43.653908,
+    lng: -79.384293,
     myImg: null,
     openInfo: true,
     prevImgUrl: null
@@ -109,8 +110,8 @@ const MapComponent = props => {
         position={{ lat: addPost.lat, lng: addPost.lng }}
         onClick={() => addPostInfoOpen()}
         icon={{
-          url: { addMarker },
-          scaledSize: new window.google.maps.Size(250, 250)
+          url: `${postMarker}`,
+          scaledSize: new window.google.maps.Size(50, 50)
         }}
       >
         {addPost.openInfo && (
@@ -184,6 +185,10 @@ const MapComponent = props => {
                 position={{ lat: fLat, lng: fLng }}
                 onClick={() => getImg(filename)}
                 defaultAnimation="2"
+                icon={{
+                  url: `${addMarker}`,
+                  scaledSize: new window.google.maps.Size(50, 50)
+                }}
               >
                 {selectedPost === post.filename && (
                   <InfoWindow

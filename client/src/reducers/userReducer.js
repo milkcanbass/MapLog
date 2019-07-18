@@ -11,7 +11,7 @@ import {
 
 const initialState = {
   token: localStorage.getItem("token"),
-  _id: null,
+  _id: "",
   isAuth: false,
   postStatus: false,
   lat: 43.653908,

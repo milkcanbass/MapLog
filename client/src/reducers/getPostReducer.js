@@ -8,7 +8,7 @@ import {
 const initialState = {
   allPost: [],
   loadAllPost: false,
-  img: null,
+  img: "",
   loadImg: false
 };
 
@@ -39,7 +39,7 @@ export default function(state = initialState, action) {
     case GETIMG_FAIL:
       return {
         ...state,
-        img: null,
+        img: "",
         loadImg: false
       };
     default:
