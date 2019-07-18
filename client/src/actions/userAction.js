@@ -12,6 +12,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import store from "../store";
 import { modalClose } from "./modalActions";
+import { resetNewMarker } from "./postAction";
 
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {
@@ -19,7 +20,6 @@ export const loadUser = () => async dispatch => {
   }
   try {
     const res = await axios.get("/api/auth/");
-    console.log(res.data);
 
     dispatch({
       type: USER_LOADED,
@@ -88,6 +88,7 @@ export const logout = () => dispatch => {
   dispatch({
     type: LOGOUT
   });
+  store.dispatch(resetNewMarker());
 };
 
 export const moveToCurrentLoc = payload => dispatch => {

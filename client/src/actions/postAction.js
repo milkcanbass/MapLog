@@ -1,4 +1,9 @@
-import { POST_SUCCESS, POST_FAIL } from "./types";
+import {
+  POST_SUCCESS,
+  POST_FAIL,
+  NEW_MARKER_SUCCESS,
+  RESET_NEW_MARKER
+} from "./types";
 import axios from "axios";
 import store from "../store";
 
@@ -30,4 +35,18 @@ export const post = payload => async dispatch => {
     console.log(err.message);
     dispatch({ type: POST_FAIL });
   }
+};
+
+export const addNewMarker = payload => dispatch => {
+  const lat = payload.latLng.lat();
+  const lng = payload.latLng.lng();
+
+  dispatch({
+    type: NEW_MARKER_SUCCESS,
+    payload: { lat, lng }
+  });
+};
+
+export const resetNewMarker = () => dispatch => {
+  dispatch({ type: RESET_NEW_MARKER });
 };

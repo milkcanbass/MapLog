@@ -21,6 +21,8 @@ export const SIGNIN_OFF = "SIGNIN_OFF";
 //postReducer
 export const POST_SUCCESS = "POST_SUCCESS";
 export const POST_FAIL = "POST_FAIL";
+export const NEW_MARKER_SUCCESS = "NEW_MARKER_SUCCESS";
+export const RESET_NEW_MARKER = "RESET_NEW_MARKER";
 
 //getPostReducer
 export const GETALLPOST_SUCCESS = "GETALLPOST_SUCCESS";

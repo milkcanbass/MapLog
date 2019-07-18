@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
-import { post } from "../actions/postAction";
+import { post, addNewMarker } from "../actions/postAction";
 import { requestImg } from "../actions/getPostAction";
 import {
   setSelectedPost,
@@ -40,21 +40,6 @@ const MapComponent = props => {
   });
   const { title, text, prevImgUrl } = addPost;
 
-  const addNewMarker = e => {
-    if (isAuth) {
-      const lat = e.latLng.lat();
-      const lng = e.latLng.lng();
-
-      setAddPost({
-        ...addPost,
-        lat,
-        lng
-      });
-    } else {
-      return null;
-    }
-  };
-
   const imgChange = e => {
     if (e.target.type === "file") {
       try {
@@ -89,76 +74,76 @@ const MapComponent = props => {
     props.post(addPost);
   };
 
-  console.log(props.openInfo);
-
   return (
     <GoogleMap
       defaultZoom={15}
       defaultCenter={{ lat: 43.653908, lng: -79.384293 }}
       defaultOptions={defaultMapOptions}
-      onClick={e => addNewMarker(e)}
+      onClick={isAuth ? e => props.addNewMarker(e) : null}
     >
-      <Marker
-        position={{ lat: addPost.lat, lng: addPost.lng }}
-        onClick={() => props.windowOpen()}
-        icon={{
-          url: `${postMarker}`,
-          scaledSize: new window.google.maps.Size(50, 50)
-        }}
-      >
-        {props.openInfo && (
-          <InfoWindow
-            position={{
-              lat: addPost.lat,
-              lng: addPost.lng
-            }}
-            onCloseClick={() => props.windowClose()}
-          >
-            <Fragment>
-              <Form onSubmit={e => submitPost(e)}>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Title</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="title"
-                    value={title}
-                    onChange={e => imgChange(e)}
+      {isAuth ? (
+        <Marker
+          position={{ lat: props.markerLat, lng: props.markerLng }}
+          onClick={() => props.windowOpen()}
+          icon={{
+            url: `${postMarker}`,
+            scaledSize: new window.google.maps.Size(50, 50)
+          }}
+        >
+          {props.openInfo && (
+            <InfoWindow
+              position={{
+                lat: props.markerLat,
+                lng: props.markerLng
+              }}
+              onCloseClick={() => props.windowClose()}
+            >
+              <Fragment>
+                <Form onSubmit={e => submitPost(e)}>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="title"
+                      value={title}
+                      onChange={e => imgChange(e)}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Text</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      onChange={e => imgChange(e)}
+                      rows="3"
+                      name="text"
+                      value={text}
+                    />
+                  </Form.Group>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      type="file"
+                      name="myImg"
+                      onChange={e => imgChange(e)}
+                    />
+                  </InputGroup>
+                  <Button type="submit">Post</Button>
+                  <Image
+                    src={
+                      prevImgUrl === null || prevImgUrl === ""
+                        ? sampleImage
+                        : prevImgUrl
+                    }
+                    className="imagePreview"
                     required
                   />
-                </Form.Group>
-
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>Text</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    onChange={e => imgChange(e)}
-                    rows="3"
-                    name="text"
-                    value={text}
-                  />
-                </Form.Group>
-                <InputGroup className="mb-3">
-                  <FormControl
-                    type="file"
-                    name="myImg"
-                    onChange={e => imgChange(e)}
-                  />
-                </InputGroup>
-                <Button type="submit">Post</Button>
-                <Image
-                  src={
-                    prevImgUrl === null || prevImgUrl === ""
-                      ? sampleImage
-                      : prevImgUrl
-                  }
-                  className="imagePreview"
-                  required
-                />
-              </Form>
-            </Fragment>
-          </InfoWindow>
-        )}
-      </Marker>
+                </Form>
+              </Fragment>
+            </InfoWindow>
+          )}
+        </Marker>
+      ) : null}
       {loadAllPost
         ? allPost.map(post => {
             const fLat = parseFloat(post.metadata.lat);
@@ -228,7 +213,8 @@ MapComponent.propTypes = {
   widowClose: PropTypes.func.isRequired,
   setSelectedPost: PropTypes.func.isRequired,
   offSelectedPost: PropTypes.func.isRequired,
-  img: PropTypes.string.isRequired
+  img: PropTypes.string.isRequired,
+  addNewMarker: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -239,7 +225,9 @@ const mapStateToProps = state => ({
   loadAllPost: state.getPostReducer.loadAllPost,
   img: state.getPostReducer.img,
   selectedPost: state.windowReducer.selectedPost,
-  openInfo: state.windowReducer.openInfo
+  openInfo: state.windowReducer.openInfo,
+  markerLat: state.postReducer.markerLat,
+  markerLng: state.postReducer.markerLng
 });
 
 export default connect(
@@ -250,6 +238,7 @@ export default connect(
     windowOpen,
     windowClose,
     setSelectedPost,
-    offSelectedPost
+    offSelectedPost,
+    addNewMarker
   }
 )(MapComponent);
