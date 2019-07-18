@@ -3,6 +3,12 @@ import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
 import { post } from "../actions/postAction";
 import { requestImg } from "../actions/getPostAction";
+import {
+  setSelectedPost,
+  offSelectedPost,
+  windowOpen,
+  windowClose
+} from "../actions/windowAction";
 import PropTypes from "prop-types";
 
 //CSS
@@ -23,15 +29,13 @@ import FormControl from "react-bootstrap/FormControl";
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
 
-  const [selectedPost, setSelectedPost] = useState(null);
-
   const [addPost, setAddPost] = useState({
     title: "",
     text: "",
     lat: 43.653908,
     lng: -79.384293,
     myImg: null,
-    openInfo: true,
+    // openInfo: true,
     prevImgUrl: null
   });
   const { title, text, prevImgUrl } = addPost;
@@ -49,20 +53,6 @@ const MapComponent = props => {
     } else {
       return null;
     }
-  };
-
-  const addPostInfoOpen = () => {
-    setAddPost({
-      ...addPost,
-      openInfo: true
-    });
-  };
-
-  const addPostInfoClose = () => {
-    setAddPost({
-      ...addPost,
-      openInfo: false
-    });
   };
 
   const imgChange = e => {
@@ -99,6 +89,8 @@ const MapComponent = props => {
     props.post(addPost);
   };
 
+  console.log(props.openInfo);
+
   return (
     <GoogleMap
       defaultZoom={15}
@@ -108,19 +100,19 @@ const MapComponent = props => {
     >
       <Marker
         position={{ lat: addPost.lat, lng: addPost.lng }}
-        onClick={() => addPostInfoOpen()}
+        onClick={() => props.windowOpen()}
         icon={{
           url: `${postMarker}`,
           scaledSize: new window.google.maps.Size(50, 50)
         }}
       >
-        {addPost.openInfo && (
+        {props.openInfo && (
           <InfoWindow
             position={{
               lat: addPost.lat,
               lng: addPost.lng
             }}
-            onCloseClick={() => addPostInfoClose()}
+            onCloseClick={() => props.windowClose()}
           >
             <Fragment>
               <Form onSubmit={e => submitPost(e)}>
@@ -173,11 +165,9 @@ const MapComponent = props => {
             const fLng = parseFloat(post.metadata.lng);
             const filename = post.filename;
             const getImg = filename => {
-              setSelectedPost(filename);
+              props.setSelectedPost(filename);
               props.requestImg(filename);
             };
-            const base64 = props.img;
-            console.log(base64);
 
             return (
               <Marker
@@ -190,7 +180,7 @@ const MapComponent = props => {
                   scaledSize: new window.google.maps.Size(50, 50)
                 }}
               >
-                {selectedPost === post.filename && (
+                {props.selectedPost === post.filename && (
                   <InfoWindow
                     key={post.filename}
                     position={{
@@ -234,6 +224,10 @@ MapComponent.propTypes = {
   lng: PropTypes.number.isRequired,
   allPost: PropTypes.array.isRequired,
   loadAllPost: PropTypes.bool.isRequired,
+  windowOpen: PropTypes.func.isRequired,
+  widowClose: PropTypes.func.isRequired,
+  setSelectedPost: PropTypes.func.isRequired,
+  offSelectedPost: PropTypes.func.isRequired,
   img: PropTypes.string.isRequired
 };
 
@@ -243,10 +237,19 @@ const mapStateToProps = state => ({
   isAuth: state.userReducer.isAuth,
   allPost: state.getPostReducer.allPost,
   loadAllPost: state.getPostReducer.loadAllPost,
-  img: state.getPostReducer.img
+  img: state.getPostReducer.img,
+  selectedPost: state.windowReducer.selectedPost,
+  openInfo: state.windowReducer.openInfo
 });
 
 export default connect(
   mapStateToProps,
-  { post, requestImg }
+  {
+    post,
+    requestImg,
+    windowOpen,
+    windowClose,
+    setSelectedPost,
+    offSelectedPost
+  }
 )(MapComponent);

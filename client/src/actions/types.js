@@ -27,3 +27,9 @@ export const GETALLPOST_SUCCESS = "GETALLPOST_SUCCESS";
 export const GETALLPOST_FAIL = "GETALLPOST_FAIL";
 export const GETIMG_SUCCESS = "GETIMG_SUCCESS";
 export const GETIMG_FAIL = "GETIMG_FAIL";
+
+//windowReducer
+export const WINDOW_OPEN = "WINDOW_OPEN";
+export const WINDOW_CLOSE = "WINDOW_CLOSE";
+export const SET_SELECTED_POST = "SET_SELECTED_POST";
+export const OFF_SELECTED_POST = "OFF_SELECTED_POST";

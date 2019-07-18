@@ -5,7 +5,6 @@ const initialState = {
   myImg: null,
   lat: 43.653908,
   lng: -79.384293,
-  comment: null,
   createdAt: new Date().getTime(),
   commented: null
 };
