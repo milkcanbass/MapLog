@@ -17,6 +17,9 @@ export const INFO_MODAL_SHOW = "INFO_MODAL_SHOW";
 export const INFO_MODAL_CLOSE = "INFO_MODAL_CLOSE";
 export const SIGNIN_ON = "SIGNIN_ON";
 export const SIGNIN_OFF = "SIGNIN_OFF";
+export const MODAL_REGISTER_FAIL = "MODAL_REGISTER_FAIL";
+export const MODAL_LOGIN_FAIL = "MODAL_LOGIN_FAIL";
+export const MODAL_ALERT = "MODAL_ALERT";
 
 //postReducer
 export const POST_SUCCESS = "POST_SUCCESS";

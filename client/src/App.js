@@ -5,12 +5,7 @@ import PropTypes from "prop-types";
 //Redux
 import { connect } from "react-redux";
 // import store from "./store";
-import {
-  modalClose,
-  postModalClose,
-  infoModalClose,
-  infoModalShow
-} from "./actions/modalActions";
+import { modalClose, infoModalShow } from "./actions/modalActions";
 import { loadUser } from "./actions/userAction";
 //Components
 import Landing from "./components/Landing";
@@ -22,7 +17,6 @@ import InfoModal from "./components/layout/Modal/InfoModal";
 // //Read Bootstrap css//
 
 import setAuthToken from "./utils/setAuthToken";
-import Button from "react-bootstrap/Button";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -32,8 +26,7 @@ const App = ({
   modalClose,
   postModalOpen,
   loadUser,
-  infoModalOpen,
-  infoModalShow
+  infoModalOpen
 }) => {
   useEffect(() => {
     loadUser();
@@ -41,9 +34,8 @@ const App = ({
   return (
     <Router>
       <NavbarTop />
-      <Button onClick={() => infoModalShow()} />
-      <InfoModal show={infoModalOpen} onHide={infoModalClose} />
-      <AddPostModal show={postModalOpen} onHide={postModalClose} />
+      <InfoModal show={infoModalOpen} onHide={modalClose} />
+      <AddPostModal show={postModalOpen} onHide={modalClose} />
       <StandardModal show={modalOpen} onHide={modalClose} />
 
       <Switch>
@@ -67,5 +59,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { modalClose, postModalClose, infoModalClose, loadUser, infoModalShow }
+  { modalClose, loadUser, infoModalShow }
 )(App);

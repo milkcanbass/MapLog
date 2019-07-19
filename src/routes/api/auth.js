@@ -52,9 +52,7 @@ router.post(
     try {
       let user = await UserModel.findOne({ email });
       if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
+        return res.status(400).send("User already existed");
       }
 
       user = new UserModel({
@@ -77,7 +75,7 @@ router.post(
       });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("server error");
+      res.status(500).send("Server error");
     }
   }
 );
@@ -98,26 +96,20 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log("error happened here");
-      console.log(email, password);
-
-      return res.status(422).json({ errors: errors.array() });
+      const message = errors.array();
+      return res.status(422).send(message);
     }
     const { email, password } = req.body;
     try {
       let user = await UserModel.findOne({ email });
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User doesn't exist" }] });
+        return res.status(400).send("User doesn't exist");
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] });
+        return res.status(400).send("Invalid Credentials");
       }
 
       const payload = {
@@ -131,7 +123,7 @@ router.post(
       });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("server error");
+      res.status(500).send("Server error");
     }
   }
 );

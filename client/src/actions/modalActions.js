@@ -2,11 +2,11 @@ import {
   MODAL_CLOSE,
   MODAL_SHOW,
   POST_MODAL_SHOW,
-  POST_MODAL_CLOSE,
   INFO_MODAL_SHOW,
-  INFO_MODAL_CLOSE,
   SIGNIN_ON,
-  SIGNIN_OFF
+  SIGNIN_OFF,
+  MODAL_REGISTER_FAIL,
+  MODAL_ALERT
 } from "./types";
 
 export const modalShow = () => dispatch => {
@@ -20,27 +20,16 @@ export const modalClose = () => dispatch => {
     type: MODAL_CLOSE
   });
 };
+
 export const postModalShow = () => dispatch => {
   dispatch({
     type: POST_MODAL_SHOW
   });
 };
-export const postModalClose = () => dispatch => {
-  console.log("postModalClose trigered");
 
-  dispatch({
-    type: POST_MODAL_CLOSE
-  });
-};
 export const infoModalShow = () => dispatch => {
   dispatch({
     type: INFO_MODAL_SHOW
-  });
-};
-
-export const infoModalClose = () => dispatch => {
-  dispatch({
-    type: INFO_MODAL_CLOSE
   });
 };
 
@@ -51,8 +40,21 @@ export const signInOn = () => dispatch => {
 };
 
 export const signInOff = () => dispatch => {
-  //Register
   dispatch({
     type: SIGNIN_OFF
+  });
+};
+
+//Info modal contents
+export const modalAlert = () => dispatch => {
+  dispatch({
+    type: MODAL_ALERT
+  });
+};
+
+export const modalRegisterFail = () => dispatch => {
+  //Register
+  dispatch({
+    type: MODAL_REGISTER_FAIL
   });
 };

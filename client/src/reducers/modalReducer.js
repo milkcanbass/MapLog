@@ -2,18 +2,21 @@ import {
   MODAL_SHOW,
   MODAL_CLOSE,
   POST_MODAL_SHOW,
-  POST_MODAL_CLOSE,
   INFO_MODAL_SHOW,
-  INFO_MODAL_CLOSE,
   SIGNIN_ON,
-  SIGNIN_OFF
+  SIGNIN_OFF,
+  MODAL_REGISTER_FAIL,
+  MODAL_LOGIN_FAIL,
+  MODAL_ALERT
 } from "../actions/types";
 
 const initialState = {
   modalOpen: false,
   postModalOpen: false,
   infoModalOpen: false,
-  signInOn: false //True = SignIn screen open
+  signInOn: false, //True = SignIn screen open
+  infoModalType: null,
+  infoModalText: ""
 };
 
 export default function(state = initialState, action) {
@@ -26,8 +29,6 @@ export default function(state = initialState, action) {
         modalOpen: true
       };
     case MODAL_CLOSE:
-    case POST_MODAL_CLOSE:
-    case INFO_MODAL_CLOSE:
       return {
         ...state,
         modalOpen: false,
@@ -55,6 +56,27 @@ export default function(state = initialState, action) {
       return {
         ...state,
         signInOn: false
+      };
+    case MODAL_REGISTER_FAIL:
+      return {
+        ...state,
+        infoModalOpen: true,
+        infoModalType: "registerFail",
+        infoModalText: payload
+      };
+    case MODAL_LOGIN_FAIL:
+      return {
+        ...state,
+        infoModalOpen: true,
+        infoModalType: "loginFail",
+        infoModalText: payload
+      };
+    case MODAL_ALERT:
+      return {
+        ...state,
+        infoModalOpen: true,
+        infoModalType: "alert",
+        infoModalText: payload
       };
     default:
       return state;

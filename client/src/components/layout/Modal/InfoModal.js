@@ -12,41 +12,80 @@ import { signInOn } from "../../../actions/modalActions";
 import "../../css/addPostModal_styles.css";
 
 const InfoModal = props => {
-  return (
-    <Modal
-      {...props}
-      variant="info"
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </Modal.Body>
-    </Modal>
-  );
+  switch (props.infoModalType) {
+    case "registerFail":
+      return (
+        <Modal
+          {...props}
+          variant="info"
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Sorry, cannot registered
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>{props.infoModalText}</p>
+          </Modal.Body>
+        </Modal>
+      );
+    case "loginFail":
+      return (
+        <Modal
+          {...props}
+          variant="info"
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Login failed
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>{props.infoModalText}</p>
+          </Modal.Body>
+        </Modal>
+      );
+
+    case "alert":
+      return (
+        <Modal
+          {...props}
+          variant="info"
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Body>
+            <p>{props.infoModalText}</p>
+          </Modal.Body>
+        </Modal>
+      );
+
+    default:
+      return null;
+  }
 };
 
 InfoModal.prototype = {
   postModalOpen: PropTypes.bool.isRequired,
   isAuth: PropTypes.bool.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  infoModalType: PropTypes.string.isRequired,
+  infoModalText: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     postModalOpen: state.modalReducer.modalOpen,
-    isAuth: state.userReducer.isAuth
+    isAuth: state.userReducer.isAuth,
+    infoModalType: state.modalReducer.infoModalType,
+    infoModalText: state.modalReducer.infoModalText
   };
 };
 
