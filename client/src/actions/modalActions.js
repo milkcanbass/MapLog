@@ -3,8 +3,8 @@ import {
   MODAL_SHOW,
   POST_MODAL_SHOW,
   POST_MODAL_CLOSE,
-  POST_ABLE,
-  POST_DISABLE,
+  INFO_MODAL_SHOW,
+  INFO_MODAL_CLOSE,
   SIGNIN_ON,
   SIGNIN_OFF
 } from "./types";
@@ -26,25 +26,21 @@ export const postModalShow = () => dispatch => {
   });
 };
 export const postModalClose = () => dispatch => {
+  console.log("postModalClose trigered");
+
   dispatch({
     type: POST_MODAL_CLOSE
   });
-  dispatch({
-    type: POST_DISABLE
-  });
 };
-export const postAble = payload => dispatch => {
+export const infoModalShow = () => dispatch => {
   dispatch({
-    type: POST_ABLE
-  });
-  dispatch({
-    type: POST_MODAL_SHOW
+    type: INFO_MODAL_SHOW
   });
 };
 
-export const postDisable = payload => dispatch => {
+export const infoModalClose = () => dispatch => {
   dispatch({
-    type: POST_DISABLE
+    type: INFO_MODAL_CLOSE
   });
 };
 

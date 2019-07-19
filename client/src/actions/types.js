@@ -13,8 +13,8 @@ export const MODAL_SHOW = "MODAL_SHOW";
 export const MODAL_CLOSE = "MODAL_CLOSE";
 export const POST_MODAL_SHOW = "POST_MODAL_SHOW";
 export const POST_MODAL_CLOSE = "POST_MODAL_CLOSE";
-export const POST_ABLE = "POST_ABLE";
-export const POST_DISABLE = "POST_DISABLE";
+export const INFO_MODAL_SHOW = "INFO_MODAL_SHOW";
+export const INFO_MODAL_CLOSE = "INFO_MODAL_CLOSE";
 export const SIGNIN_ON = "SIGNIN_ON";
 export const SIGNIN_OFF = "SIGNIN_OFF";
 

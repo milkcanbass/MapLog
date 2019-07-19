@@ -5,31 +5,41 @@ import PropTypes from "prop-types";
 //Redux
 import { connect } from "react-redux";
 // import store from "./store";
-import { modalShow, modalClose, postModalShow } from "./actions/modalActions";
+import {
+  modalClose,
+  postModalClose,
+  infoModalClose
+} from "./actions/modalActions";
 import { loadUser } from "./actions/userAction";
 //Components
 import Landing from "./components/Landing";
 import NavbarTop from "./components/layout/NavbarTop";
 import StandardModal from "./components/layout/Modal/StandardModal";
 import AddPostModal from "./components/layout/Modal/AddPostModal";
+import InfoModal from "./components/layout/Modal/InfoModal";
 
 // //Read Bootstrap css//
-// import "bootstrap/dist/css/bootstrap.css";
+
 import setAuthToken from "./utils/setAuthToken";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-const App = ({ modalOpen, modalClose, postModalOpen, loadUser }) => {
+const App = ({
+  modalOpen,
+  modalClose,
+  postModalOpen,
+  loadUser,
+  infoModalOpen
+}) => {
   useEffect(() => {
     loadUser();
   }, [loadUser]);
   return (
     <Router>
       <NavbarTop />
-
-      <AddPostModal show={postModalOpen} onHide={modalClose} />
-
+      <InfoModal show={infoModalOpen} onHide={infoModalClose} />
+      <AddPostModal show={postModalOpen} onHide={postModalClose} />
       <StandardModal show={modalOpen} onHide={modalClose} />
 
       <Switch>
@@ -41,16 +51,17 @@ const App = ({ modalOpen, modalClose, postModalOpen, loadUser }) => {
 
 App.prototype = {
   modalOpen: PropTypes.bool.isRequired,
-  modalShow: PropTypes.func.isRequired,
+
   modalClose: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   modalOpen: state.modalReducer.modalOpen,
-  postModalOpen: state.modalReducer.postModalOpen
+  postModalOpen: state.modalReducer.postModalOpen,
+  infoModalOpen: state.modalReducer.infoModalOpen
 });
 
 export default connect(
   mapStateToProps,
-  { modalShow, modalClose, postModalShow, loadUser }
+  { modalClose, postModalClose, infoModalClose, loadUser }
 )(App);
