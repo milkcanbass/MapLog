@@ -8,7 +8,8 @@ import { connect } from "react-redux";
 import {
   modalClose,
   postModalClose,
-  infoModalClose
+  infoModalClose,
+  infoModalShow
 } from "./actions/modalActions";
 import { loadUser } from "./actions/userAction";
 //Components
@@ -21,6 +22,7 @@ import InfoModal from "./components/layout/Modal/InfoModal";
 // //Read Bootstrap css//
 
 import setAuthToken from "./utils/setAuthToken";
+import Button from "react-bootstrap/Button";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -30,7 +32,8 @@ const App = ({
   modalClose,
   postModalOpen,
   loadUser,
-  infoModalOpen
+  infoModalOpen,
+  infoModalShow
 }) => {
   useEffect(() => {
     loadUser();
@@ -38,6 +41,7 @@ const App = ({
   return (
     <Router>
       <NavbarTop />
+      <Button onClick={() => infoModalShow()} />
       <InfoModal show={infoModalOpen} onHide={infoModalClose} />
       <AddPostModal show={postModalOpen} onHide={postModalClose} />
       <StandardModal show={modalOpen} onHide={modalClose} />
@@ -63,5 +67,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { modalClose, postModalClose, infoModalClose, loadUser }
+  { modalClose, postModalClose, infoModalClose, loadUser, infoModalShow }
 )(App);
