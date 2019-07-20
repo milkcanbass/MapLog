@@ -9,8 +9,10 @@ const initialState = {
   id: null,
   title: "",
   text: "",
-  markerLat: 43.653908,
-  markerLng: -79.384293,
+  position: {
+    markerLat: 43.653908,
+    markerLng: -79.384293
+  },
   myImg: null,
   createdAt: new Date().getTime(),
   commented: null
@@ -34,18 +36,24 @@ export default function(state = initialState, action) {
         commented: null
       };
     case NEW_MARKER_SUCCESS:
+      console.log(payload.lat);
+
       return {
         ...state,
-        markerLat: payload.lat,
-        markerLng: payload.lng
+        position: {
+          markerLat: payload.lat,
+          markerLng: payload.lng
+        }
       };
     case RESET_NEW_MARKER: {
       return {
         id: null,
         title: "",
         text: "",
-        markerLat: "",
-        markerLng: "",
+        position: {
+          markerLat: "",
+          markerLng: ""
+        },
         myImg: null,
         commented: null
       };

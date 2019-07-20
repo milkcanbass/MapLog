@@ -13,8 +13,8 @@ const initialState = {
   token: localStorage.getItem("token"),
   _id: "",
   isAuth: false,
-  lat: 43.653908,
-  lng: -79.384293,
+  userLat: 43.653908,
+  userLng: -79.384293,
   createdAt: new Date().getTime()
 };
 
@@ -54,8 +54,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
-        lat: payload.coords.latitude,
-        lng: payload.coords.longitude
+        userLat: payload.lat,
+        userLng: payload.lng
       };
     default:
       return state;

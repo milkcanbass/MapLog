@@ -3,3 +3,8 @@
   max-width: 400px;
   height: auto;
 }
+
+.registeFail {
+  color: red;
+  background-color: blue;
+}

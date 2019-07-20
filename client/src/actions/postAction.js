@@ -10,11 +10,12 @@ import store from "../store";
 export const post = payload => async dispatch => {
   try {
     //Need an image to upload comments.
-    const { title, text, myImg, lat, lng } = payload;
-    console.log(title);
-    console.log(text);
+
+    const { title, text, myImg } = payload;
 
     const state = store.getState();
+    const markerLat = state.postReducer.position.markerLat;
+    const markerLng = state.postReducer.position.markerLng;
     const id = state.userReducer.id;
 
     const config = {
@@ -24,8 +25,8 @@ export const post = payload => async dispatch => {
     await formData.append("myImg", myImg);
     await formData.append("title", title);
     await formData.append("text", text);
-    await formData.append("lat", lat);
-    await formData.append("lng", lng);
+    await formData.append("position[lat]", markerLat.toString());
+    await formData.append("position[lng]", markerLng.toString());
     await formData.append("id", id);
 
     await axios.post("/api/post/uploadImg", formData, config);
@@ -40,6 +41,7 @@ export const post = payload => async dispatch => {
 export const addNewMarker = payload => dispatch => {
   const lat = payload.latLng.lat();
   const lng = payload.latLng.lng();
+  console.log(lat, lng);
 
   dispatch({
     type: NEW_MARKER_SUCCESS,

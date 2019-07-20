@@ -9,7 +9,8 @@ import {
   LOGOUT,
   MODAL_REGISTER_FAIL,
   MODAL_CLOSE,
-  MODAL_LOGIN_FAIL
+  MODAL_LOGIN_FAIL,
+  MODAL_ALERT
 } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
@@ -72,7 +73,6 @@ export const login = ({ email, password }) => async dispatch => {
 
   try {
     const res = await axios.post("api/auth/login", body, config);
-    console.log(res);
 
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
@@ -101,10 +101,13 @@ export const moveToCurrentLoc = payload => dispatch => {
       return alert("Geolocation is not supported by your browser");
     }
     navigator.geolocation.getCurrentPosition(position => {
-      dispatch({ type: USER_LOCATION, payload: position });
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      dispatch({ type: USER_LOCATION, payload: { lat, lng } });
     });
   } catch (err) {
-    alert(err);
-    console.log(err.message);
+    const errors = err.response.data;
+    dispatch({ type: MODAL_ALERT, payload: errors });
   }
 };

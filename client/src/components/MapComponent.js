@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect, useRef } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
 import { post, addNewMarker } from "../actions/postAction";
@@ -9,6 +9,8 @@ import {
   windowOpen,
   windowClose
 } from "../actions/windowAction";
+
+import { moveToCurrentLoc } from "../actions/userAction";
 import PropTypes from "prop-types";
 
 //CSS
@@ -32,10 +34,7 @@ const MapComponent = props => {
   const [addPost, setAddPost] = useState({
     title: "",
     text: "",
-    lat: 43.653908,
-    lng: -79.384293,
     myImg: null,
-    // openInfo: true,
     prevImgUrl: null
   });
   const { title, text, prevImgUrl } = addPost;
@@ -70,13 +69,16 @@ const MapComponent = props => {
 
   const submitPost = e => {
     e.preventDefault();
-
     props.post(addPost);
   };
+
+  props.moveToCurrentLoc();
+  const bounds = new window.google.maps.LatLngBounds();
 
   return (
     <GoogleMap
       defaultZoom={15}
+      ref={map => map && map.fitBounds(bounds)}
       defaultCenter={{ lat: 43.653908, lng: -79.384293 }}
       defaultOptions={defaultMapOptions}
       onClick={isAuth ? e => props.addNewMarker(e) : null}
@@ -146,9 +148,13 @@ const MapComponent = props => {
       ) : null}
       {loadAllPost
         ? allPost.map(post => {
-            const fLat = parseFloat(post.metadata.lat);
-            const fLng = parseFloat(post.metadata.lng);
+            const fLat = parseFloat(post.metadata.position.lat);
+            const fLng = parseFloat(post.metadata.position.lng);
             const filename = post.filename;
+
+            const latLng = new window.google.maps.LatLng(fLat, fLng);
+            bounds.extend(latLng);
+
             const getImg = filename => {
               props.setSelectedPost(filename);
               props.requestImg(filename);
@@ -205,8 +211,8 @@ const MapComponent = props => {
 };
 
 MapComponent.propTypes = {
-  lat: PropTypes.number.isRequired,
-  lng: PropTypes.number.isRequired,
+  userLat: PropTypes.number.isRequired,
+  userLng: PropTypes.number.isRequired,
   allPost: PropTypes.array.isRequired,
   loadAllPost: PropTypes.bool.isRequired,
   windowOpen: PropTypes.func.isRequired,
@@ -218,16 +224,16 @@ MapComponent.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  lat: state.userReducer.lat,
-  lng: state.userReducer.lng,
+  userLat: state.userReducer.userLat,
+  userLng: state.userReducer.userLng,
   isAuth: state.userReducer.isAuth,
   allPost: state.getPostReducer.allPost,
   loadAllPost: state.getPostReducer.loadAllPost,
   img: state.getPostReducer.img,
   selectedPost: state.windowReducer.selectedPost,
   openInfo: state.windowReducer.openInfo,
-  markerLat: state.postReducer.markerLat,
-  markerLng: state.postReducer.markerLng
+  markerLat: state.postReducer.position.markerLat,
+  markerLng: state.postReducer.position.markerLng
 });
 
 export default connect(
@@ -239,6 +245,7 @@ export default connect(
     windowClose,
     setSelectedPost,
     offSelectedPost,
-    addNewMarker
+    addNewMarker,
+    moveToCurrentLoc
   }
 )(MapComponent);

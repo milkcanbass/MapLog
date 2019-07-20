@@ -34,7 +34,9 @@ const App = ({
   return (
     <Router>
       <NavbarTop />
+
       <InfoModal show={infoModalOpen} onHide={modalClose} />
+
       <AddPostModal show={postModalOpen} onHide={modalClose} />
       <StandardModal show={modalOpen} onHide={modalClose} />
 
