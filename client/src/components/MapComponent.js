@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useRef } from "react";
+import React, { useState, Fragment } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
 import { post, addNewMarker } from "../actions/postAction";
@@ -70,16 +70,22 @@ const MapComponent = props => {
   const submitPost = e => {
     e.preventDefault();
     props.post(addPost);
+    props.windowClose();
   };
 
-  props.moveToCurrentLoc();
+  //map bounds
+
   const bounds = new window.google.maps.LatLngBounds();
 
   return (
     <GoogleMap
       defaultZoom={15}
-      ref={map => map && map.fitBounds(bounds)}
-      defaultCenter={{ lat: 43.653908, lng: -79.384293 }}
+      defaultCenter={{ lat: props.markerLat, lng: props.markerLng }}
+      ref={
+        loadAllPost && isAuth && props.boundFlag
+          ? map => map && map.fitBounds(bounds)
+          : null
+      }
       defaultOptions={defaultMapOptions}
       onClick={isAuth ? e => props.addNewMarker(e) : null}
     >
@@ -146,7 +152,7 @@ const MapComponent = props => {
           )}
         </Marker>
       ) : null}
-      {loadAllPost
+      {loadAllPost && isAuth
         ? allPost.map(post => {
             const fLat = parseFloat(post.metadata.position.lat);
             const fLng = parseFloat(post.metadata.position.lng);
@@ -233,7 +239,8 @@ const mapStateToProps = state => ({
   selectedPost: state.windowReducer.selectedPost,
   openInfo: state.windowReducer.openInfo,
   markerLat: state.postReducer.position.markerLat,
-  markerLng: state.postReducer.position.markerLng
+  markerLng: state.postReducer.position.markerLng,
+  boundFlag: state.getPostReducer.boundFlag
 });
 
 export default connect(
@@ -245,7 +252,6 @@ export default connect(
     windowClose,
     setSelectedPost,
     offSelectedPost,
-    addNewMarker,
-    moveToCurrentLoc
+    addNewMarker
   }
 )(MapComponent);

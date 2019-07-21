@@ -26,12 +26,15 @@ export const POST_SUCCESS = "POST_SUCCESS";
 export const POST_FAIL = "POST_FAIL";
 export const NEW_MARKER_SUCCESS = "NEW_MARKER_SUCCESS";
 export const RESET_NEW_MARKER = "RESET_NEW_MARKER";
+export const CLEAR_ALL_POST = "CLEAR_ALL_POST";
 
 //getPostReducer
 export const GETALLPOST_SUCCESS = "GETALLPOST_SUCCESS";
 export const GETALLPOST_FAIL = "GETALLPOST_FAIL";
 export const GETIMG_SUCCESS = "GETIMG_SUCCESS";
 export const GETIMG_FAIL = "GETIMG_FAIL";
+export const BINDSFLAG_ON = "BINDSFLAG_ON";
+export const BINDSFLAG_OFF = "BINDSFLAG_OFF";
 
 //windowReducer
 export const WINDOW_OPEN = "WINDOW_OPEN";

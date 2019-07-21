@@ -9,7 +9,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { connect } from "react-redux";
 import { modalShow, postModalShow } from "../../actions/modalActions";
 import { moveToCurrentLoc, register, logout } from "../../actions/userAction";
-import { getAllPost } from "../../actions/getPostAction";
+import { getAllPost, clearAllPost } from "../../actions/getPostAction";
 
 //css
 import "../css/NavbarTop.css";
@@ -30,9 +30,13 @@ const NavbarTop = ({
   logout,
   getAllPost
 }) => {
-  const getPosts = async e => {
+  const getPosts = e => {
     e.persist();
-    await getAllPost();
+    getAllPost();
+  };
+  const userLogout = () => {
+    logout();
+    clearAllPost();
   };
 
   const authNav = (
@@ -40,7 +44,7 @@ const NavbarTop = ({
       <Navbar bg="danger" variant="dark">
         <Navbar.Brand href="/">MapLog</Navbar.Brand>
         <Nav className="ml-auto">
-          <Nav.Link onClick={logout}>
+          <Nav.Link onClick={() => userLogout()}>
             <FontAwesomeIcon icon={faSignInAlt} /> Logout
           </Nav.Link>
           <Nav.Link onClick={e => getPosts(e)}>
@@ -95,5 +99,13 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { modalShow, moveToCurrentLoc, register, logout, postModalShow, getAllPost }
+  {
+    modalShow,
+    moveToCurrentLoc,
+    register,
+    logout,
+    postModalShow,
+    getAllPost,
+    clearAllPost
+  }
 )(NavbarTop);
