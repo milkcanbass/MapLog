@@ -5,7 +5,9 @@ import {
   GETIMG_FAIL,
   CLEAR_ALL_POST,
   BINDSFLAG_ON,
-  BINDSFLAG_OFF
+  BINDSFLAG_OFF,
+  GET_NEW_POST_SUCCESS,
+  GET_NEW_POST_FAIL
 } from "./types";
 import axios from "axios";
 import store from "../store";
@@ -40,6 +42,7 @@ export const requestImg = filename => async dispatch => {
         filename
       }
     });
+    sessionStorage.setItem(filename, res.data);
 
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
   } catch (err) {
@@ -63,4 +66,25 @@ export const bindsFlagOff = () => dispatch => {
   dispatch({
     type: BINDSFLAG_OFF
   });
+};
+
+export const getNewPost = () => async dispatch => {
+  try {
+    const state = store.getState();
+    const id = state.userReducer.id;
+    const res = await axios.get("api/post/latestFile", {
+      params: {
+        id: id
+      }
+    });
+
+    await dispatch({
+      type: GET_NEW_POST_SUCCESS,
+      payload: res.data
+    });
+  } catch (err) {
+    console.log(err.message);
+
+    dispatch({ type: GET_NEW_POST_FAIL });
+  }
 };

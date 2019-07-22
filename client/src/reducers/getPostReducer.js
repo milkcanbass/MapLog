@@ -5,7 +5,9 @@ import {
   GETIMG_FAIL,
   CLEAR_ALL_POST,
   BINDSFLAG_ON,
-  BINDSFLAG_OFF
+  BINDSFLAG_OFF,
+  GET_NEW_POST_SUCCESS,
+  GET_NEW_POST_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -28,6 +30,7 @@ export default function(state = initialState, action) {
       };
     case GETALLPOST_FAIL:
     case CLEAR_ALL_POST:
+    case GET_NEW_POST_FAIL:
       return {
         ...state,
         ...payload,
@@ -56,6 +59,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         boundFlag: false
+      };
+    case GET_NEW_POST_SUCCESS:
+      initialState.allPost.push(payload);
+      return {
+        ...state
       };
     default:
       return state;

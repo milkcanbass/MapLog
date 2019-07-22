@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
 import { post, addNewMarker } from "../actions/postAction";
@@ -7,10 +7,11 @@ import {
   setSelectedPost,
   offSelectedPost,
   windowOpen,
-  windowClose
+  windowClose,
+  postWindowOpen,
+  postWindowClose
 } from "../actions/windowAction";
 
-import { moveToCurrentLoc } from "../actions/userAction";
 import PropTypes from "prop-types";
 
 //CSS
@@ -27,6 +28,7 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import { log } from "util";
 
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
@@ -77,6 +79,8 @@ const MapComponent = props => {
 
   const bounds = new window.google.maps.LatLngBounds();
 
+  useEffect(() => {});
+
   return (
     <GoogleMap
       defaultZoom={15}
@@ -92,19 +96,19 @@ const MapComponent = props => {
       {isAuth ? (
         <Marker
           position={{ lat: props.markerLat, lng: props.markerLng }}
-          onClick={() => props.windowOpen()}
+          onClick={() => props.postWindowOpen()}
           icon={{
             url: `${postMarker}`,
             scaledSize: new window.google.maps.Size(50, 50)
           }}
         >
-          {props.openInfo && (
+          {props.postOpenInfo && (
             <InfoWindow
               position={{
                 lat: props.markerLat,
                 lng: props.markerLng
               }}
-              onCloseClick={() => props.windowClose()}
+              onCloseClick={() => props.postWindowClose()}
             >
               <Fragment>
                 <Form onSubmit={e => submitPost(e)}>
@@ -162,8 +166,23 @@ const MapComponent = props => {
             bounds.extend(latLng);
 
             const getImg = filename => {
+              console.log("openInfoWind clicked");
+              props.windowOpen();
               props.setSelectedPost(filename);
-              props.requestImg(filename);
+              if (Object.keys(sessionStorage).includes(filename)) {
+                console.log("not call");
+                return null;
+              } else {
+                console.log("call");
+                props.requestImg(filename);
+              }
+            };
+
+            const closeInfoWind = () => {
+              console.log("closeInfoWind clicked");
+
+              setSelectedPost(null);
+              props.windowClose();
             };
 
             return (
@@ -177,7 +196,7 @@ const MapComponent = props => {
                   scaledSize: new window.google.maps.Size(50, 50)
                 }}
               >
-                {props.selectedPost === post.filename && (
+                {props.selectedPost === post.filename && props.openInfo && (
                   <InfoWindow
                     key={post.filename}
                     position={{
@@ -185,7 +204,7 @@ const MapComponent = props => {
                       lng: fLng
                     }}
                     onCloseClick={() => {
-                      setSelectedPost(null);
+                      closeInfoWind();
                     }}
                   >
                     <div>
@@ -195,7 +214,9 @@ const MapComponent = props => {
                           <h1>{post.metadata.uploadDate}</h1>
                           <div>
                             <img
-                              src={`data:image/;base64, ${props.img}`}
+                              src={`data:image/;base64, ${sessionStorage.getItem(
+                                filename
+                              )}`}
                               className="imgStyle"
                               alt={props.img}
                             />
@@ -238,6 +259,7 @@ const mapStateToProps = state => ({
   img: state.getPostReducer.img,
   selectedPost: state.windowReducer.selectedPost,
   openInfo: state.windowReducer.openInfo,
+  postOpenInfo: state.windowReducer.postOpenInfo,
   markerLat: state.postReducer.position.markerLat,
   markerLng: state.postReducer.position.markerLng,
   boundFlag: state.getPostReducer.boundFlag
@@ -250,6 +272,8 @@ export default connect(
     requestImg,
     windowOpen,
     windowClose,
+    postWindowOpen,
+    postWindowClose,
     setSelectedPost,
     offSelectedPost,
     addNewMarker

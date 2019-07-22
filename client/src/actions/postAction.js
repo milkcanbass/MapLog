@@ -6,7 +6,12 @@ import {
 } from "./types";
 import axios from "axios";
 import store from "../store";
-import { bindsFlagOn, bindsFlagOff } from "../actions/getPostAction";
+import {
+  bindsFlagOn,
+  bindsFlagOff,
+  getAllPost,
+  getNewPost
+} from "../actions/getPostAction";
 
 export const post = payload => async dispatch => {
   try {
@@ -31,8 +36,12 @@ export const post = payload => async dispatch => {
     await formData.append("id", id);
 
     await axios.post("/api/post/uploadImg", formData, config);
-    console.log(formData);
-    dispatch({ type: POST_SUCCESS, payload: payload });
+
+    store.dispatch(getNewPost());
+
+    await dispatch({ type: POST_SUCCESS, payload: payload });
+
+    store.dispatch(getAllPost());
   } catch (err) {
     console.log(err.message);
     dispatch({ type: POST_FAIL });
