@@ -11,8 +11,8 @@
 }
 
 .infoWindowStyle {
-  max-width: 400px;
-  min-width: 200px;
+  max-width: 30px;
+  min-width: 10px;
   height: auto;
 }
 

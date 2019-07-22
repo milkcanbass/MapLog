@@ -118,10 +118,12 @@ const MapComponent = props => {
         >
           {props.postOpenInfo && (
             <InfoWindow
+              id="infoWindowStyle"
               position={{
                 lat: props.markerLat,
                 lng: props.markerLng
               }}
+              maxWidth="10"
               onCloseClick={() => props.postWindowClose()}
             >
               <Fragment>
@@ -152,6 +154,7 @@ const MapComponent = props => {
                       type="file"
                       name="myImg"
                       onChange={e => imgChange(e)}
+                      required
                     />
                   </InputGroup>
                   <Button type="submit">Post</Button>
@@ -162,7 +165,7 @@ const MapComponent = props => {
                         : prevImgUrl
                     }
                     className="imagePreview"
-                    required
+                    fluid
                   />
                 </Form>
               </Fragment>
