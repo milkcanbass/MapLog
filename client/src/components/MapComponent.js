@@ -11,6 +11,7 @@ import {
   postWindowOpen,
   postWindowClose
 } from "../actions/windowAction";
+import { moveToCurrentLoc } from "../actions/userAction";
 
 import PropTypes from "prop-types";
 
@@ -28,7 +29,6 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import { log } from "util";
 
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
@@ -36,6 +36,8 @@ const MapComponent = props => {
   const [addPost, setAddPost] = useState({
     title: "",
     text: "",
+    lat: 43.653908,
+    lng: -79.384293,
     myImg: null,
     prevImgUrl: null
   });
@@ -66,20 +68,32 @@ const MapComponent = props => {
 
   const defaultMapOptions = {
     fullscreenControl: false,
-    clickableIcons: false
+    clickableIcons: false,
+    miniZoom: 10,
+    maxZoom: 15
   };
 
   const submitPost = e => {
     e.preventDefault();
     props.post(addPost);
     props.windowClose();
+    setAddPost({
+      title: "",
+      text: "",
+      lat: "",
+      lng: "",
+      myImg: null,
+      prevImgUrl: null
+    });
   };
 
   //map bounds
 
   const bounds = new window.google.maps.LatLngBounds();
 
-  useEffect(() => {});
+  useEffect(() => {
+    props.moveToCurrentLoc();
+  }, [props]);
 
   return (
     <GoogleMap
@@ -276,6 +290,7 @@ export default connect(
     postWindowClose,
     setSelectedPost,
     offSelectedPost,
-    addNewMarker
+    addNewMarker,
+    moveToCurrentLoc
   }
 )(MapComponent);

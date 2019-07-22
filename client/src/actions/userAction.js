@@ -17,6 +17,7 @@ import setAuthToken from "../utils/setAuthToken";
 import store from "../store";
 import { modalClose } from "./modalActions";
 import { resetNewMarker } from "./postAction";
+import { getAllPost } from "./getPostAction";
 
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {
@@ -74,9 +75,10 @@ export const login = ({ email, password }) => async dispatch => {
   try {
     const res = await axios.post("api/auth/login", body, config);
 
-    dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-    dispatch(loadUser());
-    store.dispatch(modalClose());
+    await dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+    await dispatch(loadUser());
+    await store.dispatch(getAllPost());
+    await store.dispatch(modalClose());
   } catch (err) {
     const errors = err.response.data;
 

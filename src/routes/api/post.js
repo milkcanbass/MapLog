@@ -104,28 +104,47 @@ router.get("/files", auth, (req, res) => {
   });
 });
 
-router.get("/latestFile", auth, (req, res) => {
-  let userId = req.query.id;
+// router.get("/latestFile", auth, (req, res) => {
+//   let userId = req.query.id;
 
-  gfs.files
-    .find({ "metadata.id": userId })
-    .sort("uploadDate", -1)
-    .toArray((err, files) => {
-      // Check if files
-      if (!files || files.length === 0) {
-        return res.status(404).json({
-          err: "No files exist"
-        });
-      }
+//   gfs.files
+//     .find({ "metadata.id": userId })
+//     .sort("uploadDate", -1)
+//     .toArray((err, files) => {
+//       // Check if files
+//       if (!files || files.length === 0) {
+//         return res.status(404).json({
+//           err: "No files exist"
+//         });
+//       }
 
-      // Files exist
-      res.json(files[0]);
-    });
-});
+//       // Files exist
+//       res.json(files[0]);
+//     });
+// });
 
 //@route /delete
 //@desc get one images in server(need)
 //Goal find images by Meta data
 //@Auth public
+
+router.delete("/files", auth, async (req, res) => {
+  try {
+    let postId = req.query.filename;
+    const post = await CommentModel.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).send("User not authorized");
+    }
+    await post.remove();
+    res.send("The post removed");
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).send("Post not found");
+    }
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;
