@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import store from "../store";
 import { bindsFlagOff, getAllPost, getNewPost } from "../actions/getPostAction";
+import { postWindowClose } from "./windowAction";
 
 export const post = payload => async dispatch => {
   try {
@@ -56,6 +57,7 @@ export const addNewMarker = payload => dispatch => {
     type: NEW_MARKER_SUCCESS,
     payload: { lat, lng }
   });
+  store.dispatch(postWindowClose());
 };
 
 export const resetNewMarker = () => dispatch => {
@@ -69,6 +71,7 @@ export const deletePost = filename => async dispatch => {
     });
 
     await dispatch({ type: DELETE_POST_SUCCESS });
+
     await store.dispatch(getAllPost());
   } catch (err) {
     console.log(err.message);

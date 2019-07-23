@@ -60,6 +60,7 @@ const RegisterModal = props => {
               name="name"
               value={name}
               onChange={e => onChange(e)}
+              required
               autoComplete="off"
             />
           </Form.Group>
@@ -70,6 +71,7 @@ const RegisterModal = props => {
               name="email"
               value={email}
               onChange={e => onChange(e)}
+              required
               autoComplete="off"
             />
             <Form.Text className="text-muted">
@@ -84,6 +86,7 @@ const RegisterModal = props => {
               name="password"
               value={password}
               onChange={e => onChange(e)}
+              required
               autoComplete="off"
             />
           </Form.Group>

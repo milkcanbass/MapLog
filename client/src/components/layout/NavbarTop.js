@@ -13,7 +13,7 @@ import { getAllPost, clearAllPost } from "../../actions/getPostAction";
 
 //css
 import "../css/NavbarTop.css";
-
+import Spinner from "react-bootstrap/Spinner";
 import {
   faMapMarkedAlt,
   faSignInAlt,
@@ -25,10 +25,9 @@ const NavbarTop = ({
   modalShow,
   moveToCurrentLoc,
   isAuth,
-  allPost,
-  loadAllPost,
   logout,
-  getAllPost
+  getAllPost,
+  loadingPost
 }) => {
   const getPosts = e => {
     e.persist();
@@ -47,11 +46,18 @@ const NavbarTop = ({
           <Nav.Link onClick={() => userLogout()}>
             <FontAwesomeIcon icon={faSignInAlt} /> Logout
           </Nav.Link>
-          <Nav.Link onClick={e => getPosts(e)}>
-            <FontAwesomeIcon icon={faPlusCircle} />
-            Download markers
-          </Nav.Link>
-          <Nav.Link onClick={moveToCurrentLoc}>
+          {loadingPost ? (
+            <Nav.Link>
+              <Spinner animation="grow" variant="light" />
+            </Nav.Link>
+          ) : (
+            <Nav.Link onClick={e => getPosts(e)}>
+              <FontAwesomeIcon icon={faPlusCircle} />
+              Download markers
+            </Nav.Link>
+          )}
+
+          <Nav.Link onClick={() => moveToCurrentLoc()}>
             <FontAwesomeIcon icon={faMapMarkedAlt} /> Your Location
           </Nav.Link>
         </Nav>
@@ -67,7 +73,7 @@ const NavbarTop = ({
           <Nav.Link onClick={modalShow}>
             <FontAwesomeIcon icon={faSignInAlt} /> Login
           </Nav.Link>
-          <Nav.Link onClick={moveToCurrentLoc}>
+          <Nav.Link onClick={() => moveToCurrentLoc()}>
             <FontAwesomeIcon icon={faMapMarkedAlt} /> Your Location
           </Nav.Link>
         </Nav>
@@ -87,6 +93,7 @@ NavbarTop.prototype = {
   register: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   getAllPost: PropTypes.func.isRequired,
+  loadingPost: PropTypes.bool.isRequired,
   allPost: PropTypes.array.isRequired
 };
 
@@ -94,7 +101,8 @@ const mapStateToProps = state => ({
   isAuth: state.userReducer.isAuth,
   postStatus: state.modalReducer.postStatus,
   loadAllPost: state.getPostReducer.loadAllPost,
-  allPost: state.getPostReducer.allPost
+  allPost: state.getPostReducer.allPost,
+  loadingPost: state.getPostReducer.loadingPost
 });
 
 export default connect(

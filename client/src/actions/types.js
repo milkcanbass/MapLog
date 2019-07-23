@@ -39,6 +39,10 @@ export const BINDSFLAG_ON = "BINDSFLAG_ON";
 export const BINDSFLAG_OFF = "BINDSFLAG_OFF";
 export const GET_NEW_POST_SUCCESS = "GET_NEW_POST_SUCCESS";
 export const GET_NEW_POST_FAIL = "GET_NEW_POST_FAIL";
+export const LOADING_POST_ON = "LOADING_POST_ON";
+export const LOADING_POST_OFF = "LOADING_POST_OFF";
+export const LOADING_IMG_ON = "LOADING_IMG_ON";
+export const LOADING_IMG_OFF = "LOADING_IMG_OFF";
 
 //windowReducer
 export const WINDOW_OPEN = "WINDOW_OPEN";

@@ -7,14 +7,19 @@ import {
   BINDSFLAG_ON,
   BINDSFLAG_OFF,
   GET_NEW_POST_SUCCESS,
-  GET_NEW_POST_FAIL
+  GET_NEW_POST_FAIL,
+  LOADING_POST_ON,
+  LOADING_POST_OFF,
+  LOADING_IMG_ON,
+  LOADING_IMG_OFF
 } from "../actions/types";
 
 const initialState = {
   allPost: [],
   loadAllPost: false,
+  loadingPost: false,
   img: "",
-  loadImg: false,
+  loadingImg: false,
   boundFlag: null
 };
 
@@ -26,7 +31,8 @@ export default function(state = initialState, action) {
         ...state,
         ...payload,
         allPost: payload,
-        loadAllPost: true
+        loadAllPost: true,
+        loadingPost: true
       };
     case GETALLPOST_FAIL:
     case CLEAR_ALL_POST:
@@ -35,19 +41,21 @@ export default function(state = initialState, action) {
         ...state,
         ...payload,
         allPost: [],
-        loadAllPost: false
+        loadAllPost: false,
+        loadingPost: false,
+        loadingImg: false
       };
     case GETIMG_SUCCESS:
       return {
         ...state,
         img: payload,
-        loadImg: true
+        loadingImg: true
       };
     case GETIMG_FAIL:
       return {
         ...state,
         img: "",
-        loadImg: false
+        loadingImg: false
       };
     case BINDSFLAG_ON:
       return {
@@ -63,6 +71,24 @@ export default function(state = initialState, action) {
       initialState.allPost.push(payload);
       return {
         ...state
+      };
+    case LOADING_POST_ON:
+      return {
+        ...state,
+        loadingPost: true
+      };
+    case LOADING_POST_OFF:
+      return {
+        ...state,
+        loadingPost: false
+      };
+    case LOADING_IMG_ON:
+      return {
+        loadingImg: true
+      };
+    case LOADING_IMG_OFF:
+      return {
+        loadingImg: false
       };
     default:
       return state;

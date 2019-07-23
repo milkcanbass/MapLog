@@ -88,11 +88,6 @@ const MapComponent = props => {
     });
   };
 
-  const editPost = filename => {
-    console.log("clicked");
-    console.log(filename);
-  };
-
   const activateDeletePost = filename => {
     console.log("clicked");
 
@@ -110,7 +105,7 @@ const MapComponent = props => {
   return (
     <GoogleMap
       defaultZoom={15}
-      defaultCenter={{ lat: props.markerLat, lng: props.markerLng }}
+      defaultCenter={{ lat: 43.653908, lng: -79.384293 }}
       ref={
         loadAllPost && isAuth && props.boundFlag
           ? map => map && map.fitBounds(bounds)
@@ -191,7 +186,6 @@ const MapComponent = props => {
             const fLat = parseFloat(post.metadata.position.lat);
             const fLng = parseFloat(post.metadata.position.lng);
             const filename = post.filename;
-            const postId = post._id;
 
             const latLng = new window.google.maps.LatLng(fLat, fLng);
             bounds.extend(latLng);
@@ -264,15 +258,6 @@ const MapComponent = props => {
 
                           <div>
                             <center>
-                              <Button
-                                key={postId}
-                                variant="info"
-                                type="button"
-                                className="postButton1"
-                                onClick={() => editPost(filename)}
-                              >
-                                Update
-                              </Button>
                               <Button
                                 variant="dark"
                                 type="button"

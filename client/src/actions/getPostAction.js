@@ -7,7 +7,11 @@ import {
   BINDSFLAG_ON,
   BINDSFLAG_OFF,
   GET_NEW_POST_SUCCESS,
-  GET_NEW_POST_FAIL
+  GET_NEW_POST_FAIL,
+  LOADING_POST_ON,
+  LOADING_POST_OFF,
+  LOADING_IMG_ON,
+  LOADING_IMG_OFF
 } from "./types";
 import axios from "axios";
 import store from "../store";
@@ -26,9 +30,10 @@ export const getAllPost = () => async dispatch => {
       type: BINDSFLAG_ON
     });
     await dispatch({ type: GETALLPOST_SUCCESS, payload: res.data });
+    await dispatch({ type: LOADING_POST_OFF });
   } catch (err) {
     console.log(err.message);
-    await dispatch({ type: GETALLPOST_FAIL });
+    await dispatch({ type: LOADING_POST_OFF });
   }
 };
 

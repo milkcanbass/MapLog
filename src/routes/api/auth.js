@@ -33,19 +33,26 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/register",
   [
-    check("name", "Name is required")
+    check("name", "Name is required. \r\n")
       .not()
       .isEmpty(),
-    check("email", "Please use valid email").isEmail(),
+    check("email", "Please use valid email. \r\n").isEmail(),
     check(
       "password",
-      "Please enter a password at least 5 characters or more"
+      "Please enter a password at least 5 characters or more. \r\n"
     ).isLength({ min: 5 })
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+      const obj = errors.errors;
+      const textArray = [];
+      obj.map(msg => {
+        const message = msg.msg;
+        textArray.push(message);
+      });
+
+      return res.status(422).send(textArray);
     }
     const { name, email, password } = req.body;
     try {
@@ -95,8 +102,14 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const message = errors.array();
-      return res.status(422).send(message);
+      const obj = errors.errors;
+      const textArray = [];
+      obj.map(msg => {
+        const message = msg.msg;
+        textArray.push(message);
+      });
+
+      return res.status(422).send(textArray);
     }
     const { email, password } = req.body;
     try {
