@@ -4,22 +4,48 @@
   position: relative;
 }
 
-.imgStyle {
-  max-width: 200px;
-  min-width: 100px;
+.inputForm .imgStyle {
+  max-width: 400px;
+  min-width: 200px;
   max-height: auto;
 }
 
-.infoWindowStyle {
-  max-width: 30px;
-  min-width: 10px;
+.inputForm {
+  max-width: 1000px;
+  max-height: 1000px;
+  background-color: aquamarine;
+  padding: 0;
+}
+.imagePreview {
+  position: relative;
+  display: inline;
+  background-color: black;
+}
+
+.postForm {
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 500px;
+  max-height: 500px;
+  padding: 0;
+  margin: 0;
+}
+
+.postForm .imgStyle {
+  min-width: 100px;
+  max-width: 500px;
   height: auto;
 }
 
-.button {
-  background: #3498db;
-  max-width: 400px;
-  padding: 15px 100px;
-  position: relative;
-  /* margin: 10px 0; */
+.postForm .textDisplay {
+  padding: 20px 10px 10px 10px;
+  overflow: auto;
+}
+
+.postButton1 {
+  margin: 0px 30px 0px 30px;
+}
+
+.postButton2 {
+  margin: 0px 30px 0px 30px;
 }

@@ -123,51 +123,52 @@ const MapComponent = props => {
                 lat: props.markerLat,
                 lng: props.markerLng
               }}
-              maxWidth="10"
               onCloseClick={() => props.postWindowClose()}
             >
               <Fragment>
-                <Form onSubmit={e => submitPost(e)}>
-                  <Form.Group controlId="exampleForm.ControlInput1">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="title"
-                      value={title}
-                      onChange={e => imgChange(e)}
-                      required
-                    />
-                  </Form.Group>
+                <div className="inputForm">
+                  <Form onSubmit={e => submitPost(e)}>
+                    <Form.Group controlId="exampleForm.ControlInput1">
+                      <Form.Label>Title</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="title"
+                        value={title}
+                        onChange={e => imgChange(e)}
+                        required
+                      />
+                    </Form.Group>
 
-                  <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Text</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      onChange={e => imgChange(e)}
-                      rows="3"
-                      name="text"
-                      value={text}
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                      <Form.Label>Text</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        onChange={e => imgChange(e)}
+                        rows="3"
+                        name="text"
+                        value={text}
+                      />
+                    </Form.Group>
+                    <InputGroup className="mb-3">
+                      <FormControl
+                        type="file"
+                        name="myImg"
+                        onChange={e => imgChange(e)}
+                        required
+                      />
+                    </InputGroup>
+                    <Button type="submit">Post</Button>
+                    <Image
+                      src={
+                        prevImgUrl === null || prevImgUrl === ""
+                          ? sampleImage
+                          : prevImgUrl
+                      }
+                      className="imagePreview"
+                      fluid
                     />
-                  </Form.Group>
-                  <InputGroup className="mb-3">
-                    <FormControl
-                      type="file"
-                      name="myImg"
-                      onChange={e => imgChange(e)}
-                      required
-                    />
-                  </InputGroup>
-                  <Button type="submit">Post</Button>
-                  <Image
-                    src={
-                      prevImgUrl === null || prevImgUrl === ""
-                        ? sampleImage
-                        : prevImgUrl
-                    }
-                    className="imagePreview"
-                    fluid
-                  />
-                </Form>
+                  </Form>
+                </div>
               </Fragment>
             </InfoWindow>
           )}
@@ -181,7 +182,7 @@ const MapComponent = props => {
 
             const latLng = new window.google.maps.LatLng(fLat, fLng);
             bounds.extend(latLng);
-
+            console.log(post.uploadDate);
             const getImg = filename => {
               console.log("openInfoWind clicked");
               props.windowOpen();
@@ -201,6 +202,20 @@ const MapComponent = props => {
               setSelectedPost(null);
               props.windowClose();
             };
+
+            const content =
+              '<div id="iw-container">' +
+              '<div class="iw-title">Porcelain Factory of Vista Alegre</div>' +
+              '<div class="iw-content">' +
+              '<div class="iw-subTitle">History</div>' +
+              '<img src="http://maps.marnoto.com/en/5wayscustomizeinfowindow/images/vistalegre.jpg" alt="Porcelain Factory of Vista Alegre" height="115" width="83">' +
+              '<p>Founded in 1824, the Porcelain Factory of Vista Alegre was the first industrial unit dedicated to porcelain production in Portugal. For the foundation and success of this risky industrial development was crucial the spirit of persistence of its founder, José Ferreira Pinto Basto. Leading figure in Portuguese society of the nineteenth century farm owner, daring dealer, wisely incorporated the liberal ideas of the century, having become "the first example of free enterprise" in Portugal.</p>' +
+              '<div class="iw-subTitle">Contacts</div>' +
+              "<p>VISTA ALEGRE ATLANTIS, SA<br>3830-292 Ílhavo - Portugal<br>" +
+              "<br>Phone. +351 234 320 600<br>e-mail: geral@vaa.pt<br>www: www.myvistaalegre.com</p>" +
+              "</div>" +
+              '<div class="iw-bottom-gradient"></div>' +
+              "</div>";
 
             return (
               <Marker
@@ -228,20 +243,42 @@ const MapComponent = props => {
                       <Fragment>
                         <center>
                           <h1>{post.metadata.title}</h1>
-                          <h1>{post.metadata.uploadDate}</h1>
-                          <div>
+                          <p>{post.uploadDate}</p>
+                        </center>
+                        <div className="postForm">
+                          <center>
                             <img
                               src={`data:image/;base64, ${sessionStorage.getItem(
                                 filename
                               )}`}
                               className="imgStyle"
                               alt={props.img}
+                              fluid
                             />
-                            <p>{post.metadata.text}</p>
+                          </center>
+                          <div>
+                            <p className="textDisplay">{post.metadata.text}</p>
                           </div>
 
-                          <Button type="button">Delete</Button>
-                        </center>
+                          <div>
+                            <center>
+                              <Button
+                                variant="info"
+                                type="button"
+                                className="postButton1"
+                              >
+                                Update
+                              </Button>
+                              <Button
+                                variant="dark"
+                                type="button"
+                                className="postButton2"
+                              >
+                                Delete
+                              </Button>
+                            </center>
+                          </div>
+                        </div>
                       </Fragment>
                     </div>
                   </InfoWindow>

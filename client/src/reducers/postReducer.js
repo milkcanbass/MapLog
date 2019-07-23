@@ -14,7 +14,6 @@ const initialState = {
     markerLng: -79.384293
   },
   myImg: null,
-  createdAt: new Date().getTime(),
   commented: null
 };
 
