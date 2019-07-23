@@ -42,7 +42,9 @@ export const requestImg = filename => async dispatch => {
         filename
       }
     });
-    sessionStorage.setItem(filename, res.data);
+
+    //easy to hit
+    // sessionStorage.setItem(filename, res.data);
 
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
   } catch (err) {

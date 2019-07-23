@@ -29,6 +29,7 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import { log } from "util";
 
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
@@ -85,6 +86,14 @@ const MapComponent = props => {
       myImg: null,
       prevImgUrl: null
     });
+  };
+
+  const editPost = id => {
+    console.log(id);
+  };
+
+  const deletePost = id => {
+    console.log(id);
   };
 
   //map bounds
@@ -179,6 +188,8 @@ const MapComponent = props => {
             const fLat = parseFloat(post.metadata.position.lat);
             const fLng = parseFloat(post.metadata.position.lng);
             const filename = post.filename;
+            const id = post._id;
+            console.log(id);
 
             const latLng = new window.google.maps.LatLng(fLat, fLng);
             bounds.extend(latLng);
@@ -202,20 +213,6 @@ const MapComponent = props => {
               setSelectedPost(null);
               props.windowClose();
             };
-
-            const content =
-              '<div id="iw-container">' +
-              '<div class="iw-title">Porcelain Factory of Vista Alegre</div>' +
-              '<div class="iw-content">' +
-              '<div class="iw-subTitle">History</div>' +
-              '<img src="http://maps.marnoto.com/en/5wayscustomizeinfowindow/images/vistalegre.jpg" alt="Porcelain Factory of Vista Alegre" height="115" width="83">' +
-              '<p>Founded in 1824, the Porcelain Factory of Vista Alegre was the first industrial unit dedicated to porcelain production in Portugal. For the foundation and success of this risky industrial development was crucial the spirit of persistence of its founder, José Ferreira Pinto Basto. Leading figure in Portuguese society of the nineteenth century farm owner, daring dealer, wisely incorporated the liberal ideas of the century, having become "the first example of free enterprise" in Portugal.</p>' +
-              '<div class="iw-subTitle">Contacts</div>' +
-              "<p>VISTA ALEGRE ATLANTIS, SA<br>3830-292 Ílhavo - Portugal<br>" +
-              "<br>Phone. +351 234 320 600<br>e-mail: geral@vaa.pt<br>www: www.myvistaalegre.com</p>" +
-              "</div>" +
-              '<div class="iw-bottom-gradient"></div>' +
-              "</div>";
 
             return (
               <Marker
@@ -248,9 +245,12 @@ const MapComponent = props => {
                         <div className="postForm">
                           <center>
                             <img
-                              src={`data:image/;base64, ${sessionStorage.getItem(
-                                filename
-                              )}`}
+                              // src={`data:image/;base64, ${sessionStorage.getItem(
+                              //   filename
+                              // )}`}
+                              src={`data:image/;base64, 
+                                ${props.img}
+                              `}
                               className="imgStyle"
                               alt={props.img}
                               fluid
@@ -266,6 +266,7 @@ const MapComponent = props => {
                                 variant="info"
                                 type="button"
                                 className="postButton1"
+                                onClick={id => editPost(id)}
                               >
                                 Update
                               </Button>
@@ -273,6 +274,7 @@ const MapComponent = props => {
                                 variant="dark"
                                 type="button"
                                 className="postButton2"
+                                onClick={id => deletePost(id)}
                               >
                                 Delete
                               </Button>
