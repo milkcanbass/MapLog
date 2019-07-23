@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
-import { post, addNewMarker } from "../actions/postAction";
+import { post, addNewMarker, deletePost } from "../actions/postAction";
 import { requestImg } from "../actions/getPostAction";
 import {
   setSelectedPost,
@@ -29,7 +29,6 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import { log } from "util";
 
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
@@ -37,6 +36,7 @@ const MapComponent = props => {
   const [addPost, setAddPost] = useState({
     title: "",
     text: "",
+    postId: "",
     lat: 43.653908,
     lng: -79.384293,
     myImg: null,
@@ -88,12 +88,15 @@ const MapComponent = props => {
     });
   };
 
-  const editPost = id => {
-    console.log(id);
+  const editPost = filename => {
+    console.log("clicked");
+    console.log(filename);
   };
 
-  const deletePost = id => {
-    console.log(id);
+  const activateDeletePost = filename => {
+    console.log("clicked");
+
+    props.deletePost(filename);
   };
 
   //map bounds
@@ -188,12 +191,11 @@ const MapComponent = props => {
             const fLat = parseFloat(post.metadata.position.lat);
             const fLng = parseFloat(post.metadata.position.lng);
             const filename = post.filename;
-            const id = post._id;
-            console.log(id);
+            const postId = post._id;
 
             const latLng = new window.google.maps.LatLng(fLat, fLng);
             bounds.extend(latLng);
-            console.log(post.uploadDate);
+
             const getImg = filename => {
               console.log("openInfoWind clicked");
               props.windowOpen();
@@ -263,10 +265,11 @@ const MapComponent = props => {
                           <div>
                             <center>
                               <Button
+                                key={postId}
                                 variant="info"
                                 type="button"
                                 className="postButton1"
-                                onClick={id => editPost(id)}
+                                onClick={() => editPost(filename)}
                               >
                                 Update
                               </Button>
@@ -274,7 +277,7 @@ const MapComponent = props => {
                                 variant="dark"
                                 type="button"
                                 className="postButton2"
-                                onClick={id => deletePost(id)}
+                                onClick={() => activateDeletePost(filename)}
                               >
                                 Delete
                               </Button>
@@ -299,7 +302,7 @@ MapComponent.propTypes = {
   allPost: PropTypes.array.isRequired,
   loadAllPost: PropTypes.bool.isRequired,
   windowOpen: PropTypes.func.isRequired,
-  widowClose: PropTypes.func.isRequired,
+  widowClose: PropTypes.func,
   setSelectedPost: PropTypes.func.isRequired,
   offSelectedPost: PropTypes.func.isRequired,
   img: PropTypes.string.isRequired,
@@ -333,6 +336,7 @@ export default connect(
     setSelectedPost,
     offSelectedPost,
     addNewMarker,
-    moveToCurrentLoc
+    moveToCurrentLoc,
+    deletePost
   }
 )(MapComponent);

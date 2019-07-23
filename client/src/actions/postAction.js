@@ -2,16 +2,13 @@ import {
   POST_SUCCESS,
   POST_FAIL,
   NEW_MARKER_SUCCESS,
-  RESET_NEW_MARKER
+  RESET_NEW_MARKER,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAIL
 } from "./types";
 import axios from "axios";
 import store from "../store";
-import {
-  bindsFlagOn,
-  bindsFlagOff,
-  getAllPost,
-  getNewPost
-} from "../actions/getPostAction";
+import { bindsFlagOff, getAllPost, getNewPost } from "../actions/getPostAction";
 
 export const post = payload => async dispatch => {
   try {
@@ -63,4 +60,18 @@ export const addNewMarker = payload => dispatch => {
 
 export const resetNewMarker = () => dispatch => {
   dispatch({ type: RESET_NEW_MARKER });
+};
+
+export const deletePost = filename => async dispatch => {
+  try {
+    await axios.delete("/api/post/files/delete", {
+      params: { filename: filename }
+    });
+
+    await dispatch({ type: DELETE_POST_SUCCESS });
+    await store.dispatch(getAllPost());
+  } catch (err) {
+    console.log(err.message);
+    dispatch({ type: DELETE_POST_FAIL });
+  }
 };

@@ -38,7 +38,6 @@ export default function(state = initialState, action) {
         loadAllPost: false
       };
     case GETIMG_SUCCESS:
-      console.log(payload);
       return {
         ...state,
         img: payload,

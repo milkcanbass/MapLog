@@ -2,7 +2,9 @@ import {
   POST_SUCCESS,
   POST_FAIL,
   NEW_MARKER_SUCCESS,
-  RESET_NEW_MARKER
+  RESET_NEW_MARKER,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -35,8 +37,6 @@ export default function(state = initialState, action) {
         commented: null
       };
     case NEW_MARKER_SUCCESS:
-      console.log(payload.lat);
-
       return {
         ...state,
         position: {
@@ -56,6 +56,18 @@ export default function(state = initialState, action) {
         },
         myImg: null,
         commented: null
+      };
+    }
+    case DELETE_POST_SUCCESS: {
+      return {
+        ...state,
+        deleted: true
+      };
+    }
+    case DELETE_POST_FAIL: {
+      return {
+        ...state,
+        deleted: null
       };
     }
     default:

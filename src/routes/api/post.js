@@ -43,7 +43,6 @@ router.post("/uploadImg", auth, upload.single("myImg"), (req, res) => {
 //@Auth public
 router.get("/getImg", (req, res) => {
   let filename = req.query.filename;
-  console.log(filename);
 
   gfs.files.findOne({ filename: filename }, (err, file) => {
     if (!file || file.length === 0) {
@@ -81,7 +80,7 @@ router.get("/getRes", (req, res) => {
     const readStream = gfs.createReadStream(file.filename);
     readStream.pipe(res);
     readStream.on("close", () => {
-      console.log("file found");
+      res.send("file found");
     });
   });
 });
@@ -109,18 +108,17 @@ router.get("/files", auth, (req, res) => {
 //Goal find images by Meta data
 //@Auth public
 
-router.delete("/files", auth, (req, res) => {
-  let userId = req.query.id;
-  gfs.remove(
-    { _id: "5d3678323ff63e587a72a255", root: "myImgs" },
-    (err, gridStore) => {
-      if (err) {
-        return res.status(404).json({ err: err });
-      }
-      res.send("succeed");
-      res.redirect("/");
+router.delete("/files/delete", auth, (req, res) => {
+  console.log(req.query.filename);
+
+  let filename = req.query.filename;
+
+  gfs.remove({ filename: filename, root: "myImgs" }, (err, gridStore) => {
+    if (err) {
+      return res.status(404).json({ err: err });
     }
-  );
+    res.send("Deleted the post");
+  });
 });
 
 module.exports = router;

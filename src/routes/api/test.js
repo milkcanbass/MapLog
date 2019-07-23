@@ -5,9 +5,6 @@ const TestModel = require("../../models/TestModel");
 
 router.post("/post", async (req, res) => {
   try {
-    console.log("activated");
-    console.log(req.body);
-
     const newPost = new TestModel({
       post: req.body.post
     });
