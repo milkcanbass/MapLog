@@ -24,20 +24,21 @@ if (localStorage.token) {
 const App = ({
   modalOpen,
   modalClose,
-  postModalOpen,
+  postmodalopen,
   loadUser,
   infoModalOpen
 }) => {
   useEffect(() => {
     loadUser();
   }, [loadUser]);
+
   return (
     <Router>
       <NavbarTop />
 
       <InfoModal show={infoModalOpen} onHide={modalClose} />
 
-      <AddPostModal show={postModalOpen} onHide={modalClose} />
+      <AddPostModal show={postmodalopen} onHide={modalClose} />
       <StandardModal show={modalOpen} onHide={modalClose} />
 
       <Switch>
@@ -49,13 +50,13 @@ const App = ({
 
 App.prototype = {
   modalOpen: PropTypes.bool.isRequired,
-
+  postmodalopen: PropTypes.bool.isRequired,
   modalClose: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   modalOpen: state.modalReducer.modalOpen,
-  postModalOpen: state.modalReducer.postModalOpen,
+  postmodalopen: state.modalReducer.postmodalopen,
   infoModalOpen: state.modalReducer.infoModalOpen
 });
 

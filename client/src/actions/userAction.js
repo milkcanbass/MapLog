@@ -10,7 +10,8 @@ import {
   MODAL_REGISTER_FAIL,
   MODAL_CLOSE,
   MODAL_LOGIN_FAIL,
-  MODAL_ALERT
+  MODAL_ALERT,
+  NEW_MARKER_SUCCESS
 } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";

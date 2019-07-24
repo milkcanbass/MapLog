@@ -12,7 +12,7 @@ import { signInOn } from "../../../actions/modalActions";
 import "../../css/addPostModal_styles.css";
 
 const InfoModal = props => {
-  switch (props.infoModalType) {
+  switch (props.infomodaltype) {
     case "registerFail":
       return (
         <Modal
@@ -28,7 +28,7 @@ const InfoModal = props => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>{props.infoModalText}</p>
+            <p>{props.infomodaltext}</p>
           </Modal.Body>
         </Modal>
       );
@@ -47,7 +47,7 @@ const InfoModal = props => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>{props.infoModalText}</p>
+            <p>{props.infomodaltext}</p>
           </Modal.Body>
         </Modal>
       );
@@ -62,7 +62,7 @@ const InfoModal = props => {
           centered
         >
           <Modal.Body>
-            <p>{props.infoModalText}</p>
+            <p>{props.infomodaltext}</p>
           </Modal.Body>
         </Modal>
       );
@@ -73,19 +73,19 @@ const InfoModal = props => {
 };
 
 InfoModal.prototype = {
-  postModalOpen: PropTypes.bool.isRequired,
+  postmodalopen: PropTypes.bool.isRequired,
   isAuth: PropTypes.bool.isRequired,
   register: PropTypes.func.isRequired,
-  infoModalType: PropTypes.string.isRequired,
-  infoModalText: PropTypes.string.isRequired
+  infomodaltype: PropTypes.string.isRequired,
+  infomodaltext: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    postModalOpen: state.modalReducer.modalOpen,
+    postmodalopen: state.modalReducer.modalOpen,
     isAuth: state.userReducer.isAuth,
-    infoModalType: state.modalReducer.infoModalType,
-    infoModalText: state.modalReducer.infoModalText
+    infomodaltype: state.modalReducer.infomodaltype,
+    infomodaltext: state.modalReducer.infomodaltext
   };
 };
 

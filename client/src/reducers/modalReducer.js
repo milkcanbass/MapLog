@@ -12,11 +12,11 @@ import {
 
 const initialState = {
   modalOpen: false,
-  postModalOpen: false,
+  postmodalopen: false,
   infoModalOpen: false,
   signInOn: false, //True = SignIn screen open
-  infoModalType: null,
-  infoModalText: ""
+  infomodaltype: null,
+  infomodaltext: ""
 };
 
 export default function(state = initialState, action) {
@@ -32,13 +32,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         modalOpen: false,
-        postModalOpen: false,
+        postmodalopen: false,
         infoModalOpen: false
       };
     case POST_MODAL_SHOW:
       return {
         ...state,
-        postModalOpen: true
+        postmodalopen: true
       };
 
     case INFO_MODAL_SHOW:
@@ -61,22 +61,22 @@ export default function(state = initialState, action) {
       return {
         ...state,
         infoModalOpen: true,
-        infoModalType: "registerFail",
-        infoModalText: payload
+        infomodaltype: "registerFail",
+        infomodaltext: payload
       };
     case MODAL_LOGIN_FAIL:
       return {
         ...state,
         infoModalOpen: true,
-        infoModalType: "loginFail",
-        infoModalText: payload
+        infomodaltype: "loginFail",
+        infomodaltext: payload
       };
     case MODAL_ALERT:
       return {
         ...state,
         infoModalOpen: true,
-        infoModalType: "alert",
-        infoModalText: payload
+        infomodaltype: "alert",
+        infomodaltext: payload
       };
     default:
       return state;

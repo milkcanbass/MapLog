@@ -15,8 +15,7 @@ const initialState = {
     markerLat: 43.653908,
     markerLng: -79.384293
   },
-  myImg: null,
-  commented: null
+  myImg: null
 };
 
 export default function(state = initialState, action) {
@@ -26,15 +25,12 @@ export default function(state = initialState, action) {
     case POST_SUCCESS:
       return {
         ...state,
-        ...payload,
-
-        commented: true
+        ...payload
       };
     case POST_FAIL:
       return {
         ...state,
-        ...payload,
-        commented: null
+        ...payload
       };
     case NEW_MARKER_SUCCESS:
       return {
@@ -54,8 +50,7 @@ export default function(state = initialState, action) {
           markerLat: "",
           markerLng: ""
         },
-        myImg: null,
-        commented: null
+        myImg: null
       };
     }
     case DELETE_POST_SUCCESS: {

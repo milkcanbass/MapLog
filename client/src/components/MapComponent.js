@@ -17,7 +17,6 @@ import PropTypes from "prop-types";
 
 //CSS
 import "./css/mapComponent.css";
-import Spinner from "react-bootstrap/Spinner";
 
 //image
 import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
@@ -90,25 +89,21 @@ const MapComponent = props => {
   };
 
   const activateDeletePost = filename => {
-    console.log("clicked");
-
     props.deletePost(filename);
   };
 
-  console.log(props.loadingImg);
+  useEffect(() => {
+    moveToCurrentLoc();
+  }, []);
 
   //map bounds
 
   const bounds = new window.google.maps.LatLngBounds();
 
-  useEffect(() => {
-    props.moveToCurrentLoc();
-  }, [props]);
-
   return (
     <GoogleMap
       defaultZoom={15}
-      defaultCenter={{ lat: 43.653908, lng: -79.384293 }}
+      defaultCenter={{ lat: props.markerLat, lng: props.markerLng }}
       ref={
         loadAllPost && isAuth && props.boundFlag
           ? map => map && map.fitBounds(bounds)
@@ -291,8 +286,8 @@ const MapComponent = props => {
 };
 
 MapComponent.propTypes = {
-  userLat: PropTypes.number.isRequired,
   userLng: PropTypes.number.isRequired,
+  userLat: PropTypes.number.isRequired,
   allPost: PropTypes.array.isRequired,
   loadAllPost: PropTypes.bool.isRequired,
   windowOpen: PropTypes.func.isRequired,
@@ -305,8 +300,8 @@ MapComponent.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  userLat: state.userReducer.userLat,
   userLng: state.userReducer.userLng,
+  userLat: state.userReducer.userLat,
   isAuth: state.userReducer.isAuth,
   allPost: state.getPostReducer.allPost,
   loadAllPost: state.getPostReducer.loadAllPost,

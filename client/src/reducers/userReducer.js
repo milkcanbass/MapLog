@@ -13,8 +13,6 @@ const initialState = {
   token: localStorage.getItem("token"),
   _id: "",
   isAuth: false,
-  userLat: 43.653908,
-  userLng: -79.384293,
   createdAt: new Date().getTime()
 };
 
@@ -54,7 +52,6 @@ export default function(state = initialState, action) {
     case USER_LOCATION:
       return {
         ...state,
-        ...payload,
         userLat: payload.lat,
         userLng: payload.lng
       };

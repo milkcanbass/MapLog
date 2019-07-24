@@ -57,14 +57,14 @@ const AddPostModal = props => {
 };
 
 AddPostModal.prototype = {
-  postModalOpen: PropTypes.bool.isRequired,
+  postmodalopen: PropTypes.bool.isRequired,
   isAuth: PropTypes.bool.isRequired,
   register: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    postModalOpen: state.modalReducer.modalOpen,
+    postmodalopen: state.modalReducer.modalOpen,
     isAuth: state.userReducer.isAuth
   };
 };
