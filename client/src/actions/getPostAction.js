@@ -47,11 +47,13 @@ export const requestImg = filename => async dispatch => {
         filename
       }
     });
+    console.log(res.data);
 
     //easy to hit
     // sessionStorage.setItem(filename, res.data);
 
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
+    await dispatch({ type: LOADING_IMG_OFF });
   } catch (err) {
     console.log(err.message);
 

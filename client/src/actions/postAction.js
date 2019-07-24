@@ -4,7 +4,8 @@ import {
   NEW_MARKER_SUCCESS,
   RESET_NEW_MARKER,
   DELETE_POST_SUCCESS,
-  DELETE_POST_FAIL
+  DELETE_POST_FAIL,
+  MODAL_ALERT
 } from "./types";
 import axios from "axios";
 import store from "../store";
@@ -41,8 +42,11 @@ export const post = payload => async dispatch => {
 
     store.dispatch(getAllPost());
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
+    const errorMessage =
+      "ServerError(500) \n It's possible that the file isn't under 1MB or jpeg/png file.";
     dispatch({ type: POST_FAIL });
+    dispatch({ type: MODAL_ALERT, payload: errorMessage });
   }
 };
 

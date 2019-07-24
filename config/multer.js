@@ -25,5 +25,5 @@ const storage = new GridFsStorage({
     });
   }
 });
-const upload = multer({ storage });
+const upload = multer({ storage: storage, limits: { fileSize: 1000000 } }); //Maximum size is 1
 module.exports = upload;

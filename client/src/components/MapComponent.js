@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 
 //CSS
 import "./css/mapComponent.css";
+import Spinner from "react-bootstrap/Spinner";
 
 //image
 import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
@@ -94,6 +95,8 @@ const MapComponent = props => {
     props.deletePost(filename);
   };
 
+  console.log(props.loadingImg);
+
   //map bounds
 
   const bounds = new window.google.maps.LatLngBounds();
@@ -163,8 +166,10 @@ const MapComponent = props => {
                         onChange={e => imgChange(e)}
                         required
                       />
+                      <label>1MB limit</label>
                     </InputGroup>
                     <Button type="submit">Post</Button>
+
                     <Image
                       src={
                         prevImgUrl === null || prevImgUrl === ""
@@ -240,17 +245,21 @@ const MapComponent = props => {
                         </center>
                         <div className="postForm">
                           <center>
-                            <img
-                              // src={`data:image/;base64, ${sessionStorage.getItem(
-                              //   filename
-                              // )}`}
-                              src={`data:image/;base64, 
+                            {props.loadingImg ? (
+                              <h1>Loading...</h1>
+                            ) : (
+                              <img
+                                // src={`data:image/;base64, ${sessionStorage.getItem(
+                                //   filename
+                                // )}`}
+                                src={`data:image;base64,
                                 ${props.img}
                               `}
-                              className="imgStyle"
-                              alt={props.img}
-                              fluid
-                            />
+                                className="imgStyle"
+                                alt={props.img}
+                                fluid
+                              />
+                            )}
                           </center>
                           <div>
                             <p className="textDisplay">{post.metadata.text}</p>
@@ -291,7 +300,8 @@ MapComponent.propTypes = {
   setSelectedPost: PropTypes.func.isRequired,
   offSelectedPost: PropTypes.func.isRequired,
   img: PropTypes.string.isRequired,
-  addNewMarker: PropTypes.func.isRequired
+  addNewMarker: PropTypes.func.isRequired,
+  loadingImg: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -306,7 +316,8 @@ const mapStateToProps = state => ({
   postOpenInfo: state.windowReducer.postOpenInfo,
   markerLat: state.postReducer.position.markerLat,
   markerLng: state.postReducer.position.markerLng,
-  boundFlag: state.getPostReducer.boundFlag
+  boundFlag: state.getPostReducer.boundFlag,
+  loadingImg: state.getPostReducer.loadingImg
 });
 
 export default connect(

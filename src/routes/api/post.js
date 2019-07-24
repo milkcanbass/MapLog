@@ -28,6 +28,8 @@ conn.once("open", () => {
 //@Auth private
 router.post("/uploadImg", auth, upload.single("myImg"), (req, res) => {
   if (req.file === null) {
+    console.log("test");
+
     return res.status(400).json({ msg: "No file uploaded" });
   } else {
     console.log("uploaded an image");

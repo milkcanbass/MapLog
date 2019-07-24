@@ -84,10 +84,12 @@ export default function(state = initialState, action) {
       };
     case LOADING_IMG_ON:
       return {
+        ...state,
         loadingImg: true
       };
     case LOADING_IMG_OFF:
       return {
+        ...state,
         loadingImg: false
       };
     default:
