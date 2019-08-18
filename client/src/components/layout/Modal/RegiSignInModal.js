@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import RegisterModal from "./RegisterModal";
 import SignInModal from "./SignInModal";
 
-const StandardModal = props => {
+const RegiSignInModal = props => {
   if (props.signInOn) {
     return <SignInModal {...props} />;
   } else {
@@ -15,7 +15,7 @@ const StandardModal = props => {
   }
 };
 
-StandardModal.prototype = {
+RegiSignInModal.prototype = {
   isAuth: PropTypes.bool.isRequired,
   signInOn: PropTypes.bool.isRequired
 };
@@ -28,4 +28,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {}
-)(StandardModal);
+)(RegiSignInModal);

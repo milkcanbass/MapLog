@@ -10,7 +10,7 @@ import { loadUser } from "./actions/userAction";
 //Components
 import Landing from "./components/Landing";
 import NavbarTop from "./components/layout/NavbarTop";
-import StandardModal from "./components/layout/Modal/StandardModal";
+import RegiSignInModal from "./components/layout/Modal/RegiSignInModal";
 import AddPostModal from "./components/layout/Modal/AddPostModal";
 import InfoModal from "./components/layout/Modal/InfoModal";
 
@@ -38,8 +38,8 @@ const App = ({
 
       <InfoModal show={infoModalOpen} onHide={modalClose} />
 
-      <AddPostModal show={postmodalopen} onHide={modalClose} />
-      <StandardModal show={modalOpen} onHide={modalClose} />
+      {/* <AddPostModal show={postmodalopen} onHide={modalClose} /> */}
+      <RegiSignInModal show={modalOpen} onHide={modalClose} />
 
       <Switch>
         <Route exact path="/" component={Landing} />

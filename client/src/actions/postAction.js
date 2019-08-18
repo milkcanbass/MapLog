@@ -35,9 +35,7 @@ export const post = payload => async dispatch => {
     await formData.append("id", id);
 
     await axios.post("/api/post/uploadImg", formData, config);
-
     store.dispatch(getNewPost());
-
     await dispatch({ type: POST_SUCCESS, payload: payload });
 
     store.dispatch(getAllPost());

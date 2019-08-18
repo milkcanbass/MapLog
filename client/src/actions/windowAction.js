@@ -14,7 +14,6 @@ export const windowOpen = () => dispatch => {
   });
 };
 export const windowClose = () => dispatch => {
-  console.log("widowClose activated");
   dispatch({
     type: WINDOW_CLOSE
   });

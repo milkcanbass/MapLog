@@ -24,9 +24,11 @@ export const getAllPost = () => async dispatch => {
         id: id
       }
     });
+    console.log(res);
     dispatch({
       type: BINDSFLAG_ON
     });
+
     await dispatch({ type: GETALLPOST_SUCCESS, payload: res.data });
     await dispatch({ type: LOADING_POST_OFF });
   } catch (err) {

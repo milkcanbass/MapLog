@@ -10,8 +10,7 @@ import {
   MODAL_REGISTER_FAIL,
   MODAL_CLOSE,
   MODAL_LOGIN_FAIL,
-  MODAL_ALERT,
-  NEW_MARKER_SUCCESS
+  MODAL_ALERT
 } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
@@ -55,6 +54,7 @@ export const register = ({ name, email, password }) => async dispatch => {
 
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     dispatch(loadUser());
+    dispatch(moveToCurrentLoc());
     store.dispatch(modalClose());
   } catch (err) {
     const errors = err.response.data;
@@ -90,8 +90,6 @@ export const login = ({ email, password }) => async dispatch => {
 };
 
 export const logout = () => dispatch => {
-  console.log("logout");
-
   dispatch({
     type: LOGOUT
   });

@@ -13,7 +13,9 @@ const initialState = {
   token: localStorage.getItem("token"),
   _id: "",
   isAuth: false,
-  createdAt: new Date().getTime()
+  createdAt: new Date().getTime(),
+  userLat: 43.653908,
+  userLng: -79.384293
 };
 
 export default function(state = initialState, action) {
