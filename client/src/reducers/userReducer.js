@@ -12,6 +12,7 @@ import {
 const initialState = {
   token: localStorage.getItem("token"),
   _id: "",
+  name: "",
   isAuth: false,
   createdAt: new Date().getTime(),
   userLat: 43.653908,
@@ -26,6 +27,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         id: payload._id,
+        name: payload.name,
         isAuth: true
       };
     case REGISTER_SUCCESS:
@@ -36,6 +38,7 @@ export default function(state = initialState, action) {
         ...payload,
         token: payload.token,
         id: payload._id,
+        name: payload.name,
         isAuth: true
       };
     case REGISTER_FAIL:
@@ -44,13 +47,7 @@ export default function(state = initialState, action) {
     case LOGOUT:
       localStorage.removeItem("token");
       sessionStorage.clear();
-      return {
-        ...state,
-        ...payload,
-        token: null,
-        id: null,
-        isAuth: false
-      };
+      return { state };
     case USER_LOCATION:
       return {
         ...state,

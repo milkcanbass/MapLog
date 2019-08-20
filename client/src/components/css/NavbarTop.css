@@ -1,3 +1,10 @@
 .active {
   color: white;
 }
+
+.userName {
+  color: white;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

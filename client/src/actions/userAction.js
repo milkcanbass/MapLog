@@ -18,6 +18,7 @@ import store from "../store";
 import { modalClose } from "./modalActions";
 import { resetNewMarker } from "./postAction";
 import { getAllPost } from "./getPostAction";
+import { SSL_OP_LEGACY_SERVER_CONNECT } from "constants";
 
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {

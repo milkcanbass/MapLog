@@ -225,9 +225,6 @@ const MapComponent = props => {
             );
             const localTime = JSON.stringify(time);
 
-            console.log(time);
-            console.log(localTime);
-
             const getImg = filename => {
               console.log("openInfoWind clicked");
               props.windowOpen();

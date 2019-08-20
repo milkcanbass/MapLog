@@ -25,6 +25,7 @@ const NavbarTop = ({
   modalShow,
   moveToCurrentLoc,
   isAuth,
+  name,
   logout,
   getAllPost,
   loadingPost
@@ -41,7 +42,7 @@ const NavbarTop = ({
   const authNav = (
     <Fragment>
       <Navbar bg="danger" variant="dark">
-        <Navbar.Brand href="/">MapLog</Navbar.Brand>
+        <Navbar.Brand className="userName">Hi! {name}</Navbar.Brand>
         <Nav className="ml-auto">
           <Nav.Link onClick={() => userLogout()}>
             <FontAwesomeIcon icon={faSignInAlt} /> Logout
@@ -86,6 +87,7 @@ const NavbarTop = ({
 
 NavbarTop.prototype = {
   isAuth: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
   postStatus: PropTypes.bool.isRequired,
   loadAllPost: PropTypes.bool.isRequired,
   modalShow: PropTypes.func.isRequired,
@@ -102,7 +104,8 @@ const mapStateToProps = state => ({
   postStatus: state.modalReducer.postStatus,
   loadAllPost: state.getPostReducer.loadAllPost,
   allPost: state.getPostReducer.allPost,
-  loadingPost: state.getPostReducer.loadingPost
+  loadingPost: state.getPostReducer.loadingPost,
+  name: state.userReducer.name
 });
 
 export default connect(
