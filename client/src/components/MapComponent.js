@@ -247,21 +247,17 @@ const MapComponent = props => {
                         </center>
                         <div className="postForm">
                           <center>
-                            {props.loadingImg ? (
-                              <h1>Loading...</h1>
-                            ) : (
-                              <img
-                                // src={`data:image/;base64, ${sessionStorage.getItem(
-                                //   filename
-                                // )}`}
-                                src={`data:image;base64,
+                            <img
+                              // src={`data:image/;base64, ${sessionStorage.getItem(
+                              //   filename
+                              // )}`}
+                              src={`data:image;base64,
                                 ${props.img}
                               `}
-                                className="imgStyle"
-                                alt={props.img}
-                                fluid
-                              />
-                            )}
+                              className="imgStyle"
+                              alt={props.img}
+                              fluid
+                            />
                           </center>
                           <div>
                             <h5 className="textDisplay">

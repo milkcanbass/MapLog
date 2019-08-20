@@ -40,6 +40,7 @@ export const getAllPost = () => async dispatch => {
 
 export const requestImg = filename => async dispatch => {
   try {
+    await dispatch({ type: LOADING_IMG_OFF });
     const res = await axios({
       method: "get",
       url: "/api/post//getImg",
@@ -54,7 +55,6 @@ export const requestImg = filename => async dispatch => {
     // sessionStorage.setItem(filename, res.data);
 
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
-    await dispatch({ type: LOADING_IMG_OFF });
   } catch (err) {
     console.log(err.message);
 

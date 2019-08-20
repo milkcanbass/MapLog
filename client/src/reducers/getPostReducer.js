@@ -90,6 +90,7 @@ export default function(state = initialState, action) {
     case LOADING_IMG_OFF:
       return {
         ...state,
+        img: "",
         loadingImg: false
       };
     default:
