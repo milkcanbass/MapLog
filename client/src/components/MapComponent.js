@@ -30,6 +30,8 @@ import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
+import testpic from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
+
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
 
@@ -251,9 +253,13 @@ const MapComponent = props => {
                               // src={`data:image/;base64, ${sessionStorage.getItem(
                               //   filename
                               // )}`}
-                              src={`data:image;base64,
+                              src={
+                                props.loadingImg
+                                  ? `data:image;base64,
                                 ${props.img}
-                              `}
+                              `
+                                  : testpic
+                              }
                               className="imgStyle"
                               alt={props.img}
                               fluid
