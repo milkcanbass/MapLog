@@ -258,7 +258,7 @@ const MapComponent = props => {
                                   ? `data:image;base64,
                                 ${props.img}
                               `
-                                  : testpic
+                                  : testpics
                               }
                               className="imgStyle"
                               alt={props.img}
