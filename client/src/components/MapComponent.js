@@ -32,6 +32,7 @@ import FormControl from "react-bootstrap/FormControl";
 import Spinner from "react-bootstrap/Spinner";
 
 import testpic from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
+import { log } from "util";
 
 const MapComponent = props => {
   const { loadAllPost, allPost, isAuth } = props;
@@ -106,7 +107,11 @@ const MapComponent = props => {
   return (
     <GoogleMap
       defaultZoom={15}
-      defaultCenter={{ lat: props.markerLat, lng: props.markerLng }}
+      defaultCenter={
+        loadAllPost
+          ? { lat: props.markerLat, lng: props.markerLng }
+          : { lat: props.userLat, lng: props.userLng }
+      }
       ref={
         loadAllPost && isAuth && props.boundFlag
           ? map => map && map.fitBounds(bounds)
@@ -200,6 +205,29 @@ const MapComponent = props => {
             const latLng = new window.google.maps.LatLng(fLat, fLng);
             bounds.extend(latLng);
 
+            {
+              /* const localTime = ISODate(middleData).toLocaleTimeString(); */
+            }
+
+            //time setting
+            const timeOptions = {
+              year: "numeric",
+              month: "short",
+              day: "2-digit",
+              hour12: true,
+              hour: "2-digit",
+              minute: "2-digit"
+            };
+
+            const time = new Date(post.uploadDate).toLocaleTimeString(
+              "en-US",
+              timeOptions
+            );
+            const localTime = JSON.stringify(time);
+
+            console.log(time);
+            console.log(localTime);
+
             const getImg = filename => {
               console.log("openInfoWind clicked");
               props.windowOpen();
@@ -246,7 +274,7 @@ const MapComponent = props => {
                       <Fragment>
                         <center>
                           <h1>{post.metadata.title}</h1>
-                          <p>{post.uploadDate}</p>
+                          <p>{localTime}</p>
                         </center>
                         <div className="postForm">
                           <center>

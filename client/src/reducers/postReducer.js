@@ -42,16 +42,7 @@ export default function(state = initialState, action) {
         boundFlag: false
       };
     case RESET_NEW_MARKER: {
-      return {
-        id: null,
-        title: "",
-        text: "",
-        position: {
-          markerLat: "",
-          markerLng: ""
-        },
-        myImg: null
-      };
+      return state;
     }
     case DELETE_POST_SUCCESS: {
       return {

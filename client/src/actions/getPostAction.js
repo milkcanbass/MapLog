@@ -24,7 +24,9 @@ export const getAllPost = () => async dispatch => {
         id: id
       }
     });
-    console.log(res);
+    console.log(res.data);
+    console.log(res.data.length);
+
     dispatch({
       type: BINDSFLAG_ON
     });

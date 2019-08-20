@@ -42,7 +42,7 @@ export const post = payload => async dispatch => {
   } catch (err) {
     console.log(err);
     const errorMessage =
-      "ServerError(500) \n It's possible that the file isn't under 1MB or jpeg/png file.";
+      "ServerError(500) \n The file isn't under 1MB or jpeg/png file.";
     dispatch({ type: POST_FAIL });
     dispatch({ type: MODAL_ALERT, payload: errorMessage });
   }
