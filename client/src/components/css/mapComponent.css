@@ -4,48 +4,68 @@
   position: relative;
 }
 
-.inputForm .imgStyle {
-  max-width: 400px;
-  min-width: 200px;
+.inputWrapper {
+  max-width: 35vw;
   max-height: auto;
+  min-width: 20vw;
+  min-height: auto;
+  border-radius: 2%;
+  padding: 3%;
+  background-color: whitesmoke;
 }
 
-.inputForm {
-  max-width: 1000px;
-  max-height: 1000px;
-  background-color: aquamarine;
-  padding: 0;
-}
 .imagePreview {
   position: relative;
-  display: inline;
-  background-color: black;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  border-radius: 2%;
+  border-style: solid;
+  border-color: white;
+  border-width: 5px;
+  margin: 0 0 5% 0;
+  object-fit: contain;
 }
 
-.postForm {
-  min-width: 100px;
-  min-height: 100px;
-  max-width: 500px;
-  max-height: 500px;
-  padding: 0;
+.fileUploadLabel {
+  font-weight: bold;
+  color: red;
+  margin: 1% 0;
+}
+
+.headline {
+  font-weight: bold;
   margin: 0;
 }
 
+.postForm {
+  max-width: 35vw;
+  max-height: auto;
+  min-width: 20vw;
+  min-height: auto;
+  border-radius: 2%;
+  padding: 3%;
+  background-color: whitesmoke;
+}
+
 .postForm .imgStyle {
-  min-width: 100px;
-  max-width: 500px;
-  height: auto;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 2%;
+  margin: 3% 0;
+  object-fit: contain;
+  object-position: center;
 }
 
 .postForm .textDisplay {
-  padding: 20px 10px 10px 10px;
+  padding: 2%;
+  margin-bottom: 2%;
   overflow: auto;
+  text-align: center;
 }
 
-.postButton1 {
-  margin: 0px 30px 0px 30px;
-}
-
-.postButton2 {
-  margin: 0px 30px 0px 30px;
+.float-right {
+  margin-top: 7%;
 }

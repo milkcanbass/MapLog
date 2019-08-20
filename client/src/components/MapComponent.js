@@ -131,10 +131,30 @@ const MapComponent = props => {
               onCloseClick={() => props.postWindowClose()}
             >
               <Fragment>
-                <div className="inputForm">
+                <div className="inputWrapper">
                   <Form onSubmit={e => submitPost(e)}>
+                    <Image
+                      src={
+                        prevImgUrl === null || prevImgUrl === ""
+                          ? sampleImage
+                          : prevImgUrl
+                      }
+                      className="imagePreview"
+                      fluid
+                    />
+                    <InputGroup className="mb-3">
+                      <FormControl
+                        type="file"
+                        name="myImg"
+                        onChange={e => imgChange(e)}
+                        required
+                      />
+                      <p className="fileUploadLabel">
+                        PNG file or JPEG file only. Maximum data size 1MB
+                      </p>
+                    </InputGroup>
                     <Form.Group controlId="exampleForm.ControlInput1">
-                      <Form.Label>Title</Form.Label>
+                      <Form.Label className="headline">Title</Form.Label>
                       <Form.Control
                         type="text"
                         name="title"
@@ -145,7 +165,7 @@ const MapComponent = props => {
                     </Form.Group>
 
                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                      <Form.Label>Text</Form.Label>
+                      <Form.Label className="headline">Text</Form.Label>
                       <Form.Control
                         as="textarea"
                         onChange={e => imgChange(e)}
@@ -154,26 +174,13 @@ const MapComponent = props => {
                         value={text}
                       />
                     </Form.Group>
-                    <InputGroup className="mb-3">
-                      <FormControl
-                        type="file"
-                        name="myImg"
-                        onChange={e => imgChange(e)}
-                        required
-                      />
-                      <label>1MB limit</label>
-                    </InputGroup>
-                    <Button type="submit">Post</Button>
-
-                    <Image
-                      src={
-                        prevImgUrl === null || prevImgUrl === ""
-                          ? sampleImage
-                          : prevImgUrl
-                      }
-                      className="imagePreview"
-                      fluid
-                    />
+                    <Button
+                      type="submit"
+                      className="float-right"
+                      variant="info"
+                    >
+                      Post
+                    </Button>
                   </Form>
                 </div>
               </Fragment>
@@ -257,15 +264,17 @@ const MapComponent = props => {
                             )}
                           </center>
                           <div>
-                            <p className="textDisplay">{post.metadata.text}</p>
+                            <h5 className="textDisplay">
+                              {post.metadata.text}
+                            </h5>
                           </div>
 
                           <div>
                             <center>
                               <Button
-                                variant="dark"
+                                variant="danger"
                                 type="button"
-                                className="postButton2"
+                                className="float-right"
                                 onClick={() => activateDeletePost(filename)}
                               >
                                 Delete
