@@ -29,6 +29,7 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import Spinner from "react-bootstrap/Spinner";
 
 import testpic from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
 
@@ -249,21 +250,21 @@ const MapComponent = props => {
                         </center>
                         <div className="postForm">
                           <center>
-                            <img
-                              // src={`data:image/;base64, ${sessionStorage.getItem(
-                              //   filename
-                              // )}`}
-                              src={
-                                props.loadingImg
-                                  ? `data:image;base64,
+                            {props.loadingImg ? (
+                              <img
+                                // src={`data:image/;base64, ${sessionStorage.getItem(
+                                //   filename
+                                // )}`}
+                                src={`data:image;base64,
                                 ${props.img}
-                              `
-                                  : testpic
-                              }
-                              className="imgStyle"
-                              alt={props.img}
-                              fluid
-                            />
+                              `}
+                                className="imgStyle"
+                                alt={props.img}
+                                fluid
+                              />
+                            ) : (
+                              <Spinner animation="border" variant="info" />
+                            )}
                           </center>
                           <div>
                             <h5 className="textDisplay">
