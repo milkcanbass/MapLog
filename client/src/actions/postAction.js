@@ -9,7 +9,7 @@ import {
 } from "./types";
 import axios from "axios";
 import store from "../store";
-import { bindsFlagOff, getAllPost, getNewPost } from "../actions/getPostAction";
+import { getAllPost, getNewPost } from "../actions/getPostAction";
 import { postWindowClose } from "./windowAction";
 
 export const post = payload => async dispatch => {
@@ -52,8 +52,6 @@ export const addNewMarker = payload => dispatch => {
   const lat = payload.latLng.lat();
   const lng = payload.latLng.lng();
   console.log(lat, lng);
-
-  store.dispatch(bindsFlagOff());
 
   dispatch({
     type: NEW_MARKER_SUCCESS,

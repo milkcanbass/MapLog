@@ -4,8 +4,6 @@ import {
   GETIMG_SUCCESS,
   GETIMG_FAIL,
   CLEAR_ALL_POST,
-  BINDSFLAG_ON,
-  BINDSFLAG_OFF,
   GET_NEW_POST_SUCCESS,
   GET_NEW_POST_FAIL,
   LOADING_POST_ON,
@@ -19,8 +17,7 @@ const initialState = {
   loadAllPost: false,
   loadingPost: false,
   img: "",
-  loadingImg: false,
-  boundFlag: null
+  loadingImg: false
 };
 
 export default function(state = initialState, action) {
@@ -57,16 +54,7 @@ export default function(state = initialState, action) {
         img: "",
         loadingImg: false
       };
-    case BINDSFLAG_ON:
-      return {
-        ...state,
-        boundFlag: true
-      };
-    case BINDSFLAG_OFF:
-      return {
-        ...state,
-        boundFlag: false
-      };
+
     case GET_NEW_POST_SUCCESS:
       initialState.allPost.push(payload);
       return {

@@ -74,9 +74,6 @@ const NavbarTop = ({
           <Nav.Link onClick={modalShow}>
             <FontAwesomeIcon icon={faSignInAlt} /> Login
           </Nav.Link>
-          <Nav.Link onClick={() => moveToCurrentLoc()}>
-            <FontAwesomeIcon icon={faMapMarkedAlt} /> Your Location
-          </Nav.Link>
         </Nav>
       </Navbar>
     </Fragment>

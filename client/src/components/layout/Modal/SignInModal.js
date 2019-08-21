@@ -85,7 +85,7 @@ const SignInModal = props => {
             .
           </p>
           <Button type="submit" variant="info" size="lg" block>
-            Sign up
+            Sign in
           </Button>
         </Form>
       </Modal.Body>

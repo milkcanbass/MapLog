@@ -38,8 +38,7 @@ export default function(state = initialState, action) {
         position: {
           markerLat: payload.lat,
           markerLng: payload.lng
-        },
-        boundFlag: false
+        }
       };
     case RESET_NEW_MARKER: {
       return state;

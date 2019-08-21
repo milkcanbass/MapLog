@@ -17,8 +17,7 @@ import setAuthToken from "../utils/setAuthToken";
 import store from "../store";
 import { modalClose } from "./modalActions";
 import { resetNewMarker } from "./postAction";
-import { getAllPost } from "./getPostAction";
-import { SSL_OP_LEGACY_SERVER_CONNECT } from "constants";
+import { getAllPost, clearAllPost } from "./getPostAction";
 
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {
@@ -95,6 +94,7 @@ export const logout = () => dispatch => {
     type: LOGOUT
   });
   store.dispatch(resetNewMarker());
+  store.dispatch(clearAllPost());
 };
 
 export const moveToCurrentLoc = payload => dispatch => {
@@ -102,6 +102,7 @@ export const moveToCurrentLoc = payload => dispatch => {
     if (!navigator.geolocation) {
       return alert("Geolocation is not supported by your browser");
     }
+    console.log("moveTo activated");
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;

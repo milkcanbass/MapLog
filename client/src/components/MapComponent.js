@@ -31,21 +31,19 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Spinner from "react-bootstrap/Spinner";
 
-import testpic from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/img/uploadIcon.png";
-import { log } from "util";
-
 const MapComponent = props => {
-  const { loadAllPost, allPost, isAuth } = props;
+  const { loadAllPost, allPost, isAuth, userLat, userLng } = props;
 
   const [addPost, setAddPost] = useState({
     title: "",
     text: "",
     postId: "",
-    lat: 43.653908,
-    lng: -79.384293,
+    lat: "",
+    lng: "",
     myImg: null,
     prevImgUrl: null
   });
+
   const { title, text, prevImgUrl } = addPost;
 
   const imgChange = e => {
@@ -96,10 +94,6 @@ const MapComponent = props => {
     props.deletePost(filename);
   };
 
-  useEffect(() => {
-    moveToCurrentLoc();
-  }, []);
-
   //map bounds
 
   const bounds = new window.google.maps.LatLngBounds();
@@ -110,13 +104,9 @@ const MapComponent = props => {
       defaultCenter={
         loadAllPost
           ? { lat: props.markerLat, lng: props.markerLng }
-          : { lat: props.userLat, lng: props.userLng }
+          : { lat: userLat, lng: userLng }
       }
-      ref={
-        loadAllPost && isAuth && props.boundFlag
-          ? map => map && map.fitBounds(bounds)
-          : null
-      }
+      ref={loadAllPost && isAuth ? map => map && map.fitBounds(bounds) : null}
       defaultOptions={defaultMapOptions}
       onClick={isAuth ? e => props.addNewMarker(e) : null}
     >
@@ -204,10 +194,6 @@ const MapComponent = props => {
 
             const latLng = new window.google.maps.LatLng(fLat, fLng);
             bounds.extend(latLng);
-
-            {
-              /* const localTime = ISODate(middleData).toLocaleTimeString(); */
-            }
 
             //time setting
             const timeOptions = {
@@ -337,8 +323,8 @@ MapComponent.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  userLng: state.userReducer.userLng,
   userLat: state.userReducer.userLat,
+  userLng: state.userReducer.userLng,
   isAuth: state.userReducer.isAuth,
   allPost: state.getPostReducer.allPost,
   loadAllPost: state.getPostReducer.loadAllPost,
@@ -348,7 +334,6 @@ const mapStateToProps = state => ({
   postOpenInfo: state.windowReducer.postOpenInfo,
   markerLat: state.postReducer.position.markerLat,
   markerLng: state.postReducer.position.markerLng,
-  boundFlag: state.getPostReducer.boundFlag,
   loadingImg: state.getPostReducer.loadingImg
 });
 

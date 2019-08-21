@@ -24,6 +24,8 @@ export default function(state = initialState, action) {
 
   switch (type) {
     case USER_LOADED:
+      console.log(payload);
+
       return {
         ...state,
         id: payload._id,
@@ -47,7 +49,8 @@ export default function(state = initialState, action) {
     case LOGOUT:
       localStorage.removeItem("token");
       sessionStorage.clear();
-      return { state };
+      return { ...state, _id: "", name: "", isAuth: false };
+
     case USER_LOCATION:
       return {
         ...state,

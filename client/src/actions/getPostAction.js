@@ -4,8 +4,6 @@ import {
   GETIMG_SUCCESS,
   GETIMG_FAIL,
   CLEAR_ALL_POST,
-  BINDSFLAG_ON,
-  BINDSFLAG_OFF,
   GET_NEW_POST_SUCCESS,
   GET_NEW_POST_FAIL,
   LOADING_POST_OFF,
@@ -23,12 +21,6 @@ export const getAllPost = () => async dispatch => {
       params: {
         id: id
       }
-    });
-    console.log(res.data);
-    console.log(res.data.length);
-
-    dispatch({
-      type: BINDSFLAG_ON
     });
 
     await dispatch({ type: GETALLPOST_SUCCESS, payload: res.data });
@@ -67,16 +59,6 @@ export const requestImg = filename => async dispatch => {
 export const clearAllPost = () => dispatch => {
   dispatch({
     type: CLEAR_ALL_POST
-  });
-};
-export const bindsFlagOn = () => dispatch => {
-  dispatch({
-    type: BINDSFLAG_ON
-  });
-};
-export const bindsFlagOff = () => dispatch => {
-  dispatch({
-    type: BINDSFLAG_OFF
   });
 };
 

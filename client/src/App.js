@@ -11,8 +11,9 @@ import { loadUser } from "./actions/userAction";
 import Landing from "./components/Landing";
 import NavbarTop from "./components/layout/NavbarTop";
 import RegiSignInModal from "./components/layout/Modal/RegiSignInModal";
-import AddPostModal from "./components/layout/Modal/AddPostModal";
 import InfoModal from "./components/layout/Modal/InfoModal";
+
+import { moveToCurrentLoc } from "./actions/userAction";
 
 // //Read Bootstrap css//
 
@@ -24,13 +25,14 @@ if (localStorage.token) {
 const App = ({
   modalOpen,
   modalClose,
-  postmodalopen,
   loadUser,
-  infoModalOpen
+  infoModalOpen,
+  moveToCurrentLoc
 }) => {
   useEffect(() => {
     loadUser();
-  }, [loadUser]);
+    moveToCurrentLoc();
+  }, [loadUser, moveToCurrentLoc]);
 
   return (
     <Router>
@@ -62,5 +64,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { modalClose, loadUser, infoModalShow }
+  { modalClose, loadUser, infoModalShow, moveToCurrentLoc }
 )(App);
