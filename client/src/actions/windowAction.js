@@ -7,8 +7,11 @@ import {
   OFF_SELECTED_POST
 } from "./types";
 
+import store from "../store";
+import { offBond } from "./getPostAction";
+
 export const windowOpen = () => dispatch => {
-  console.log("widowOpen activated");
+  store.dispatch(offBond());
   dispatch({
     type: WINDOW_OPEN
   });
@@ -20,14 +23,13 @@ export const windowClose = () => dispatch => {
 };
 
 export const postWindowClose = () => dispatch => {
-  console.log("widowClose activated");
   dispatch({
     type: POST_WINDOW_CLOSE
   });
 };
 
 export const postWindowOpen = () => dispatch => {
-  console.log("widowOpen activated");
+  store.dispatch(offBond());
   dispatch({
     type: POST_WINDOW_OPEN
   });
@@ -41,7 +43,6 @@ export const setSelectedPost = payload => dispatch => {
 };
 
 export const offSelectedPost = () => dispatch => {
-  console.log("widowOpen activated");
   dispatch({
     type: OFF_SELECTED_POST
   });

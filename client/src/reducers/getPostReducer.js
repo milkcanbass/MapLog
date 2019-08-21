@@ -6,7 +6,8 @@ import {
   CLEAR_ALL_POST,
   LOADING_POST_OFF,
   LOADING_IMG_ON,
-  LOADING_IMG_OFF
+  LOADING_IMG_OFF,
+  OFF_BOND_OFFSET
 } from "../actions/types";
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
   loadAllPost: false,
   loadingPost: false,
   img: "",
-  loadingImg: false
+  loadingImg: false,
+  offBondOffset: false
 };
 
 export default function(state = initialState, action) {
@@ -25,7 +27,8 @@ export default function(state = initialState, action) {
         ...state,
         allPost: payload,
         loadAllPost: true,
-        loadingPost: true
+        loadingPost: true,
+        offBondOffset: true
       };
     case GETALLPOST_FAIL:
     case CLEAR_ALL_POST:
@@ -34,7 +37,8 @@ export default function(state = initialState, action) {
         allPost: [],
         loadAllPost: false,
         loadingPost: false,
-        loadingImg: false
+        loadingImg: false,
+        offBondOffset: false
       };
     case GETIMG_SUCCESS:
       return {
@@ -64,6 +68,12 @@ export default function(state = initialState, action) {
         ...state,
         img: "",
         loadingImg: false
+      };
+
+    case OFF_BOND_OFFSET:
+      return {
+        ...state,
+        offBondOffset: false
       };
     default:
       return state;

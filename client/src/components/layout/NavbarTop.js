@@ -14,11 +14,7 @@ import { getAllPost, clearAllPost } from "../../actions/getPostAction";
 //css
 import "../css/NavbarTop.css";
 import Spinner from "react-bootstrap/Spinner";
-import {
-  faMapMarkedAlt,
-  faSignInAlt,
-  faPlusCircle
-} from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NavbarTop = ({

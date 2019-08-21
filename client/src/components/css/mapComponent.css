@@ -16,8 +16,8 @@
 
 .imagePreview {
   position: relative;
-  display: inline-block;
-  width: auto;
+  display: block;
+  width: 100%;
   height: auto;
   border-radius: 2%;
   border-style: solid;

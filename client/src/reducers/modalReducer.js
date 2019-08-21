@@ -16,7 +16,7 @@ const initialState = {
   infoModalOpen: false,
   signInOn: false, //True = SignIn screen open
   infomodaltype: null,
-  infomodaltext: ""
+  infomodaltext: "",
 };
 
 export default function(state = initialState, action) {

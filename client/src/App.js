@@ -18,6 +18,7 @@ import { moveToCurrentLoc } from "./actions/userAction";
 // //Read Bootstrap css//
 
 import setAuthToken from "./utils/setAuthToken";
+import { getAllPost } from "./actions/getPostAction";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -26,13 +27,18 @@ const App = ({
   modalOpen,
   modalClose,
   loadUser,
+  isAuth,
   infoModalOpen,
-  moveToCurrentLoc
+  moveToCurrentLoc,
+  getAllPost
 }) => {
   useEffect(() => {
-    loadUser();
-    moveToCurrentLoc();
-  }, [loadUser, moveToCurrentLoc]);
+    if (localStorage.token) {
+      loadUser();
+      moveToCurrentLoc();
+      getAllPost();
+    }
+  }, [getAllPost, isAuth, loadUser, moveToCurrentLoc]);
 
   return (
     <Router>
@@ -51,16 +57,19 @@ const App = ({
 App.prototype = {
   modalOpen: PropTypes.bool.isRequired,
   postmodalopen: PropTypes.bool.isRequired,
-  modalClose: PropTypes.func.isRequired
+  modalClose: PropTypes.func.isRequired,
+  getAllPost: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   modalOpen: state.modalReducer.modalOpen,
   postmodalopen: state.modalReducer.postmodalopen,
-  infoModalOpen: state.modalReducer.infoModalOpen
+  infoModalOpen: state.modalReducer.infoModalOpen,
+  isAuth: state.userReducer.isAuth
 });
 
 export default connect(
   mapStateToProps,
-  { modalClose, loadUser, infoModalShow, moveToCurrentLoc }
+  { modalClose, loadUser, infoModalShow, moveToCurrentLoc, getAllPost }
 )(App);

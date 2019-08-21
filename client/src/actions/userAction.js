@@ -25,6 +25,7 @@ export const loadUser = () => async dispatch => {
   }
   try {
     const res = await axios.get("/api/auth/");
+    console.log(res.data);
 
     dispatch({
       type: USER_LOADED,
@@ -37,6 +38,20 @@ export const loadUser = () => async dispatch => {
       type: AUTH_ERROR
     });
   }
+
+  // if (localStorage.token) {
+  //   setAuthToken(localStorage.token);
+
+  //   dispatch({
+  //     type: USER_LOADED
+  //   });
+  // } else {
+  //   console.log("AuthError");
+
+  //   dispatch({
+  //     type: AUTH_ERROR
+  //   });
+  // }
 };
 
 export const register = ({ name, email, password }) => async dispatch => {

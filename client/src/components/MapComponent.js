@@ -1,17 +1,15 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { connect } from "react-redux";
 import { post, addNewMarker, deletePost } from "../actions/postAction";
 import { requestImg } from "../actions/getPostAction";
 import {
   setSelectedPost,
-  offSelectedPost,
   windowOpen,
   windowClose,
   postWindowOpen,
   postWindowClose
 } from "../actions/windowAction";
-import { moveToCurrentLoc } from "../actions/userAction";
 
 import PropTypes from "prop-types";
 
@@ -32,7 +30,32 @@ import FormControl from "react-bootstrap/FormControl";
 import Spinner from "react-bootstrap/Spinner";
 
 const MapComponent = props => {
-  const { loadAllPost, allPost, isAuth, userLat, userLng } = props;
+  const {
+    userLat,
+    userLng,
+    isAuth,
+    allPost,
+    loadAllPost,
+    img,
+    selectedPost,
+    openInfo,
+    postOpenInfo,
+    markerLat,
+    markerLng,
+    loadingImg,
+    offBondOffset,
+
+    //functions
+    post,
+    requestImg,
+    windowOpen,
+    windowClose,
+    postWindowOpen,
+    postWindowClose,
+    setSelectedPost,
+    addNewMarker,
+    deletePost
+  } = props;
 
   const [addPost, setAddPost] = useState({
     title: "",
@@ -78,8 +101,8 @@ const MapComponent = props => {
 
   const submitPost = e => {
     e.preventDefault();
-    props.post(addPost);
-    props.windowClose();
+    post(addPost);
+    windowClose();
     setAddPost({
       title: "",
       text: "",
@@ -91,7 +114,7 @@ const MapComponent = props => {
   };
 
   const activateDeletePost = filename => {
-    props.deletePost(filename);
+    deletePost(filename);
   };
 
   //map bounds
@@ -103,30 +126,34 @@ const MapComponent = props => {
       defaultZoom={15}
       defaultCenter={
         loadAllPost
-          ? { lat: props.markerLat, lng: props.markerLng }
+          ? { lat: markerLat, lng: markerLng }
           : { lat: userLat, lng: userLng }
       }
-      ref={loadAllPost && isAuth ? map => map && map.fitBounds(bounds) : null}
+      ref={
+        loadAllPost && isAuth && offBondOffset
+          ? map => map && map.fitBounds(bounds)
+          : null
+      }
       defaultOptions={defaultMapOptions}
-      onClick={isAuth ? e => props.addNewMarker(e) : null}
+      onClick={isAuth ? e => addNewMarker(e) : null}
     >
       {isAuth ? (
         <Marker
-          position={{ lat: props.markerLat, lng: props.markerLng }}
-          onClick={() => props.postWindowOpen()}
+          position={{ lat: markerLat, lng: markerLng }}
+          onClick={() => postWindowOpen()}
           icon={{
             url: `${postMarker}`,
             scaledSize: new window.google.maps.Size(50, 50)
           }}
         >
-          {props.postOpenInfo && (
+          {postOpenInfo && (
             <InfoWindow
               id="infoWindowStyle"
               position={{
-                lat: props.markerLat,
-                lng: props.markerLng
+                lat: markerLat,
+                lng: markerLng
               }}
-              onCloseClick={() => props.postWindowClose()}
+              onCloseClick={() => postWindowClose()}
             >
               <Fragment>
                 <div className="inputWrapper">
@@ -138,7 +165,6 @@ const MapComponent = props => {
                           : prevImgUrl
                       }
                       className="imagePreview"
-                      fluid
                     />
                     <InputGroup className="mb-3">
                       <FormControl
@@ -213,14 +239,14 @@ const MapComponent = props => {
 
             const getImg = filename => {
               console.log("openInfoWind clicked");
-              props.windowOpen();
-              props.setSelectedPost(filename);
+              windowOpen();
+              setSelectedPost(filename);
               if (Object.keys(sessionStorage).includes(filename)) {
                 console.log("not call");
                 return null;
               } else {
                 console.log("call");
-                props.requestImg(filename);
+                requestImg(filename);
               }
             };
 
@@ -228,7 +254,7 @@ const MapComponent = props => {
               console.log("closeInfoWind clicked");
 
               setSelectedPost(null);
-              props.windowClose();
+              windowClose();
             };
 
             return (
@@ -242,7 +268,7 @@ const MapComponent = props => {
                   scaledSize: new window.google.maps.Size(50, 50)
                 }}
               >
-                {props.selectedPost === post.filename && props.openInfo && (
+                {selectedPost === post.filename && openInfo && (
                   <InfoWindow
                     key={post.filename}
                     position={{
@@ -261,16 +287,16 @@ const MapComponent = props => {
                         </center>
                         <div className="postForm">
                           <center>
-                            {props.loadingImg ? (
+                            {loadingImg ? (
                               <img
                                 // src={`data:image/;base64, ${sessionStorage.getItem(
                                 //   filename
                                 // )}`}
                                 src={`data:image;base64,
-                                ${props.img}
+                                ${img}
                               `}
                                 className="imgStyle"
-                                alt={props.img}
+                                alt={img}
                                 fluid
                               />
                             ) : (
@@ -316,7 +342,6 @@ MapComponent.propTypes = {
   windowOpen: PropTypes.func.isRequired,
   widowClose: PropTypes.func,
   setSelectedPost: PropTypes.func.isRequired,
-  offSelectedPost: PropTypes.func.isRequired,
   img: PropTypes.string.isRequired,
   addNewMarker: PropTypes.func.isRequired,
   loadingImg: PropTypes.bool.isRequired
@@ -334,7 +359,8 @@ const mapStateToProps = state => ({
   postOpenInfo: state.windowReducer.postOpenInfo,
   markerLat: state.postReducer.position.markerLat,
   markerLng: state.postReducer.position.markerLng,
-  loadingImg: state.getPostReducer.loadingImg
+  loadingImg: state.getPostReducer.loadingImg,
+  offBondOffset: state.getPostReducer.offBondOffset
 });
 
 export default connect(
@@ -347,9 +373,7 @@ export default connect(
     postWindowOpen,
     postWindowClose,
     setSelectedPost,
-    offSelectedPost,
     addNewMarker,
-    moveToCurrentLoc,
     deletePost
   }
 )(MapComponent);

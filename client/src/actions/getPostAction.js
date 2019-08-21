@@ -5,7 +5,8 @@ import {
   GETIMG_FAIL,
   CLEAR_ALL_POST,
   LOADING_POST_OFF,
-  LOADING_IMG_OFF
+  LOADING_IMG_OFF,
+  OFF_BOND_OFFSET
 } from "./types";
 import axios from "axios";
 import store from "../store";
@@ -55,5 +56,11 @@ export const requestImg = filename => async dispatch => {
 export const clearAllPost = () => dispatch => {
   dispatch({
     type: CLEAR_ALL_POST
+  });
+};
+
+export const offBond = () => dispatch => {
+  dispatch({
+    type: OFF_BOND_OFFSET
   });
 };

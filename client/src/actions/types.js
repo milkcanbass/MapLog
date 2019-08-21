@@ -36,6 +36,7 @@ export const LOADING_POST_OFF = "LOADING_POST_OFF";
 export const LOADING_IMG_ON = "LOADING_IMG_ON";
 export const LOADING_IMG_OFF = "LOADING_IMG_OFF";
 export const CLEAR_ALL_POST = "CLEAR_ALL_POST";
+export const OFF_BOND_OFFSET = "OFF_BOND_OFFSET";
 
 //windowReducer
 export const WINDOW_OPEN = "WINDOW_OPEN";
