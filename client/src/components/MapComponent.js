@@ -60,9 +60,9 @@ const MapComponent = props => {
   const [addPost, setAddPost] = useState({
     title: "",
     text: "",
-    postId: "",
-    lat: "",
-    lng: "",
+    postId: null,
+    lat: null,
+    lng: null,
     myImg: null,
     prevImgUrl: null
   });
@@ -78,7 +78,6 @@ const MapComponent = props => {
           prevImgUrl: URL.createObjectURL(e.target.files[0])
         });
       } catch (err) {
-        console.log(err.message);
         setAddPost({
           ...addPost,
           prevImgUrl: sampleImage
@@ -238,21 +237,16 @@ const MapComponent = props => {
             const localTime = JSON.stringify(time);
 
             const getImg = filename => {
-              console.log("openInfoWind clicked");
               windowOpen();
               setSelectedPost(filename);
               if (Object.keys(sessionStorage).includes(filename)) {
-                console.log("not call");
                 return null;
               } else {
-                console.log("call");
                 requestImg(filename);
               }
             };
 
             const closeInfoWind = () => {
-              console.log("closeInfoWind clicked");
-
               setSelectedPost(null);
               windowClose();
             };

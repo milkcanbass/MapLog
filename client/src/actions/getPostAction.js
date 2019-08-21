@@ -25,7 +25,6 @@ export const getAllPost = () => async dispatch => {
     await dispatch({ type: GETALLPOST_SUCCESS, payload: res.data });
     await dispatch({ type: LOADING_POST_OFF });
   } catch (err) {
-    console.log(err.message);
     await dispatch({ type: GETALLPOST_FAIL });
 
     //flags for the spinner of get all post on Navbar
@@ -47,8 +46,6 @@ export const requestImg = filename => async dispatch => {
 
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log(err.message);
-
     dispatch({ type: GETIMG_FAIL });
   }
 };

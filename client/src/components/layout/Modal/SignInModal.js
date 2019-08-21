@@ -32,9 +32,7 @@ const SignInModal = props => {
     try {
       props.login({ email, password });
       // register({ name, email, password });
-    } catch (err) {
-      console.error(err.message);
-    }
+    } catch (err) {}
   };
 
   const handler = () => {

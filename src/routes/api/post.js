@@ -28,11 +28,8 @@ conn.once("open", () => {
 //@Auth private
 router.post("/uploadImg", auth, upload.single("myImg"), (req, res) => {
   if (req.file === null) {
-    console.log("test");
-
     return res.status(400).json({ msg: "No file uploaded" });
   } else {
-    console.log("uploaded an image");
     res.json({ msg: "imageUploaded" });
   }
 });
@@ -65,7 +62,6 @@ router.get("/getImg", (req, res) => {
         res.json(base64);
       });
     } catch (err) {
-      console.log(err.message);
       res.status(500).json({ err: "server error" });
     }
   });
@@ -111,8 +107,6 @@ router.get("/files", auth, (req, res) => {
 //@Auth public
 
 router.delete("/files/delete", auth, (req, res) => {
-  console.log(req.query.filename);
-
   let filename = req.query.filename;
 
   gfs.remove({ filename: filename, root: "myImgs" }, (err, gridStore) => {

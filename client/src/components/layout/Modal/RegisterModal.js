@@ -32,9 +32,7 @@ const RegisterModal = props => {
 
     try {
       props.register({ email, name, password });
-    } catch (err) {
-      console.error(err.message);
-    }
+    } catch (err) {}
   };
 
   const handler = () => {

@@ -25,38 +25,19 @@ export const loadUser = () => async dispatch => {
   }
   try {
     const res = await axios.get("/api/auth/");
-    console.log(res.data);
 
     dispatch({
       type: USER_LOADED,
       payload: res.data
     });
   } catch (err) {
-    console.log(err.message);
-
     dispatch({
       type: AUTH_ERROR
     });
   }
-
-  // if (localStorage.token) {
-  //   setAuthToken(localStorage.token);
-
-  //   dispatch({
-  //     type: USER_LOADED
-  //   });
-  // } else {
-  //   console.log("AuthError");
-
-  //   dispatch({
-  //     type: AUTH_ERROR
-  //   });
-  // }
 };
 
 export const register = ({ name, email, password }) => async dispatch => {
-  console.log({ name, email, password });
-
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -115,7 +96,7 @@ export const moveToCurrentLoc = () => dispatch => {
     if (!navigator.geolocation) {
       return alert("Geolocation is not supported by your browser");
     }
-    console.log("moveTo activated");
+
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
