@@ -17,9 +17,9 @@ import PropTypes from "prop-types";
 import "./css/mapComponent.css";
 
 //image
-import sampleImage from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/components/img/uploadIcon.png";
-import postMarker from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/components/img/iconfinder_Location_728975.png";
-import addMarker from "/Users/shincat/webDevelopment/NodeStudy/SocketPractice/client/src/components/img/iconfinder_Marker_red_1891013.png";
+import sampleImage from "./img/uploadIcon.png";
+import postMarker from "./img/iconfinder_Location_728975.png";
+import addMarker from "./img/iconfinder_Marker_red_1891013.png";
 
 //Bootstrap
 import Form from "react-bootstrap/Form";

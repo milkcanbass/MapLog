@@ -1,6 +1,9 @@
 {
   "name": "socketpractice",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.3.1"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
