@@ -50,11 +50,9 @@ export const register = ({ name, email, password }) => async dispatch => {
   const body = JSON.stringify({ name, email, password });
   try {
     const res = await axios.post("api/auth/register", body, config);
-    console.log(res.data);
 
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     dispatch(loadUser());
-    dispatch(moveToCurrentLoc());
     store.dispatch(modalClose());
   } catch (err) {
     const errors = err.response.data;
@@ -97,7 +95,7 @@ export const logout = () => dispatch => {
   store.dispatch(clearAllPost());
 };
 
-export const moveToCurrentLoc = payload => dispatch => {
+export const moveToCurrentLoc = () => dispatch => {
   try {
     if (!navigator.geolocation) {
       return alert("Geolocation is not supported by your browser");

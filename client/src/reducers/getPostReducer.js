@@ -4,7 +4,6 @@ import {
   GETIMG_SUCCESS,
   GETIMG_FAIL,
   CLEAR_ALL_POST,
-  LOADING_POST_ON,
   LOADING_POST_OFF,
   LOADING_IMG_ON,
   LOADING_IMG_OFF
@@ -24,7 +23,6 @@ export default function(state = initialState, action) {
     case GETALLPOST_SUCCESS:
       return {
         ...state,
-        ...payload,
         allPost: payload,
         loadAllPost: true,
         loadingPost: true
@@ -33,7 +31,6 @@ export default function(state = initialState, action) {
     case CLEAR_ALL_POST:
       return {
         ...state,
-        ...payload,
         allPost: [],
         loadAllPost: false,
         loadingPost: false,
@@ -52,11 +49,6 @@ export default function(state = initialState, action) {
         loadingImg: false
       };
 
-    case LOADING_POST_ON:
-      return {
-        ...state,
-        loadingPost: true
-      };
     case LOADING_POST_OFF:
       return {
         ...state,

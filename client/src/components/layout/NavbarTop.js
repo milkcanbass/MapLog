@@ -86,7 +86,6 @@ NavbarTop.prototype = {
   isAuth: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   postStatus: PropTypes.bool.isRequired,
-  loadAllPost: PropTypes.bool.isRequired,
   modalShow: PropTypes.func.isRequired,
   moveToCurrentLoc: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
@@ -99,7 +98,6 @@ NavbarTop.prototype = {
 const mapStateToProps = state => ({
   isAuth: state.userReducer.isAuth,
   postStatus: state.modalReducer.postStatus,
-  loadAllPost: state.getPostReducer.loadAllPost,
   allPost: state.getPostReducer.allPost,
   loadingPost: state.getPostReducer.loadingPost,
   name: state.userReducer.name

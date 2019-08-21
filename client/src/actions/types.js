@@ -22,11 +22,8 @@ export const MODAL_LOGIN_FAIL = "MODAL_LOGIN_FAIL";
 export const MODAL_ALERT = "MODAL_ALERT";
 
 //postReducer
-export const POST_SUCCESS = "POST_SUCCESS";
-export const POST_FAIL = "POST_FAIL";
 export const NEW_MARKER_SUCCESS = "NEW_MARKER_SUCCESS";
 export const RESET_NEW_MARKER = "RESET_NEW_MARKER";
-export const CLEAR_ALL_POST = "CLEAR_ALL_POST";
 export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
 export const DELETE_POST_FAIL = "DELETE_POST_FAIL";
 
@@ -35,10 +32,10 @@ export const GETALLPOST_SUCCESS = "GETALLPOST_SUCCESS";
 export const GETALLPOST_FAIL = "GETALLPOST_FAIL";
 export const GETIMG_SUCCESS = "GETIMG_SUCCESS";
 export const GETIMG_FAIL = "GETIMG_FAIL";
-export const LOADING_POST_ON = "LOADING_POST_ON";
 export const LOADING_POST_OFF = "LOADING_POST_OFF";
 export const LOADING_IMG_ON = "LOADING_IMG_ON";
 export const LOADING_IMG_OFF = "LOADING_IMG_OFF";
+export const CLEAR_ALL_POST = "CLEAR_ALL_POST";
 
 //windowReducer
 export const WINDOW_OPEN = "WINDOW_OPEN";

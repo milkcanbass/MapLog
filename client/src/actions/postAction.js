@@ -15,7 +15,6 @@ export const post = payload => async dispatch => {
     //Need an image to upload comments.
 
     const { title, text, myImg } = payload;
-
     const state = store.getState();
     const markerLat = state.postReducer.position.markerLat;
     const markerLng = state.postReducer.position.markerLng;
@@ -46,16 +45,18 @@ export const post = payload => async dispatch => {
 export const addNewMarker = payload => dispatch => {
   const lat = payload.latLng.lat();
   const lng = payload.latLng.lng();
-  console.log(lat, lng);
 
   dispatch({
     type: NEW_MARKER_SUCCESS,
     payload: { lat, lng }
   });
+
+  //To Close other marker's infoWindow opened.
   store.dispatch(postWindowClose());
 };
 
 export const resetNewMarker = () => dispatch => {
+  //reset newMaker. using for logout
   dispatch({ type: RESET_NEW_MARKER });
 };
 
@@ -66,7 +67,6 @@ export const deletePost = filename => async dispatch => {
     });
 
     await dispatch({ type: DELETE_POST_SUCCESS });
-
     await store.dispatch(getAllPost());
   } catch (err) {
     console.log(err.message);

@@ -10,11 +10,9 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  token: localStorage.getItem("token"),
-  _id: "",
+  id: null,
   name: "",
   isAuth: false,
-  createdAt: new Date().getTime(),
   userLat: 43.653908,
   userLng: -79.384293
 };
@@ -37,8 +35,6 @@ export default function(state = initialState, action) {
       localStorage.setItem("token", payload.token);
       return {
         ...state,
-        ...payload,
-        token: payload.token,
         id: payload._id,
         name: payload.name,
         isAuth: true
@@ -49,7 +45,7 @@ export default function(state = initialState, action) {
     case LOGOUT:
       localStorage.removeItem("token");
       sessionStorage.clear();
-      return { ...state, _id: "", name: "", isAuth: false };
+      return { ...state, _id: null, name: "", isAuth: false };
 
     case USER_LOCATION:
       return {

@@ -6,14 +6,10 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  id: null,
-  title: "",
-  text: "",
   position: {
     markerLat: "",
     markerLng: ""
-  },
-  myImg: null
+  }
 };
 
 export default function(state = initialState, action) {
@@ -28,9 +24,7 @@ export default function(state = initialState, action) {
           markerLng: payload.lng
         }
       };
-    case RESET_NEW_MARKER: {
-      return state;
-    }
+
     case DELETE_POST_SUCCESS: {
       return {
         ...state,
@@ -43,6 +37,7 @@ export default function(state = initialState, action) {
         deleted: null
       };
     }
+    case RESET_NEW_MARKER:
     default:
       return state;
   }
