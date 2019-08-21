@@ -39,8 +39,6 @@ const App = ({
       <NavbarTop />
 
       <InfoModal show={infoModalOpen} onHide={modalClose} />
-
-      {/* <AddPostModal show={postmodalopen} onHide={modalClose} /> */}
       <RegiSignInModal show={modalOpen} onHide={modalClose} />
 
       <Switch>

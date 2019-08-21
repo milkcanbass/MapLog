@@ -102,11 +102,6 @@ const RegisterModal = props => {
           </Button>
         </Form>
       </Modal.Body>
-      {/* <Modal.Footer>
-          <Button onClick={props.onHide} type="submit">
-            Submit
-          </Button>
-        </Modal.Footer> */}
     </Modal>
   );
 };

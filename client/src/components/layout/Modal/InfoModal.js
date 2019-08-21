@@ -8,9 +8,6 @@ import { connect } from "react-redux";
 import { register } from "../../../actions/userAction";
 import { signInOn } from "../../../actions/modalActions";
 
-//Bootstrap
-import "../../css/addPostModal_styles.css";
-
 const InfoModal = props => {
   switch (props.infomodaltype) {
     case "registerFail":

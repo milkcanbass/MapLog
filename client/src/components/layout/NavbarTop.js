@@ -57,10 +57,6 @@ const NavbarTop = ({
               Download markers
             </Nav.Link>
           )}
-
-          <Nav.Link onClick={() => moveToCurrentLoc()}>
-            <FontAwesomeIcon icon={faMapMarkedAlt} /> Your Location
-          </Nav.Link>
         </Nav>
       </Navbar>
     </Fragment>
