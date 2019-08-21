@@ -4,8 +4,6 @@ import {
   GETIMG_SUCCESS,
   GETIMG_FAIL,
   CLEAR_ALL_POST,
-  GET_NEW_POST_SUCCESS,
-  GET_NEW_POST_FAIL,
   LOADING_POST_OFF,
   LOADING_IMG_OFF
 } from "./types";
@@ -28,6 +26,8 @@ export const getAllPost = () => async dispatch => {
   } catch (err) {
     console.log(err.message);
     await dispatch({ type: GETALLPOST_FAIL });
+
+    //flags for the spinner of get all post on Navbar
     await dispatch({ type: LOADING_POST_OFF });
   }
 };
@@ -43,10 +43,6 @@ export const requestImg = filename => async dispatch => {
         filename
       }
     });
-    console.log(res.data);
-
-    //easy to hit
-    // sessionStorage.setItem(filename, res.data);
 
     await dispatch({ type: GETIMG_SUCCESS, payload: res.data });
   } catch (err) {
@@ -60,25 +56,4 @@ export const clearAllPost = () => dispatch => {
   dispatch({
     type: CLEAR_ALL_POST
   });
-};
-
-export const getNewPost = () => async dispatch => {
-  try {
-    const state = store.getState();
-    const id = state.userReducer.id;
-    const res = await axios.get("api/post/latestFile", {
-      params: {
-        id: id
-      }
-    });
-
-    await dispatch({
-      type: GET_NEW_POST_SUCCESS,
-      payload: res.data
-    });
-  } catch (err) {
-    console.log(err.message);
-
-    dispatch({ type: GET_NEW_POST_FAIL });
-  }
 };

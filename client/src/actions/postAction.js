@@ -1,6 +1,4 @@
 import {
-  POST_SUCCESS,
-  POST_FAIL,
   NEW_MARKER_SUCCESS,
   RESET_NEW_MARKER,
   DELETE_POST_SUCCESS,
@@ -9,7 +7,7 @@ import {
 } from "./types";
 import axios from "axios";
 import store from "../store";
-import { getAllPost, getNewPost } from "../actions/getPostAction";
+import { getAllPost } from "../actions/getPostAction";
 import { postWindowClose } from "./windowAction";
 
 export const post = payload => async dispatch => {
@@ -35,15 +33,12 @@ export const post = payload => async dispatch => {
     await formData.append("id", id);
 
     await axios.post("/api/post/uploadImg", formData, config);
-    store.dispatch(getNewPost());
-    await dispatch({ type: POST_SUCCESS, payload: payload });
 
     store.dispatch(getAllPost());
   } catch (err) {
     console.log(err);
     const errorMessage =
       "ServerError(500) \n The file isn't under 1MB or jpeg/png file.";
-    dispatch({ type: POST_FAIL });
     dispatch({ type: MODAL_ALERT, payload: errorMessage });
   }
 };

@@ -1,6 +1,4 @@
 import {
-  POST_SUCCESS,
-  POST_FAIL,
   NEW_MARKER_SUCCESS,
   RESET_NEW_MARKER,
   DELETE_POST_SUCCESS,
@@ -12,8 +10,8 @@ const initialState = {
   title: "",
   text: "",
   position: {
-    markerLat: 43.653908,
-    markerLng: -79.384293
+    markerLat: "",
+    markerLng: ""
   },
   myImg: null
 };
@@ -22,16 +20,6 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case POST_SUCCESS:
-      return {
-        ...state,
-        ...payload
-      };
-    case POST_FAIL:
-      return {
-        ...state,
-        ...payload
-      };
     case NEW_MARKER_SUCCESS:
       return {
         ...state,
