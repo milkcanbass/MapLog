@@ -4,8 +4,7 @@
 * [Technologies](#technologies)
 
 ## General info
-Personal image storage web application with Google Maps API.
-Authorized user can put image files with comment on google map.
+This project is a personal image storage web application with Google Maps API. An authorized user can put image files with comments on google map.
 
 ## How to use
 - Post image<br>
