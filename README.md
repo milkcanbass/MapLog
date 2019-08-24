@@ -9,9 +9,9 @@ This project is a personal image storage web application with Google Maps API. A
 
 
 ## Test
-1/Download this repositely, and dependecies.
-2/Open config/default.json to set mongoDB access key.
-3/run this scriot "dev": "concurrently \"npm run server\" \"npm run client\"" in root.
+1/Download this repositely, and dependecies.<br>
+2/Open config/default.json to set mongoDB access key.<br>
+3/run this scriot "dev": "concurrently \"npm run server\" \"npm run client\"" in root.<br>
 
 
 ## How to use
