@@ -6,11 +6,16 @@
 ## General info
 This project is a personal image storage web application with Google Maps API. An authorized user can put image files with comments on google map.
 
+
+## How to use
+
+
+
 ## How to use
 - Post image<br>
 1/Sign up or Sign in<br>
 2/Click map to display post marker where you would like to post your image.<br>
-3/Click the post marker to post your image.<br>
+3/Click the post marker to post your image. The data will upload to MongoDB.<br>
 
 - Read post<br>
 1/Sign up or Sign in<br>
