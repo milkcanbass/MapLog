@@ -11,7 +11,7 @@ This project is a personal image storage web application with Google Maps API. A
 ## Test
 1/Download this repositely, and dependecies.<br>
 2/Open config/default.json to set mongoDB access key.<br>
-3/run this scriot "dev": "concurrently \"npm run server\" \"npm run client\"" in root.<br>
+3/run this script "npm run dev" on the root directory. <br>
 
 
 ## How to use
