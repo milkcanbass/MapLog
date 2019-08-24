@@ -1,14 +1,17 @@
 ## Table of contents
 * [General info](#general-info)
-* [How  to  use](#How-to-use)
+* [Test](#test)
+* [How  to  use](#how-to-use)
 * [Technologies](#technologies)
 
 ## General info
 This project is a personal image storage web application with Google Maps API. An authorized user can put image files with comments on google map.
 
 
-## How to use
-
+## Test
+1/Download this repositely, and dependecies.
+2/Open config/default.json to set mongoDB access key.
+3/run this scriot "dev": "concurrently \"npm run server\" \"npm run client\"" in root.
 
 
 ## How to use
