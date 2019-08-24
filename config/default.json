@@ -1,0 +1,4 @@
+{
+  "jwtSecret": "jwtSecret",
+  "mongoURI": "mongodb+srv://mapchat:Tokoroten1215@cluster0-hjnjq.mongodb.net/test?retryWrites=true&w=majority"
+}
