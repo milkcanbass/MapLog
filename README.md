@@ -2,7 +2,7 @@
 * [General info](#general-info)
 * [Test](#test)
 * [How  to  use](#how-to-use)
-* [Technologies](#technologies)
+* [Dependencies](#Dependencies)
 
 ## General info
 This project is a personal image storage web application with Google Maps API. An authorized user can put image files with comments on google map.
@@ -32,7 +32,7 @@ This project is a personal image storage web application with Google Maps API. A
 
 
 
-## Technologies
+## Dependencies
 Frontend:<br>
 "@fortawesome/fontawesome-svg-core": "^1.2.19",<br>
 "@fortawesome/free-solid-svg-icons": "^5.9.0",<br>
